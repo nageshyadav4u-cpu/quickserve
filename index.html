@@ -23,6 +23,10 @@
     .ride-sub-screen.active { display: block; }
     .luggage-sub-view { display: none; }
     .luggage-sub-view.active { display: block; }
+    .reg-form-section { display: none; }
+    .reg-form-section.active { display: block; }
+    .tc-group-section { display: none; }
+    .tc-group-section.active { display: block; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
@@ -485,7 +489,7 @@
 
 
   <!-- ================================================================= -->
-  <!-- 🚖 EXPANDED MULTI-VEHICLE RIDE & PARCEL BOOKING MODAL              -->
+  <!-- 🚖 STANDARDIZED MULTI-VEHICLE RIDE & PARCEL BOOKING MODAL          -->
   <!-- ================================================================= -->
   <div id="rideBookingModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex justify-center items-end sm:items-center p-0 sm:p-4">
     <div class="bg-white w-full max-w-2xl rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 space-y-4 max-h-[92vh] overflow-y-auto">
@@ -563,7 +567,7 @@
 
         <div id="rideVehicleList" class="space-y-2 text-xs max-h-56 overflow-y-auto no-scrollbar">
           
-          <!-- 📦 PARCEL OPTION INTEGRATED INTO RIDE BOOKING -->
+          <!-- 📦 PARCEL OPTION -->
           <label id="optParcel" onclick="selectRideVehicleCard(this, 'Parcel Delivery', 50, true)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer hover:border-blue-500 transition">
             <div class="flex items-center gap-3">
               <input type="radio" name="rideVeh" id="radioParcel" class="accent-blue-600" />
@@ -586,7 +590,7 @@
               <span class="text-2xl">🏍</span>
               <div>
                 <span class="font-black text-gray-900 block">Bike Taxi</span>
-                <p class="text-[11px] text-gray-500">1 Passenger • ETA: 2 mins</p>
+                <p class="text-[11px] text-gray-500">1 Passenger • Non-AC • ETA: 2 mins</p>
               </div>
             </div>
             <div class="text-right">
@@ -595,77 +599,97 @@
             </div>
           </label>
 
+          <!-- 🛺 AUTO RICKSHAW -->
           <label onclick="selectRideVehicleCard(this, 'Auto Rickshaw', 85)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
             <div class="flex items-center gap-3">
               <input type="radio" name="rideVeh" class="accent-yellow-500" />
               <span class="text-2xl">🛺</span>
               <div>
                 <span class="font-black text-gray-900 block">Auto Rickshaw</span>
-                <p class="text-[11px] text-gray-500">Up to 3 Passengers • ETA: 3 mins</p>
+                <p class="text-[11px] text-gray-500">Up to 3 Passengers • Non-AC • ETA: 3 mins</p>
               </div>
             </div>
             <span class="font-black text-sm text-gray-900">₹85</span>
           </label>
 
-          <label onclick="selectRideVehicleCard(this, 'Taxi Hatchback', 140)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+          <!-- 🚗 HATCHBACK -->
+          <label onclick="selectRideVehicleCard(this, 'Hatchback', 130)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
             <div class="flex items-center gap-3">
               <input type="radio" name="rideVeh" class="accent-yellow-500" />
-              <span class="text-2xl">🚖</span>
+              <span class="text-2xl">🚗</span>
               <div>
-                <span class="font-black text-gray-900 block">Taxi (Hatchback)</span>
-                <p class="text-[11px] text-gray-500">4 Passengers • ETA: 4 mins</p>
+                <span class="font-black text-gray-900 block">Hatchback</span>
+                <p class="text-[11px] text-gray-500">Up to 4 Passengers • AC • ETA: 4 mins</p>
               </div>
             </div>
-            <span class="font-black text-sm text-gray-900">₹140</span>
+            <span class="font-black text-sm text-gray-900">₹130</span>
           </label>
 
-          <label onclick="selectRideVehicleCard(this, 'Sedan Comfort', 180)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+          <!-- 🚘 SEDAN -->
+          <label onclick="selectRideVehicleCard(this, 'Sedan', 170)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
             <div class="flex items-center gap-3">
               <input type="radio" name="rideVeh" class="accent-yellow-500" />
               <span class="text-2xl">🚘</span>
               <div>
-                <span class="font-black text-gray-900 block">Sedan (Dzire / Etios)</span>
-                <p class="text-[11px] text-gray-500">AC • 4 Passengers • ETA: 5 mins</p>
+                <span class="font-black text-gray-900 block">Sedan</span>
+                <p class="text-[11px] text-gray-500">Up to 4 Passengers • AC • Luggage Suitability • ETA: 5 mins</p>
               </div>
             </div>
-            <span class="font-black text-sm text-gray-900">₹180</span>
+            <span class="font-black text-sm text-gray-900">₹170</span>
           </label>
 
-          <label onclick="selectRideVehicleCard(this, 'SUV Premium', 260)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+          <!-- 🚙 SUV -->
+          <label onclick="selectRideVehicleCard(this, 'SUV', 250)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
             <div class="flex items-center gap-3">
               <input type="radio" name="rideVeh" class="accent-yellow-500" />
               <span class="text-2xl">🚙</span>
               <div>
-                <span class="font-black text-gray-900 block">SUV (Innova / Ertiga)</span>
-                <p class="text-[11px] text-gray-500">6–7 Passengers • ETA: 6 mins</p>
+                <span class="font-black text-gray-900 block">SUV</span>
+                <p class="text-[11px] text-gray-500">Up to 7 Passengers • AC • High Luggage Suitability • ETA: 6 mins</p>
               </div>
             </div>
-            <span class="font-black text-sm text-gray-900">₹260</span>
+            <span class="font-black text-sm text-gray-900">₹250</span>
           </label>
 
-          <label onclick="selectRideVehicleCard(this, 'XL Van', 450)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+          <!-- 🚐 VAN / MUV -->
+          <label onclick="selectRideVehicleCard(this, 'Van / MUV', 380)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
             <div class="flex items-center gap-3">
               <input type="radio" name="rideVeh" class="accent-yellow-500" />
               <span class="text-2xl">🚐</span>
               <div>
-                <span class="font-black text-gray-900 block">XL Van / Traveller</span>
-                <p class="text-[11px] text-gray-500">8–15 Passengers • ETA: 8 mins</p>
+                <span class="font-black text-gray-900 block">Van / MUV</span>
+                <p class="text-[11px] text-gray-500">Up to 7 Passengers • AC • Maximum Space • ETA: 8 mins</p>
               </div>
             </div>
-            <span class="font-black text-sm text-gray-900">₹450</span>
+            <span class="font-black text-sm text-gray-900">₹380</span>
           </label>
 
-          <label onclick="selectRideVehicleCard(this, 'Luxury Car', 750)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+          <!-- ⭐ PREMIUM SEDAN -->
+          <label onclick="selectRideVehicleCard(this, 'Premium Sedan', 320)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
             <div class="flex items-center gap-3">
               <input type="radio" name="rideVeh" class="accent-yellow-500" />
               <span class="text-2xl">⭐</span>
               <div>
-                <span class="font-black text-gray-900 block">Luxury (BMW / Mercedes / Audi)</span>
-                <p class="text-[11px] text-gray-500">4 Passengers • Premium • ETA: 10 mins</p>
+                <span class="font-black text-gray-900 block">Premium Sedan</span>
+                <p class="text-[11px] text-gray-500">Up to 4 Passengers • Luxury AC • ETA: 5 mins</p>
               </div>
             </div>
-            <span class="font-black text-sm text-gray-900">₹750</span>
+            <span class="font-black text-sm text-gray-900">₹320</span>
           </label>
+
+          <!-- ⭐ PREMIUM SUV -->
+          <label onclick="selectRideVehicleCard(this, 'Premium SUV', 500)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="rideVeh" class="accent-yellow-500" />
+              <span class="text-2xl">⭐</span>
+              <div>
+                <span class="font-black text-gray-900 block">Premium SUV</span>
+                <p class="text-[11px] text-gray-500">Up to 7 Passengers • Luxury AC • ETA: 7 mins</p>
+              </div>
+            </div>
+            <span class="font-black text-sm text-gray-900">₹500</span>
+          </label>
+
         </div>
       </div>
 
@@ -813,7 +837,7 @@
               <span class="font-black text-xs text-purple-700 mt-2">Base: ₹1100</span>
             </label>
 
-            <label onclick="selectLuggageVehicleCard(this, 'Cargo Van', 1400)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white cursor-pointer flex flex-col justify-between">
+            <label onclick="selectLuggageVehicleCard(this, 'Cargo Van', 1400)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white rounded-2xl cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex justify-between items-center"><span class="font-black text-xs">🚐 Cargo Van</span><span class="text-[9px] bg-gray-100 px-1 rounded">Fragile Goods</span></div>
                 <p class="text-[10px] text-gray-500 mt-1">Covered & secure electronics</p>
@@ -821,7 +845,7 @@
               <span class="font-black text-xs text-purple-700 mt-2">Base: ₹1400</span>
             </label>
 
-            <label onclick="selectLuggageVehicleCard(this, 'Tempo', 1900)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white cursor-pointer flex flex-col justify-between">
+            <label onclick="selectLuggageVehicleCard(this, 'Tempo', 1900)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white rounded-2xl cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex justify-between items-center"><span class="font-black text-xs">🚛 Tempo</span><span class="text-[9px] bg-gray-100 px-1 rounded">Bulk Goods</span></div>
                 <p class="text-[10px] text-gray-500 mt-1">Commercial inventory & events</p>
@@ -829,7 +853,7 @@
               <span class="font-black text-xs text-purple-700 mt-2">Base: ₹1900</span>
             </label>
 
-            <label onclick="selectLuggageVehicleCard(this, 'LCV', 2800)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white cursor-pointer flex flex-col justify-between">
+            <label onclick="selectLuggageVehicleCard(this, 'LCV', 2800)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white rounded-2xl cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex justify-between items-center"><span class="font-black text-xs">🚛 LCV</span><span class="text-[9px] bg-gray-100 px-1 rounded">Up to 5 Tons</span></div>
                 <p class="text-[10px] text-gray-500 mt-1">Industrial & wholesale loads</p>
@@ -940,15 +964,722 @@
 
 
   <!-- ================================================================= -->
-  <!-- 2. UNIVERSAL REGISTRATION & 3. PROVIDER & 5. ADMIN & 6. LEGAL     -->
+  <!-- 2. UNIVERSAL PARTNER REGISTRATION FORM (STANDARDIZED)             -->
   <!-- ================================================================= -->
   <div id="panelRegistration" class="view-panel max-w-4xl mx-auto px-4 py-8">
-    <div class="bg-white rounded-3xl border p-6 space-y-4">
-      <h2 class="text-xl font-black text-gray-900">Universal Partner Registration</h2>
-      <form onsubmit="handleUniversalRegistration(event)" class="space-y-3 text-xs">
-        <input type="text" required placeholder="Full Name *" class="w-full p-2.5 border rounded-xl bg-gray-50" />
-        <button type="submit" class="w-full bg-rose-600 text-white font-bold py-3 rounded-xl">Submit Application</button>
+    <div class="bg-white rounded-3xl border p-6 sm:p-8 space-y-6 shadow-xl">
+      <div class="flex justify-between items-center border-b pb-4">
+        <div>
+          <span class="bg-rose-100 text-rose-800 text-[10px] font-black px-2.5 py-1 rounded-full uppercase">Onboarding Hub</span>
+          <h2 class="text-xl sm:text-2xl font-black text-gray-900 mt-1">Universal Partner Registration</h2>
+          <p class="text-xs text-gray-500">Join QuickServe as a merchant, driver, service expert, or seller.</p>
+        </div>
+        <button onclick="switchView('panelCustomer')" class="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 transition flex items-center justify-center">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- SELECT PARTNER TYPE -->
+      <div class="space-y-3">
+        <label class="block text-xs font-black text-gray-700 uppercase tracking-wider">1. Select Partner Category</label>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <button type="button" onclick="selectRegFormType('restaurant')" class="reg-type-btn p-3.5 border-2 border-rose-600 bg-rose-50/50 rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-xl">🍲</span> Restaurant Partner
+          </button>
+          <button type="button" onclick="selectRegFormType('grocery')" class="reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-xl">⚡</span> 10-Min Delivery Partner
+          </button>
+          <button type="button" onclick="selectRegFormType('ride')" class="reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-xl">🚖</span> Ride Booking Partner
+          </button>
+          <button type="button" onclick="selectRegFormType('professional')" class="reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-xl">🛠️</span> Professional Service
+          </button>
+          <button type="button" onclick="selectRegFormType('luggage')" class="reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-xl">🚛</span> Luggage Vehicle Partner
+          </button>
+          <button type="button" onclick="selectRegFormType('ecommerce')" class="reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-xl">🛍</span> E-Commerce Seller
+          </button>
+        </div>
+      </div>
+
+      <form onsubmit="handleUniversalRegistration(event)" class="space-y-6 text-xs pt-2">
+        
+        <!-- COMMON PERSONAL & CONTACT DETAILS -->
+        <div class="bg-gray-50 p-4 rounded-2xl border space-y-3">
+          <h3 class="font-black text-gray-900 uppercase tracking-wider text-[11px]">Personal & Account Details</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Full Name *</label>
+              <input type="text" required placeholder="Enter full name" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Mobile Number (OTP Verification) *</label>
+              <div class="flex gap-2">
+                <input type="tel" required placeholder="10-digit mobile" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+                <button type="button" onclick="alert('OTP sent successfully to mobile number!')" class="bg-gray-900 text-white px-3 py-2 rounded-xl font-bold shrink-0">Send OTP</button>
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Email Address *</label>
+              <input type="email" required placeholder="name@example.com" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Password *</label>
+              <input type="password" required placeholder="Create secure password" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Date of Birth & Gender</label>
+              <div class="grid grid-cols-2 gap-2">
+                <input type="date" class="p-2.5 border rounded-xl bg-white font-bold" />
+                <select class="p-2.5 border rounded-xl bg-white font-bold">
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Profile Photo *</label>
+              <input type="file" required class="w-full p-2 border rounded-xl bg-white file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-[10px] file:font-semibold file:bg-rose-50 file:text-rose-700" />
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMON ADDRESS & LOCATION DETAILS -->
+        <div class="bg-gray-50 p-4 rounded-2xl border space-y-3">
+          <h3 class="font-black text-gray-900 uppercase tracking-wider text-[11px]">Address & Location Details</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">State *</label>
+              <input type="text" required placeholder="State" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">City *</label>
+              <input type="text" required placeholder="City" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Area / Locality *</label>
+              <input type="text" required placeholder="Area" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="sm:col-span-2">
+              <label class="block font-bold text-gray-600 mb-1">Complete Address *</label>
+              <input type="text" required placeholder="Street address, door no, landmark" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">PIN Code & Map Link *</label>
+              <div class="flex gap-2">
+                <input type="text" required placeholder="PIN" class="w-24 p-2.5 border rounded-xl bg-white font-bold" />
+                <input type="text" placeholder="Google Maps URL" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DYNAMIC SPECIFIC REGISTRATION SECTIONS -->
+        
+        <!-- 1. RESTAURANT PARTNER SECTION -->
+        <div id="formSecRestaurant" class="reg-form-section active space-y-4 bg-rose-50/50 p-4 rounded-2xl border border-rose-100">
+          <h3 class="font-black text-rose-900 uppercase tracking-wider text-[11px]">Restaurant Specific Information</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Restaurant Name *</label>
+              <input type="text" placeholder="Restaurant Name" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Business Type *</label>
+              <select class="w-full p-2.5 border rounded-xl bg-white font-bold">
+                <option>Restaurant</option><option>Café</option><option>Bakery</option><option>Cloud Kitchen</option><option>Sweet Shop</option><option>Fast Food</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Cuisine Type *</label>
+              <input type="text" placeholder="Biryani, Chinese, North Indian" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Seating Capacity</label>
+              <input type="number" placeholder="e.g. 40" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Dine-in Available</label>
+              <select class="w-full p-2.5 border rounded-xl bg-white font-bold"><option>Yes</option><option>No</option></select>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Takeaway Available</label>
+              <select class="w-full p-2.5 border rounded-xl bg-white font-bold"><option>Yes</option><option>No</option></select>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Home Delivery</label>
+              <select class="w-full p-2.5 border rounded-xl bg-white font-bold"><option>Yes</option><option>No</option></select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Opening & Closing Time</label>
+              <div class="flex gap-2">
+                <input type="time" value="09:00" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+                <input type="time" value="23:00" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Weekly Holidays</label>
+              <input type="text" placeholder="e.g. None / Tuesday" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Logo & Cover Image</label>
+              <input type="file" multiple class="w-full p-1 border rounded-xl bg-white text-[10px]" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. GROCERY / 10-MIN PARTNER SECTION -->
+        <div id="formSecGrocery" class="reg-form-section space-y-4 bg-amber-50/50 p-4 rounded-2xl border border-amber-100">
+          <h3 class="font-black text-amber-900 uppercase tracking-wider text-[11px]">10-Min Store Specific Information</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Store Name *</label>
+              <input type="text" placeholder="Store Name" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Store Type *</label>
+              <select class="w-full p-2.5 border rounded-xl bg-white font-bold">
+                <option>Grocery</option><option>Pharmacy</option><option>Fruits & Vegetables</option><option>Dairy</option><option>Meat</option><option>Pet Supplies</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Opening & Closing Time</label>
+              <div class="flex gap-2">
+                <input type="time" value="06:00" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+                <input type="time" value="22:00" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Delivery Radius & Estimated Time</label>
+              <div class="flex gap-2">
+                <input type="text" placeholder="Radius (e.g. 5km)" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+                <input type="text" placeholder="ETA (10-15 mins)" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Store Logo & Images</label>
+              <input type="file" multiple class="w-full p-1 border rounded-xl bg-white text-[10px]" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. RIDE BOOKING PARTNER SECTION (STANDARDIZED) -->
+        <div id="formSecRide" class="reg-form-section space-y-4 bg-yellow-50/50 p-4 rounded-2xl border border-yellow-100">
+          <h3 class="font-black text-yellow-900 uppercase tracking-wider text-[11px]">Ride Booking & Vehicle Information</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Vehicle Type *</label>
+              <select class="w-full p-2.5 border rounded-xl bg-white font-bold">
+                <option>Bike Taxi</option>
+                <option>Auto Rickshaw</option>
+                <option>Hatchback</option>
+                <option>Sedan</option>
+                <option>SUV</option>
+                <option>Van / MUV</option>
+                <option>Premium Sedan</option>
+                <option>Premium SUV</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Vehicle Brand & Model *</label>
+              <input type="text" placeholder="e.g. Toyota Etios" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Manufacturing Year *</label>
+              <input type="number" placeholder="e.g. 2024" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Vehicle Registration Number *</label>
+              <input type="text" placeholder="AP 31 AB 1234" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Seating Capacity *</label>
+              <input type="number" value="4" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Vehicle Color *</label>
+              <input type="text" placeholder="White" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Driving License Number *</label>
+              <input type="text" placeholder="DL Number" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Preferred Service Areas *</label>
+              <input type="text" placeholder="City / Region" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. PROFESSIONAL SERVICE PARTNER SECTION (WITH FULL HIERARCHY SELECTION) -->
+        <div id="formSecProfessional" class="reg-form-section space-y-4 bg-cyan-50/50 p-4 rounded-2xl border border-cyan-100">
+          <h3 class="font-black text-cyan-900 uppercase tracking-wider text-[11px]">Professional & Home Service Details</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Business / Expert Name *</label>
+              <input type="text" placeholder="Business Name" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Service Category *</label>
+              <select id="regSvcCatSelect" onchange="updateRegSubcategories(this.value)" class="w-full p-2.5 border rounded-xl bg-white font-bold">
+                <option value="">Select Service Category</option>
+                <option>🏠 Home Services</option>
+                <option>❄️ AC & Appliance Services</option>
+                <option>🧹 Cleaning Services</option>
+                <option>💇 Beauty & Salon</option>
+                <option>🩺 Health & Wellness</option>
+                <option>🚗 Automotive Services</option>
+                <option>📚 Education & Training</option>
+                <option>🎉 Event Services</option>
+                <option>💼 Business Services</option>
+                <option>📦 Packers & Movers</option>
+                <option>🐾 Pet Services</option>
+                <option>🌿 Gardening & Outdoor</option>
+                <option>🔒 Security Services</option>
+                <option>👶 Child & Elder Care</option>
+                <option>💻 Freelance & Professional Services</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Subcategory / Skill Task *</label>
+              <select id="regSvcSubSelect" class="w-full p-2.5 border rounded-xl bg-white font-bold">
+                <option value="">Select Subcategory First</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Years of Experience *</label>
+              <input type="text" placeholder="e.g. 4 Years" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Languages Known *</label>
+              <input type="text" placeholder="English, Telugu, Hindi" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Pricing (Hourly / Visit Fee) *</label>
+              <input type="text" placeholder="₹350 visit / ₹500/hr" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. LUGGAGE VEHICLE PARTNER SECTION -->
+        <div id="formSecLuggage" class="reg-form-section space-y-4 bg-purple-50/50 p-4 rounded-2xl border border-purple-100">
+          <h3 class="font-black text-purple-900 uppercase tracking-wider text-[11px]">Luggage & Cargo Vehicle Information</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Vehicle Type *</label>
+              <select class="w-full p-2.5 border rounded-xl bg-white font-bold">
+                <option>Cargo Auto</option><option>Pickup Truck</option><option>Mini Truck</option><option>Cargo Van</option><option>Tempo</option><option>LCV</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Vehicle Capacity *</label>
+              <input type="text" placeholder="e.g. 1 Ton / 1000 kg" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Vehicle Number *</label>
+              <input type="text" placeholder="Vehicle Reg Number" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. E-COMMERCE SELLER SECTION -->
+        <div id="formSecEcommerce" class="reg-form-section space-y-4 bg-teal-50/50 p-4 rounded-2xl border border-teal-100">
+          <h3 class="font-black text-teal-900 uppercase tracking-wider text-[11px]">E-Commerce Store & Inventory Information</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Store / Brand Name *</label>
+              <input type="text" placeholder="Brand Name" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">GST Number *</label>
+              <input type="text" placeholder="GSTIN Number" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Product Categories *</label>
+              <input type="text" placeholder="Fashion, Electronics, Home" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMON BANK DETAILS -->
+        <div class="bg-gray-50 p-4 rounded-2xl border space-y-3">
+          <h3 class="font-black text-gray-900 uppercase tracking-wider text-[11px]">Bank Account Details (Payouts)</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Account Holder Name *</label>
+              <input type="text" required placeholder="Holder Name" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Bank Name *</label>
+              <input type="text" required placeholder="Bank Name" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Account Number & IFSC *</label>
+              <div class="flex gap-2">
+                <input type="text" required placeholder="Account No" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+                <input type="text" required placeholder="IFSC" class="w-28 p-2.5 border rounded-xl bg-white font-bold uppercase" />
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">UPI ID</label>
+              <input type="text" placeholder="username@okhdfcbank" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Cancelled Cheque / Passbook *</label>
+              <input type="file" required class="w-full p-1 border rounded-xl bg-white text-[10px]" />
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMON MANDATORY DOCUMENTS UPLOAD -->
+        <div class="bg-gray-50 p-4 rounded-2xl border space-y-3">
+          <h3 class="font-black text-gray-900 uppercase tracking-wider text-[11px]">Mandatory Document Verification</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Identity Proof (PAN / Passport) *</label>
+              <input type="file" required class="w-full p-1 border rounded-xl bg-white text-[10px]" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Vehicle/Business License *</label>
+              <input type="file" required class="w-full p-1 border rounded-xl bg-white text-[10px]" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Passport-size Photo *</label>
+              <input type="file" required class="w-full p-1 border rounded-xl bg-white text-[10px]" />
+            </div>
+          </div>
+        </div>
+
+        <!-- TERMS & CONDITIONS CHECKBOXES (DYNAMIC PER CATEGORY WITH CLICKABLE MODALS) -->
+        <div class="space-y-3 bg-rose-50/40 p-4 rounded-2xl border border-rose-200">
+          <h3 class="font-black text-gray-900 uppercase tracking-wider text-[11px]">Terms & Compliance Agreements</h3>
+          <p class="text-[11px] text-gray-500">Please click on any agreement title to read the details, then check the box to confirm acceptance.</p>
+
+          <!-- FOOD PARTNER T&C -->
+          <div id="tcGroupRestaurant" class="tc-group-section active space-y-2">
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4" /> I Accept the Food Partner Terms & Conditions</label>
+              <button type="button" onclick="openTcModal('Food Partner Terms & Conditions', [
+                'The restaurant must provide accurate business and licensing information.',
+                'Only fresh, hygienic, and legally permitted food items may be sold.',
+                'Menu prices displayed on QuickServe must match the partner approved pricing.',
+                'Partners are responsible for food quality, packaging, and order accuracy.',
+                'Restaurants must maintain the agreed preparation time.',
+                'Repeated delays or order cancellations may result in temporary suspension.',
+                'QuickServe reserves the right to remove prohibited food items.',
+                'Restaurants must comply with local food safety and health regulations.'
+              ])" class="text-rose-600 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4" /> I Accept the Food Partner Agreement</label>
+              <button type="button" onclick="openTcModal('Food Partner Agreement', [
+                'I confirm that I am the legal owner or authorized representative of the restaurant.',
+                'I authorize QuickServe to display my restaurant information, menu, pricing, offers, and branding on the platform.',
+                'I agree to fulfill customer orders received through QuickServe.',
+                'I understand that QuickServe acts as a marketplace connecting customers and restaurants.'
+              ])" class="text-rose-600 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+              <button type="button" onclick="openTcModal('Privacy Policy', [
+                'Customer information must only be used for order fulfillment.',
+                'Customer contact details must not be stored or shared outside the platform.',
+                'Restaurant business information may be displayed publicly on QuickServe.',
+                'Partner documents will remain confidential except when required by law.'
+              ])" class="text-rose-600 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4" /> I Accept the Commission Policy</label>
+              <button type="button" onclick="openTcModal('Commission Policy', [
+                'QuickServe will deduct the agreed commission from every completed order.',
+                'Commission rates are defined in the partner agreement.',
+                'Settlements will be processed according to the payment schedule.',
+                'Applicable taxes will be deducted where required.'
+              ])" class="text-rose-600 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4" /> I Accept the Cancellation Policy</label>
+              <button type="button" onclick="openTcModal('Cancellation Policy', [
+                'Orders accepted by the restaurant should not be cancelled without a valid reason.',
+                'Frequent cancellations may result in penalties or account suspension.',
+                'Refunds for cancelled orders will follow QuickServe customer refund policy.'
+              ])" class="text-rose-600 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+          </div>
+
+          <!-- GROCERY / 10-MIN PARTNER T&C -->
+          <div id="tcGroupGrocery" class="tc-group-section space-y-2">
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4" /> I Accept the 10-Min Delivery Terms & Conditions</label>
+              <button type="button" onclick="openTcModal('10-Min Delivery Terms & Conditions', [
+                'Products must be genuine, fresh, and legally saleable.',
+                'Inventory must be updated regularly to prevent stock issues.',
+                'Orders must be packed and handed over within the agreed preparation time.',
+                'Expired or damaged products must not be sold.',
+                'All local retail and food safety regulations must be followed.'
+              ])" class="text-amber-600 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4" /> I Accept the Partner Agreement</label>
+              <button type="button" onclick="openTcModal('Partner Agreement', [
+                'I authorize QuickServe to display my store and product catalog.',
+                'I agree to fulfill customer orders accurately and on time.',
+                'I will maintain product availability and pricing.'
+              ])" class="text-amber-600 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+              <button type="button" onclick="openTcModal('Privacy Policy', [
+                'Customer data must be used only for fulfilling orders.',
+                'Confidential business information will be securely stored.'
+              ])" class="text-amber-600 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4" /> I Accept the Commission Policy</label>
+              <button type="button" onclick="openTcModal('Commission Policy', [
+                'Commission will be deducted from completed orders.',
+                'Settlement schedules and deductions will follow the signed agreement.'
+              ])" class="text-amber-600 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4" /> I Accept the Cancellation Policy</label>
+              <button type="button" onclick="openTcModal('Cancellation Policy', [
+                'Accepted orders should not be cancelled due to inventory negligence.',
+                'Frequent cancellations may reduce store visibility or lead to suspension.'
+              ])" class="text-amber-600 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+          </div>
+
+          <!-- RIDE BOOKING PARTNER T&C -->
+          <div id="tcGroupRide" class="tc-group-section space-y-2">
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4" /> I Accept the Ride Partner Terms & Conditions</label>
+              <button type="button" onclick="openTcModal('Ride Partner Terms & Conditions', [
+                'Drivers must possess valid licenses and vehicle documents.',
+                'Vehicles must be roadworthy, insured, and regularly maintained.',
+                'Drivers must follow traffic laws and treat passengers respectfully.',
+                'Fraudulent trips, fare manipulation, or misconduct are prohibited.',
+                'Drivers are responsible for passenger safety during the trip.'
+              ])" class="text-yellow-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4" /> I Accept the Partner Agreement</label>
+              <button type="button" onclick="openTcModal('Partner Agreement', [
+                'I authorize QuickServe to connect me with ride requests.',
+                'I agree to provide transportation services professionally.',
+                'I understand that QuickServe acts only as a technology platform.'
+              ])" class="text-yellow-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+              <button type="button" onclick="openTcModal('Privacy Policy', [
+                'Passenger information must remain confidential.',
+                'Personal information must not be shared or misused.',
+                'Trip records may be stored for safety and legal compliance.'
+              ])" class="text-yellow-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4" /> I Accept the Commission Policy</label>
+              <button type="button" onclick="openTcModal('Commission Policy', [
+                'QuickServe will deduct commission from completed rides.',
+                'Driver earnings will be transferred according to the settlement cycle.'
+              ])" class="text-yellow-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4" /> I Accept the Cancellation Policy</label>
+              <button type="button" onclick="openTcModal('Cancellation Policy', [
+                'Drivers should avoid cancelling accepted rides without valid reasons.',
+                'Excessive cancellations may affect incentives and account status.'
+              ])" class="text-yellow-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <!-- RideShare Add-on terms -->
+            <div class="bg-indigo-50/70 p-3 rounded-xl border border-indigo-100 space-y-2 mt-2">
+              <span class="font-black text-indigo-900 text-[11px] block">Optional RideShare Feature Terms:</span>
+              <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+                <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" class="accent-indigo-600 w-4 h-4" /> I Accept the RideShare Terms & Conditions</label>
+                <button type="button" onclick="openTcModal('RideShare Terms & Conditions', [
+                  'Only verified Ride Booking Partners may enable RideShare.',
+                  'Drivers must publish accurate travel routes and timings.',
+                  'Seat availability must not exceed the vehicle legal seating capacity.',
+                  'Passengers must pay online before confirmation.',
+                  'Drivers must not request additional payments outside the platform.',
+                  'RideShare bookings are non-refundable unless cancelled by the driver or due to exceptional circumstances.'
+                ])" class="text-indigo-600 font-bold hover:underline text-[11px]">Read Details</button>
+              </div>
+              <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+                <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" class="accent-indigo-600 w-4 h-4" /> I Accept the RideShare Agreement</label>
+                <button type="button" onclick="openTcModal('RideShare Agreement', [
+                  'I agree to offer available seats in my registered vehicle.',
+                  'I understand that RideShare is optional and can be enabled or disabled anytime.',
+                  'I will follow all safety and traffic regulations.'
+                ])" class="text-indigo-600 font-bold hover:underline text-[11px]">Read Details</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROFESSIONAL SERVICE PARTNER T&C -->
+          <div id="tcGroupProfessional" class="tc-group-section space-y-2">
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4" /> I Accept the Service Partner Terms & Conditions</label>
+              <button type="button" onclick="openTcModal('Service Partner Terms & Conditions', [
+                'Services must be delivered professionally and on time.',
+                'Partners must carry required tools and equipment.',
+                'False qualifications or certifications are prohibited.',
+                'Uniforms or ID cards must be worn if provided by QuickServe.'
+              ])" class="text-cyan-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4" /> I Accept the Partner Agreement</label>
+              <button type="button" onclick="openTcModal('Partner Agreement', [
+                'I agree to provide the listed services with honesty and professionalism.',
+                'I authorize QuickServe to display my profile, pricing, and ratings.'
+              ])" class="text-cyan-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+              <button type="button" onclick="openTcModal('Privacy Policy', [
+                'Customer information must remain confidential.',
+                'Photos or videos of customer premises may not be shared without permission.'
+              ])" class="text-cyan-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4" /> I Accept the Commission Policy</label>
+              <button type="button" onclick="openTcModal('Commission Policy', [
+                'Commission will be deducted on completed services.',
+                'Settlements will follow the agreed payment cycle.'
+              ])" class="text-cyan-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4" /> I Accept the Cancellation Policy</label>
+              <button type="button" onclick="openTcModal('Cancellation Policy', [
+                'Service providers should avoid cancelling confirmed appointments.',
+                'Repeated cancellations may reduce profile visibility or result in suspension.'
+              ])" class="text-cyan-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+          </div>
+
+          <!-- LUGGAGE VEHICLE PARTNER T&C -->
+          <div id="tcGroupLuggage" class="tc-group-section space-y-2">
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4" /> I Accept the Luggage Partner Terms & Conditions</label>
+              <button type="button" onclick="openTcModal('Luggage Partner Terms & Conditions', [
+                'Vehicles must be legally registered and insured.',
+                'Drivers are responsible for the safe transport of customer goods.',
+                'Illegal, hazardous, or prohibited items must not be transported.',
+                'Vehicle capacity limits must be followed.'
+              ])" class="text-purple-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4" /> I Accept the Partner Agreement</label>
+              <button type="button" onclick="openTcModal('Partner Agreement', [
+                'I agree to provide transportation services for luggage and goods.',
+                'I authorize QuickServe to display my vehicle and service information.'
+              ])" class="text-purple-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+              <button type="button" onclick="openTcModal('Privacy Policy', [
+                'Customer pickup and delivery information must remain confidential.',
+                'Transport details will only be used for completing bookings.'
+              ])" class="text-purple-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4" /> I Accept the Commission Policy</label>
+              <button type="button" onclick="openTcModal('Commission Policy', [
+                'Commission will be deducted from completed transport bookings.',
+                'Payments will be settled according to the agreed schedule.'
+              ])" class="text-purple-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4" /> I Accept the Cancellation Policy</label>
+              <button type="button" onclick="openTcModal('Cancellation Policy', [
+                'Confirmed transport bookings should not be cancelled without valid reasons.',
+                'Frequent cancellations may lead to penalties or suspension.'
+              ])" class="text-purple-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+          </div>
+
+          <!-- E-COMMERCE SELLER T&C -->
+          <div id="tcGroupEcommerce" class="tc-group-section space-y-2">
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4" /> I Accept the Seller Terms & Conditions</label>
+              <button type="button" onclick="openTcModal('Seller Terms & Conditions', [
+                'Sellers must provide genuine and legally permitted products.',
+                'Product descriptions, pricing, and images must be accurate.',
+                'Sellers are responsible for product quality, warranty, and legal compliance.',
+                'Counterfeit or prohibited products are strictly prohibited.'
+              ])" class="text-teal-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4" /> I Accept the Partner Agreement</label>
+              <button type="button" onclick="openTcModal('Partner Agreement', [
+                'I authorize QuickServe to display and sell my products through the platform.',
+                'I agree to fulfill customer orders according to platform standards.'
+              ])" class="text-teal-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+              <button type="button" onclick="openTcModal('Privacy Policy', [
+                'Customer information may only be used to process orders.',
+                'Seller business information may be publicly displayed on the marketplace.'
+              ])" class="text-teal-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4" /> I Accept the Commission Policy</label>
+              <button type="button" onclick="openTcModal('Commission Policy', [
+                'QuickServe will deduct the applicable commission from completed sales.',
+                'Settlement schedules, deductions, and applicable taxes will be processed according to the partner agreement.'
+              ])" class="text-teal-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4" /> I Accept the Cancellation & Return Policy</label>
+              <button type="button" onclick="openTcModal('Cancellation & Return Policy', [
+                'Sellers must honor the platform approved cancellation and return policies.',
+                'Eligible returns and refunds must be processed within the prescribed timelines.',
+                'Sellers are responsible for replacing or refunding defective, damaged, or incorrect products in accordance with QuickServe policies.'
+              ])" class="text-teal-700 font-bold hover:underline text-[11px]">Read Details</button>
+            </div>
+          </div>
+
+        </div>
+
+        <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-black py-4 rounded-2xl text-xs shadow-lg transition">
+          Submit Partner Application for Admin Review
+        </button>
       </form>
+    </div>
+  </div>
+
+  <!-- TERMS & CONDITIONS MODAL POPUP -->
+  <div id="tcModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex justify-center items-center p-4">
+    <div class="bg-white w-full max-w-lg rounded-3xl p-6 space-y-4 shadow-2xl max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 id="tcModalTitle" class="font-black text-base text-gray-900">Terms & Conditions Details</h3>
+        <button onclick="closeTcModal()" class="text-gray-400 hover:text-gray-700"><i data-lucide="x" class="w-6 h-6"></i></button>
+      </div>
+      <ul id="tcModalList" class="space-y-2 text-xs text-gray-700 list-disc pl-4 font-medium">
+        <!-- Injected via JS -->
+      </ul>
+      <button onclick="closeTcModal()" class="w-full bg-gray-900 text-white font-black py-3 rounded-xl text-xs">Got it, Close</button>
     </div>
   </div>
 
@@ -1027,271 +1758,236 @@
       ]
     };
 
-    const foodQuickFilters = ['⭐ Top Rated', '🔥 Trending', '⚡ Fast Delivery', '💰 Budget Meals', '🌱 Pure Veg', '🍗 Best Sellers'];
-    const groceryQuickFilters = ['🔥 All', '🍽 Breakfast', '🍱 Lunch Box', '🥗 Healthy', '🌿 Organic', '⚡ Flash Deals'];
-    const ecommerceQuickFilters = ['⭐ Best Sellers', '🔥 Trending', '🆕 New Arrivals', '💰 Deals of the Day', '⚡ Flash Sale', '🎉 Festival Offers', '💎 Premium Collection', '🌱 Eco-Friendly Products', '🛍 Local Store Products', '🚚 Free Shipping', '❤️ Most Wishlisted', '🏷 Clearance Sale'];
-
-    const foodSubCategoriesMap = {
-      '🍛 Meals': ['South Indian Meals', 'Veg Meals', 'Mini Meals', 'Deluxe Meals', 'Thali'],
-      '🍗 Biryani': ['Chicken Dum Biryani', 'Chicken Fry Biryani', 'Mutton Dum Biryani', 'Veg Biryani']
-    };
-
-    const subCategoriesMap = {
-      '🥛 Milk & Dairy': ['Fresh Milk', 'Toned Milk', 'Curd', 'Paneer', 'Butter', 'Ghee']
-    };
-
-    const ecommerceSubCategoriesMap = {
-      '👗 Fashion': ["Men's Fashion", "Women's Fashion", "Kids Fashion", "Footwear", "Fashion Accessories"],
-      '📱 Mobiles & Accessories': ['Smartphones', 'Accessories'],
-      '💻 Computers & Office': ['Computers', 'Accessories', 'Office Supplies'],
-      '📺 Electronics': ['TV & Entertainment', 'Audio', 'Cameras'],
-      '🏠 Home & Kitchen': ['Kitchen Appliances', 'Kitchenware', 'Home Essentials'],
-      '🛋 Furniture': ['Living Room', 'Bedroom', 'Dining', 'Office Furniture'],
-      '🧴 Beauty & Personal Care': ['Makeup', 'Skin Care', 'Hair Care', 'Grooming'],
-      '💊 Health & Wellness': ['Health Devices', 'Nutrition', 'Fitness'],
-      '👶 Baby Products': ['Feeding', 'Baby Care', 'Baby Gear', 'Toys'],
-      '🐶 Pet Supplies': ['Dog', 'Cat', 'Accessories'],
-      '⚽ Sports & Fitness': ['Sports', 'Gym Equipment', 'Outdoor'],
-      '🚗 Automotive': ['Car Accessories', 'Bike Accessories', 'Vehicle Care'],
-      '📚 Books & Stationery': ['Books', 'Stationery'],
-      '🎮 Gaming': ['Consoles', 'Gaming Accessories', 'PC Gaming'],
-      '🎁 Gifts & Toys': ['Gifts', 'Toys'],
-      '🌿 Gardening': ['Plants', 'Seeds', 'Pots', 'Garden Tools', 'Fertilizers', 'Watering Cans'],
-      '🎉 Festival Store': ['Decorations', 'Pooja Items', 'Seasonal Gifts'],
-      '🏷 Digital Products': ['Gift Cards', 'Mobile Recharge', 'DTH Recharge', 'Software Licenses', 'Antivirus', 'E-books', 'Online Courses']
-    };
-
-    /* COMPLETE SERVICES HIERARCHY MAP WITH EXPLICIT ICONS AND SUB-ICONS */
     const servicesHierarchy = {
       '🏠 Home Services': {
         icon: '🏠',
         sub: {
-          'Electrical Services': { icon: '⚡', items: ['Fan Installation', 'Light Installation', 'Switch Repair', 'Socket Repair', 'MCB Replacement', 'House Wiring', 'Inverter Installation', 'Generator Installation', 'Door Bell Installation', 'Motor Repair', 'Power Failure Repair', 'Electrical Inspection'] },
-          'Plumbing Services': { icon: '🚰', items: ['Tap Repair', 'Pipe Leakage', 'Toilet Repair', 'Wash Basin Installation', 'Water Tank Repair', 'Motor Installation', 'Bathroom Fittings', 'Kitchen Sink Repair', 'Drain Cleaning', 'Water Pipeline Installation'] },
-          'Carpentry': { icon: '🪚', items: ['Door Installation', 'Door Repair', 'Window Repair', 'Furniture Assembly', 'Bed Assembly', 'Wardrobe Installation', 'Modular Furniture', 'Shelf Installation', 'Wooden Flooring', 'Custom Furniture'] },
-          'Painting': { icon: '🎨', items: ['Interior Painting', 'Exterior Painting', 'Texture Painting', 'Waterproof Painting', 'Wood Polish', 'Wall Putty'] },
-          'Masonry': { icon: '🧱', items: ['Tile Installation', 'Flooring', 'Brick Work', 'Concrete Repair', 'Wall Construction', 'Granite Installation'] },
-          'Handyman': { icon: '🔨', items: ['TV Mounting', 'Mirror Installation', 'Curtain Installation', 'Picture Hanging', 'Wall Drilling', 'Furniture Fixing'] },
-          'Pest Control': { icon: '🐜', items: ['Cockroach Control', 'Termite Control', 'Mosquito Control', 'Bed Bug Treatment', 'Rodent Control', 'General Pest Control'] },
-          'CCTV & Security': { icon: '🔒', items: ['CCTV Installation', 'CCTV Maintenance', 'Smart Lock Installation', 'Video Door Phone', 'Biometric System', 'Alarm System'] }
+          'Electrical Services': ['Fan Installation', 'Light Installation', 'Switch Repair', 'Socket Repair', 'MCB Replacement', 'House Wiring', 'Inverter Installation', 'Generator Installation', 'Door Bell Installation', 'Motor Repair', 'Power Failure Repair', 'Electrical Inspection'],
+          'Plumbing Services': ['Tap Repair', 'Pipe Leakage', 'Toilet Repair', 'Wash Basin Installation', 'Water Tank Repair', 'Motor Installation', 'Bathroom Fittings', 'Kitchen Sink Repair', 'Drain Cleaning', 'Water Pipeline Installation'],
+          'Carpentry': ['Door Installation', 'Door Repair', 'Window Repair', 'Furniture Assembly', 'Bed Assembly', 'Wardrobe Installation', 'Modular Furniture', 'Shelf Installation', 'Wooden Flooring', 'Custom Furniture'],
+          'Painting': ['Interior Painting', 'Exterior Painting', 'Texture Painting', 'Waterproof Painting', 'Wood Polish', 'Wall Putty'],
+          'Masonry': ['Tile Installation', 'Flooring', 'Brick Work', 'Concrete Repair', 'Wall Construction', 'Granite Installation'],
+          'Handyman': ['TV Mounting', 'Mirror Installation', 'Curtain Installation', 'Picture Hanging', 'Wall Drilling', 'Furniture Fixing'],
+          'Pest Control': ['Cockroach Control', 'Termite Control', 'Mosquito Control', 'Bed Bug Treatment', 'Rodent Control', 'General Pest Control'],
+          'CCTV & Security': ['CCTV Installation', 'CCTV Maintenance', 'Smart Lock Installation', 'Video Door Phone', 'Biometric System', 'Alarm System']
         }
       },
       '❄️ AC & Appliance Services': {
         icon: '❄️',
         sub: {
-          'Air Conditioner': { icon: '🌬️', items: ['AC Installation', 'AC Uninstallation', 'AC Repair', 'AC Gas Filling', 'AC Service', 'Annual Maintenance'] },
-          'Refrigerator': { icon: '🧊', items: ['Cooling Repair', 'Compressor Repair', 'Gas Refill', 'Installation', 'Maintenance'] },
-          'Washing Machine': { icon: '🫧', items: ['Installation', 'Repair', 'Drum Repair', 'Motor Repair', 'Maintenance'] },
-          'Water Purifier': { icon: '💧', items: ['RO Installation', 'Filter Replacement', 'RO Repair', 'AMC'] },
-          'Television': { icon: '📺', items: ['LED TV Repair', 'Smart TV Installation', 'Wall Mount', 'Display Repair'] },
-          'Microwave': { icon: '🍲', items: ['Heating Repair', 'Door Repair', 'Transformer Replacement', 'General Service'] },
-          'Geyser': { icon: '♨️', items: ['Thermostat Repair', 'Element Replacement', 'Tank Leakage Repair', 'Installation'] },
-          'Chimney': { icon: '💨', items: ['Filter Cleaning', 'Motor Repair', 'Duct Cleaning', 'Installation'] },
-          'Dishwasher': { icon: '🍽️', items: ['Installation', 'Repair', 'Leakage Fix', 'General Service'] },
-          'Mixer Grinder': { icon: '🥣', items: ['Blade Replacement', 'Motor Repair', 'Coupler Change', 'Jar Repair'] },
-          'Water Heater': { icon: '🔥', items: ['Heating Element', 'Wiring Check', 'Tank Scaling Clean', 'Installation'] }
+          'Air Conditioner': ['AC Installation', 'AC Uninstallation', 'AC Repair', 'AC Gas Filling', 'AC Service', 'Annual Maintenance'],
+          'Refrigerator': ['Cooling Repair', 'Compressor Repair', 'Gas Refill', 'Installation', 'Maintenance'],
+          'Washing Machine': ['Installation', 'Repair', 'Drum Repair', 'Motor Repair', 'Maintenance'],
+          'Water Purifier': ['RO Installation', 'Filter Replacement', 'RO Repair', 'AMC'],
+          'Television': ['LED TV Repair', 'Smart TV Installation', 'Wall Mount', 'Display Repair'],
+          'Microwave': ['Heating Repair', 'Door Repair', 'Transformer Replacement', 'General Service'],
+          'Geyser': ['Thermostat Repair', 'Element Replacement', 'Tank Leakage Repair', 'Installation'],
+          'Chimney': ['Filter Cleaning', 'Motor Repair', 'Duct Cleaning', 'Installation'],
+          'Dishwasher': ['Installation', 'Repair', 'Leakage Fix', 'General Service'],
+          'Mixer Grinder': ['Blade Replacement', 'Motor Repair', 'Coupler Change', 'Jar Repair'],
+          'Water Heater': ['Heating Element', 'Wiring Check', 'Tank Scaling Clean', 'Installation']
         }
       },
       '🧹 Cleaning Services': {
         icon: '🧹',
         sub: {
-          'Home Cleaning': { icon: '🧽', items: ['Basic Cleaning', 'Deep Cleaning', 'Move-in Cleaning', 'Move-out Cleaning'] },
-          'Kitchen Cleaning': { icon: '🍳', items: ['Chimney Degreasing', 'Hob Cleaning', 'Cabinet Deep Clean', 'Full Kitchen Scrub'] },
-          'Bathroom Cleaning': { icon: '🚿', items: ['Hard Water Stain Removal', 'Sanitization', 'Deep Descaling', 'Floor Scrub'] },
-          'Sofa Cleaning': { icon: '🛋️', items: ['Fabric Shampooing', 'Leather Conditioning', 'Stain Removal', 'Vacuuming'] },
-          'Carpet Cleaning': { icon: '🧶', items: ['Dry Vacuuming', 'Shampoo Wash', 'Stain Removal', 'Deodorizing'] },
-          'Mattress Cleaning': { icon: '🛏️', items: ['Steam Sanitization', 'Dust Mite Treatment', 'Stain Removal'] },
-          'Office Cleaning': { icon: '🏢', items: ['Workstation Cleaning', 'Floor Buffing', 'Glass Facade Cleaning', 'Restroom Sanitization'] },
-          'Water Tank Cleaning': { icon: '🛢️', items: ['Overhead Tank Scrub', 'Underground Sump Cleaning', 'UV Disinfection'] },
-          'Glass Cleaning': { icon: '🪟', items: ['Window Glass Polish', 'Balcony Glass Clean'] },
-          'Floor Polishing': { icon: '✨', items: ['Marble Buffing', 'Granite Polishing', 'Tile Scrubbing'] },
-          'Sanitization': { icon: '🛡️', items: ['Full House Fogging', 'Surface Disinfection'] }
+          'Home Cleaning': ['Basic Cleaning', 'Deep Cleaning', 'Move-in Cleaning', 'Move-out Cleaning'],
+          'Kitchen Cleaning': ['Chimney Degreasing', 'Hob Cleaning', 'Cabinet Deep Clean', 'Full Kitchen Scrub'],
+          'Bathroom Cleaning': ['Hard Water Stain Removal', 'Sanitization', 'Deep Descaling', 'Floor Scrub'],
+          'Sofa Cleaning': ['Fabric Shampooing', 'Leather Conditioning', 'Stain Removal', 'Vacuuming'],
+          'Carpet Cleaning': ['Dry Vacuuming', 'Shampoo Wash', 'Stain Removal', 'Deodorizing'],
+          'Mattress Cleaning': ['Steam Sanitization', 'Dust Mite Treatment', 'Stain Removal'],
+          'Office Cleaning': ['Workstation Cleaning', 'Floor Buffing', 'Glass Facade Cleaning', 'Restroom Sanitization'],
+          'Water Tank Cleaning': ['Overhead Tank Scrub', 'Underground Sump Cleaning', 'UV Disinfection'],
+          'Glass Cleaning': ['Window Glass Polish', 'Balcony Glass Clean'],
+          'Floor Polishing': ['Marble Buffing', 'Granite Polishing', 'Tile Scrubbing'],
+          'Sanitization': ['Full House Fogging', 'Surface Disinfection']
         }
       },
       '💇 Beauty & Salon': {
         icon: '💇',
         sub: {
-          "Women's Salon": { icon: '💅', items: ['Hair Cut', 'Hair Spa', 'Hair Coloring', 'Facial', 'Waxing', 'Threading', 'Manicure', 'Pedicure', 'Bridal Makeup'] },
-          "Men's Salon": { icon: '🪒', items: ['Hair Cut', 'Beard Styling', 'Hair Color', 'Facial', 'Shaving', 'Head Massage'] },
-          'Spa': { icon: '🌿', items: ['Aromatherapy', 'Deep Tissue', 'Swedish Massage', 'Head & Shoulder'] },
-          'Massage': { icon: '💆‍♂️', items: ['Full Body Relaxation', 'Pain Relief Therapy'] },
-          'Nail Art': { icon: '💎', items: ['Gel Extensions', 'Manicure Art', 'Nail Polish Application'] },
-          'Skin Care': { icon: '🧖‍♀️', items: ['Anti-Aging Facial', 'Tan Removal', 'Acne Treatment', 'Gold Glow Facial'] },
-          'Makeup Artist': { icon: '💄', items: ['Party Makeup', 'Engagement Look', 'Bridal Makeup'] }
+          "Women's Salon": ['Hair Cut', 'Hair Spa', 'Hair Coloring', 'Facial', 'Waxing', 'Threading', 'Manicure', 'Pedicure', 'Bridal Makeup'],
+          "Men's Salon": ['Hair Cut', 'Beard Styling', 'Hair Color', 'Facial', 'Shaving', 'Head Massage'],
+          'Spa': ['Aromatherapy', 'Deep Tissue', 'Swedish Massage', 'Head & Shoulder'],
+          'Massage': ['Full Body Relaxation', 'Pain Relief Therapy'],
+          'Nail Art': ['Gel Extensions', 'Manicure Art', 'Nail Polish Application'],
+          'Skin Care': ['Anti-Aging Facial', 'Tan Removal', 'Acne Treatment', 'Gold Glow Facial'],
+          'Makeup Artist': ['Party Makeup', 'Engagement Look', 'Bridal Makeup']
         }
       },
       '🩺 Health & Wellness': {
         icon: '🩺',
         sub: {
-          'Doctor Consultation': { icon: '👨‍⚕️', items: ['General Physician Visit', 'Pediatrician Visit', 'Geriatric Consultation'] },
-          'Home Nurse': { icon: '👩‍⚕️', items: ['Post-Surgery Care', 'Elderly Nursing', 'Injection & IV Administration'] },
-          'Physiotherapy': { icon: '🤸‍♂️', items: ['Back Pain Rehab', 'Post-Op Therapy', 'Joint Mobility Exercises'] },
-          'Elder Care': { icon: '🧓', items: ['Daily Assistance', 'Vitals Monitoring', 'Companionship'] },
-          'Baby Care': { icon: '👶', items: ['Newborn Care Assistance', 'Infant Massage', 'Babysitting Support'] },
-          'Lab Tests': { icon: '🩸', items: ['Blood Collection at Home', 'Full Body Checkup', 'Diabetes Panel'] },
-          'Vaccination': { icon: '💉', items: ['Adult Vaccine Admin', 'Flu Shot at Home'] },
-          'Medical Equipment Rental': { icon: '🦽', items: ['Oxygen Concentrator', 'Wheelchair Rental', 'Hospital Bed Rental'] },
-          'Dietician': { icon: '🥗', items: ['Weight Loss Plan', 'Diabetes Diet Plan', 'Clinical Nutrition'] },
-          'Yoga Trainer': { icon: '🧘‍♀️', items: ['Personal Yoga Trainer', 'Zumba Sessions', 'Weight Loss Training'] },
-          'Personal Trainer': { icon: '🏋️‍♂️', items: ['Strength Training', 'Cardio Workout', 'Core Fitness'] },
-          'Mental Wellness': { icon: '🧠', items: ['Counseling Session', 'Stress Management', 'Therapy Consultation'] }
+          'Doctor Consultation': ['General Physician Visit', 'Pediatrician Visit', 'Geriatric Consultation'],
+          'Home Nurse': ['Post-Surgery Care', 'Elderly Nursing', 'Injection & IV Administration'],
+          'Physiotherapy': ['Back Pain Rehab', 'Post-Op Therapy', 'Joint Mobility Exercises'],
+          'Elder Care': ['Daily Assistance', 'Vitals Monitoring', 'Companionship'],
+          'Baby Care': ['Newborn Care Assistance', 'Infant Massage', 'Babysitting Support'],
+          'Lab Tests': ['Blood Collection at Home', 'Full Body Checkup', 'Diabetes Panel'],
+          'Vaccination': ['Adult Vaccine Admin', 'Flu Shot at Home'],
+          'Medical Equipment Rental': ['Oxygen Concentrator', 'Wheelchair Rental', 'Hospital Bed Rental'],
+          'Dietician': ['Weight Loss Plan', 'Diabetes Diet Plan', 'Clinical Nutrition'],
+          'Yoga Trainer': ['Personal Yoga Trainer', 'Zumba Sessions', 'Weight Loss Training'],
+          'Personal Trainer': ['Strength Training', 'Cardio Workout', 'Core Fitness'],
+          'Mental Wellness': ['Counseling Session', 'Stress Management', 'Therapy Consultation']
         }
       },
       '🚗 Automotive Services': {
         icon: '🚗',
         sub: {
-          'Car Wash': { icon: '🧼', items: ['Foam Wash', 'Interior Vacuuming', 'Underbody Wash', 'Complete Detailing'] },
-          'Bike Wash': { icon: '🏍️', items: ['Water Wash', 'Chain Lube', 'Polish & Wax'] },
-          'Interior Cleaning': { icon: '🧽', items: ['Seat Shampooing', 'Dashboard Polish', 'Odour Removal'] },
-          'Exterior Polishing': { icon: '✨', items: ['Rubbing & Polishing', 'Ceramic Coating Prep'] },
-          'Battery Replacement': { icon: '🔋', items: ['New Battery Install', 'Old Battery Exchange'] },
-          'Tyre Replacement': { icon: '🛞', items: ['Stepney Change', 'New Tyre Fitment'] },
-          'Wheel Alignment': { icon: '🔄', items: ['Balancing & Alignment'] },
-          'Oil Change': { icon: '🛢️', items: ['Engine Oil Top-up', 'Filter Replacement'] },
-          'Fuel Delivery': { icon: '⛽', items: ['Emergency Petrol/Diesel Delivery'] },
-          'Jump Start': { icon: '⚡', items: ['Battery Jump Start Service'] },
-          'Puncture Repair': { icon: '🛠️', items: ['Tubeless Puncture Repair', 'Tube Patching'] },
-          'Car Repair': { icon: '🚙', items: ['Brake Pad Change', 'Suspension Repair', 'AC Repair'] },
-          'Bike Repair': { icon: '🛵', items: ['Chain Adjustment', 'Clutch Cable Replace', 'General Tune-up'] }
+          'Car Wash': ['Foam Wash', 'Interior Vacuuming', 'Underbody Wash', 'Complete Detailing'],
+          'Bike Wash': ['Water Wash', 'Chain Lube', 'Polish & Wax'],
+          'Interior Cleaning': ['Seat Shampooing', 'Dashboard Polish', 'Odour Removal'],
+          'Exterior Polishing': ['Rubbing & Polishing', 'Ceramic Coating Prep'],
+          'Battery Replacement': ['New Battery Install', 'Old Battery Exchange'],
+          'Tyre Replacement': ['Stepney Change', 'New Tyre Fitment'],
+          'Wheel Alignment': ['Balancing & Alignment'],
+          'Oil Change': ['Engine Oil Top-up', 'Filter Replacement'],
+          'Fuel Delivery': ['Emergency Petrol/Diesel Delivery'],
+          'Jump Start': ['Battery Jump Start Service'],
+          'Puncture Repair': ['Tubeless Puncture Repair', 'Tube Patching'],
+          'Car Repair': ['Brake Pad Change', 'Suspension Repair', 'AC Repair'],
+          'Bike Repair': ['Chain Adjustment', 'Clutch Cable Replace', 'General Tune-up']
         }
       },
       '📚 Education & Training': {
         icon: '📚',
         sub: {
-          'Home Tutor': { icon: '📖', items: ['Math & Science Tutor', 'English Literature', 'Physics & Chemistry'] },
-          'Online Tutor': { icon: '💻', items: ['Virtual Math Tutor', 'Coding for Kids'] },
-          'Language Trainer': { icon: '🗣️', items: ['Spoken English', 'French Classes', 'German Language'] },
-          'Computer Trainer': { icon: '🖥️', items: ['MS Office Training', 'Advanced Excel', 'Graphic Design Basics'] },
-          'Music Teacher': { icon: '🎸', items: ['Guitar Classes', 'Keyboard Lessons', 'Vocal Music'] },
-          'Dance Teacher': { icon: '💃', items: ['Classical Dance', 'Hip Hop Lessons', 'Bollywood Dance'] },
-          'Art Teacher': { icon: '🎨', items: ['Sketching & Drawing', 'Canvas Painting Classes'] },
-          'Spoken English': { icon: '💬', items: ['Fluency Development', 'Interview Prep'] },
-          'Competitive Exam Coaching': { icon: '📝', items: ['JEE/NEET Foundation', 'Banking Exam Prep'] },
-          'Career Guidance': { icon: '🎯', items: ['Stream Selection', 'Resume Building & Mock Interviews'] }
+          'Home Tutor': ['Math & Science Tutor', 'English Literature', 'Physics & Chemistry'],
+          'Online Tutor': ['Virtual Math Tutor', 'Coding for Kids'],
+          'Language Trainer': ['Spoken English', 'French Classes', 'German Language'],
+          'Computer Trainer': ['MS Office Training', 'Advanced Excel', 'Graphic Design Basics'],
+          'Music Teacher': ['Guitar Classes', 'Keyboard Lessons', 'Vocal Music'],
+          'Dance Teacher': ['Classical Dance', 'Hip Hop Lessons', 'Bollywood Dance'],
+          'Art Teacher': ['Sketching & Drawing', 'Canvas Painting Classes'],
+          'Spoken English': ['Fluency Development', 'Interview Prep'],
+          'Competitive Exam Coaching': ['JEE/NEET Foundation', 'Banking Exam Prep'],
+          'Career Guidance': ['Stream Selection', 'Resume Building & Mock Interviews']
         }
       },
       '🎉 Event Services': {
         icon: '🎉',
         sub: {
-          'Photography': { icon: '📸', items: ['Candid Wedding Shoots', 'Birthday Party Coverage', 'Baby Shower Photography'] },
-          'Videography': { icon: '🎥', items: ['Cinematic Trailer', 'Drone Shoot', 'Event Highlights'] },
-          'Decoration': { icon: '🎈', items: ['Balloon Arch Setup', 'Floral Stage Decor', 'Birthday Theme Decor'] },
-          'Catering': { icon: '🥘', items: ['Buffet Catering', 'Live BBQ Counter', 'Snacks & High Tea'] },
-          'DJ': { icon: '🎧', items: ['Party DJ with Console', 'Lighting Effects'] },
-          'Live Music': { icon: '🎤', items: ['Acoustic Band', 'Singer for Events'] },
-          'Event Planner': { icon: '📋', items: ['Corporate Meet Planner', 'Private Party Management'] },
-          'Sound System': { icon: '🔊', items: ['JBL Speakers & Mics Setup'] },
-          'Lighting': { icon: '💡', items: ['Ambient Fairy Lights', 'Stage Spotlights'] },
-          'Stage Setup': { icon: '🎪', items: ['Trussing & Backdrop Setup'] },
-          'Wedding Planner': { icon: '💐', items: ['End-to-End Wedding Management'] },
-          'Birthday Planner': { icon: '🎂', items: ['Theme Party Coordination'] }
+          'Photography': ['Candid Wedding Shoots', 'Birthday Party Coverage', 'Baby Shower Photography'],
+          'Videography': ['Cinematic Trailer', 'Drone Shoot', 'Event Highlights'],
+          'Decoration': ['Balloon Arch Setup', 'Floral Stage Decor', 'Birthday Theme Decor'],
+          'Catering': ['Buffet Catering', 'Live BBQ Counter', 'Snacks & High Tea'],
+          'DJ': ['Party DJ with Console', 'Lighting Effects'],
+          'Live Music': ['Acoustic Band', 'Singer for Events'],
+          'Event Planner': ['Corporate Meet Planner', 'Private Party Management'],
+          'Sound System': ['JBL Speakers & Mics Setup'],
+          'Lighting': ['Ambient Fairy Lights', 'Stage Spotlights'],
+          'Stage Setup': ['Trussing & Backdrop Setup'],
+          'Wedding Planner': ['End-to-End Wedding Management'],
+          'Birthday Planner': ['Theme Party Coordination']
         }
       },
       '💼 Business Services': {
         icon: '💼',
         sub: {
-          'Accounting': { icon: '📊', items: ['Bookkeeping', 'Ledger Maintenance', 'Financial Statement Prep'] },
-          'GST Filing': { icon: '🧾', items: ['Monthly GSTR-1 & 3B', 'Annual GST Return'] },
-          'Income Tax Filing': { icon: '📑', items: ['ITR-1 to ITR-4 Filing', 'TDS Return Filing'] },
-          'Legal Services': { icon: '⚖️', items: ['Drafting Contracts', 'Notice Drafting', 'Legal Consultation'] },
-          'Company Registration': { icon: '🏢', items: ['Private Limited Setup', 'LLP Incorporation', 'Proprietorship Registration'] },
-          'Trademark Registration': { icon: '™️', items: ['Brand Name Filing', 'Logo Registration'] },
-          'Website Development': { icon: '💻', items: ['Business Landing Page', 'E-commerce Website Setup'] },
-          'Mobile App Development': { icon: '📱', items: ['Android & iOS App Architecture'] },
-          'Graphic Design': { icon: '🎨', items: ['Social Media Banners', 'Brochures & Flyers'] },
-          'Logo Design': { icon: '✒️', items: ['Brand Identity & Logo Suite'] },
-          'Digital Marketing': { icon: '📈', items: ['PPC Campaigns', 'Social Media Management'] },
-          'SEO': { icon: '🔍', items: ['On-page & Off-page SEO Audit'] },
-          'Social Media Marketing': { icon: '💬', items: ['Instagram & LinkedIn Growth'] },
-          'Printing': { icon: '🖨️', items: ['Visiting Cards, Banners, Letterheads'] },
-          'HR Consultancy': { icon: '👥', items: ['Payroll Setup', 'Candidate Screening'] }
+          'Accounting': ['Bookkeeping', 'Ledger Maintenance', 'Financial Statement Prep'],
+          'GST Filing': ['Monthly GSTR-1 & 3B', 'Annual GST Return'],
+          'Income Tax Filing': ['ITR-1 to ITR-4 Filing', 'TDS Return Filing'],
+          'Legal Services': ['Drafting Contracts', 'Notice Drafting', 'Legal Consultation'],
+          'Company Registration': ['Private Limited Setup', 'LLP Incorporation', 'Proprietorship Registration'],
+          'Trademark Registration': ['Brand Name Filing', 'Logo Registration'],
+          'Website Development': ['Business Landing Page', 'E-commerce Website Setup'],
+          'Mobile App Development': ['Android & iOS App Architecture'],
+          'Graphic Design': ['Social Media Banners', 'Brochures & Flyers'],
+          'Logo Design': ['Brand Identity & Logo Suite'],
+          'Digital Marketing': ['PPC Campaigns', 'Social Media Management'],
+          'SEO': ['On-page & Off-page SEO Audit'],
+          'Social Media Marketing': ['Instagram & LinkedIn Growth'],
+          'Printing': ['Visiting Cards, Banners, Letterheads'],
+          'HR Consultancy': ['Payroll Setup', 'Candidate Screening']
         }
       },
       '📦 Packers & Movers': {
         icon: '📦',
         sub: {
-          'House Shifting': { icon: '🏡', items: ['1BHK Shifting', '2BHK/3BHK Relocation', 'Villa Shifting'] },
-          'Office Relocation': { icon: '🏢', items: ['Workstation Packing', 'Server Transport', 'Full Office Move'] },
-          'Furniture Moving': { icon: '🛋️', items: ['Sofa & Bed Transport', 'Heavy Wardrobe Moving'] },
-          'Vehicle Transport': { icon: '🚚', items: ['Car Transport Carrier', 'Bike Relocation Service'] },
-          'Warehouse Moving': { icon: '🏭', items: ['Pallet Shifting', 'Heavy Goods Transit'] },
-          'Packing Service': { icon: '📦', items: ['Bubble Wrap & Carton Pack', 'Fragile Protection'] },
-          'Loading': { icon: '🏗️', items: ['Expert Labor Loading'] },
-          'Unloading': { icon: '🛬', items: ['Safe Unloading & Placement'] },
-          'Storage': { icon: '🗄️', items: ['Secure Short/Long Term Warehouse Storage'] },
-          'International Moving': { icon: '✈️', items: ['Customs Clearance & Overseas Freight'] }
+          'House Shifting': ['1BHK Shifting', '2BHK/3BHK Relocation', 'Villa Shifting'],
+          'Office Relocation': ['Workstation Packing', 'Server Transport', 'Full Office Move'],
+          'Furniture Moving': ['Sofa & Bed Transport', 'Heavy Wardrobe Moving'],
+          'Vehicle Transport': ['Car Transport Carrier', 'Bike Relocation Service'],
+          'Warehouse Moving': ['Pallet Shifting', 'Heavy Goods Transit'],
+          'Packing Service': ['Bubble Wrap & Carton Pack', 'Fragile Protection'],
+          'Loading': ['Expert Labor Loading'],
+          'Unloading': ['Safe Unloading & Placement'],
+          'Storage': ['Secure Short/Long Term Warehouse Storage'],
+          'International Moving': ['Customs Clearance & Overseas Freight']
         }
       },
       '🐾 Pet Services': {
         icon: '🐾',
         sub: {
-          'Pet Grooming': { icon: '🐩', items: ['Bath & Blowdry', 'Haircut & Styling', 'Nail Clipping'] },
-          'Veterinary Doctor': { icon: '🩺', items: ['Home Vet Visit', 'General Health Check'] },
-          'Pet Vaccination': { icon: '💉', items: ['Anti-Rabies Vaccine', 'Annual Booster Shot'] },
-          'Pet Boarding': { icon: '🏠', items: ['Overnight Pet Stay', 'Daycare Facility'] },
-          'Pet Walking': { icon: '🦮', items: ['Daily Morning/Evening Walk'] },
-          'Pet Training': { icon: '🐕', items: ['Obedience Training', 'Behavioral Correction'] },
-          'Pet Sitting': { icon: '🐈', items: ['In-home Feeding & Care'] },
-          'Pet Taxi': { icon: '🚕', items: ['Safe Vet Clinic Cab Transport'] }
+          'Pet Grooming': ['Bath & Blowdry', 'Haircut & Styling', 'Nail Clipping'],
+          'Veterinary Doctor': ['Home Vet Visit', 'General Health Check'],
+          'Pet Vaccination': ['Anti-Rabies Vaccine', 'Annual Booster Shot'],
+          'Pet Boarding': ['Overnight Pet Stay', 'Daycare Facility'],
+          'Pet Walking': ['Daily Morning/Evening Walk'],
+          'Pet Training': ['Obedience Training', 'Behavioral Correction'],
+          'Pet Sitting': ['In-home Feeding & Care'],
+          'Pet Taxi': ['Safe Vet Clinic Cab Transport']
         }
       },
       '🌿 Gardening & Outdoor': {
         icon: '🌿',
         sub: {
-          'Garden Maintenance': { icon: '🌱', items: ['Weeding & Watering', 'Soil Manuring'] },
-          'Lawn Mowing': { icon: '🌾', items: ['Grass Cutting & Edging'] },
-          'Landscaping': { icon: '🏡', items: ['Backyard Design', 'Stone Pathways'] },
-          'Plant Care': { icon: '🌻', items: ['Pest treatment for plants', 'Pruning & Blooming'] },
-          'Tree Cutting': { icon: '🌲', items: ['Safe Branch Removal', 'Full Tree Felling'] },
-          'Tree Pruning': { icon: '✂️', items: ['Hedge Trimming', 'Canopy Shaping'] },
-          'Irrigation': { icon: '💦', items: ['Drip System Setup', 'Sprinkler Repair'] },
-          'Vertical Gardening': { icon: '🪴', items: ['Balcony Green Wall Setup'] },
-          'Terrace Gardening': { icon: '🌿', items: ['Pot Setup & Veggie Patch Layout'] }
+          'Garden Maintenance': ['Weeding & Watering', 'Soil Manuring'],
+          'Lawn Mowing': ['Grass Cutting & Edging'],
+          'Landscaping': ['Backyard Design', 'Stone Pathways'],
+          'Plant Care': ['Pest treatment for plants', 'Pruning & Blooming'],
+          'Tree Cutting': ['Safe Branch Removal', 'Full Tree Felling'],
+          'Tree Pruning': ['Hedge Trimming', 'Canopy Shaping'],
+          'Irrigation': ['Drip System Setup', 'Sprinkler Repair'],
+          'Vertical Gardening': ['Balcony Green Wall Setup'],
+          'Terrace Gardening': ['Pot Setup & Veggie Patch Layout']
         }
       },
       '🔒 Security Services': {
         icon: '🔒',
         sub: {
-          'Security Guards': { icon: '👮‍♂️', items: ['Residential Guard', 'Corporate Security Guard'] },
-          'CCTV Monitoring': { icon: '📹', items: ['Remote Live Monitoring Setup'] },
-          'Smart Home Installation': { icon: '🏠', items: ['Smart Hub & Sensors Setup'] },
-          'Fire Safety': { icon: '🧯', items: ['Extinguisher Install & Audit'] },
-          'Access Control': { icon: '🔑', items: ['RFID Gate Pass Setup', 'Biometric Turnstiles'] },
-          'Alarm Systems': { icon: '🚨', items: ['Intruder Sensor & Siren Setup'] },
-          'Event Security': { icon: '🛡️', items: ['Bouncers & Crowd Control Team'] }
+          'Security Guards': ['Residential Guard', 'Corporate Security Guard'],
+          'CCTV Monitoring': ['Remote Live Monitoring Setup'],
+          'Smart Home Installation': ['Smart Hub & Sensors Setup'],
+          'Fire Safety': ['Extinguisher Install & Audit'],
+          'Access Control': ['RFID Gate Pass Setup', 'Biometric Turnstiles'],
+          'Alarm Systems': ['Intruder Sensor & Siren Setup'],
+          'Event Security': ['Bouncers & Crowd Control Team']
         }
       },
       '👶 Child & Elder Care': {
         icon: '👶',
         sub: {
-          'Babysitter': { icon: '🍼', items: ['Evening Babysitting', 'Weekend Care'] },
-          'Nanny': { icon: '🧸', items: ['Full-time Nanny', 'Toddler Engagement'] },
-          'Elder Companion': { icon: '👵', items: ['Park Walks', 'Medication Reminders'] },
-          'Home Care Attendant': { icon: '🏥', items: ['Bedridden Patient Support'] },
-          'Special Needs Care': { icon: '❤️', items: ['Trained Specialized Attendant'] },
-          'Overnight Care': { icon: '🌙', items: ['Night Nursing & Monitoring'] }
+          'Babysitter': ['Evening Babysitting', 'Weekend Care'],
+          'Nanny': ['Full-time Nanny', 'Toddler Engagement'],
+          'Elder Companion': ['Park Walks', 'Medication Reminders'],
+          'Home Care Attendant': ['Bedridden Patient Support'],
+          'Special Needs Care': ['Trained Specialized Attendant'],
+          'Overnight Care': ['Night Nursing & Monitoring']
         }
       },
       '💻 Freelance & Professional Services': {
         icon: '💻',
         sub: {
-          'Content Writing': { icon: '✍️', items: ['Blog Posts', 'Website Copy'] },
-          'Copywriting': { icon: '📝', items: ['Ad Copy', 'Email Campaigns'] },
-          'Translation': { icon: '🌐', items: ['Regional Language Translation'] },
-          'Data Entry': { icon: '⌨️', items: ['Excel & Database Management'] },
-          'Virtual Assistant': { icon: '🤖', items: ['Calendar & Email Management'] },
-          'Graphic Design': { icon: '🎨', items: ['Poster & Banner Design'] },
-          'Video Editing': { icon: '🎬', items: ['Reels & YouTube Editing'] },
-          'Photography': { icon: '📸', items: ['Product & Food Shoots'] },
-          'Business Consultancy': { icon: '📈', items: ['Startup Strategy'] },
-          'Financial Consultancy': { icon: '💰', items: ['Wealth Planning & Budgeting'] },
-          'Legal Consultancy': { icon: '⚖️', items: ['Agreement Review'] },
-          'HR Consultancy': { icon: '👥', items: ['Recruitment Outsourcing'] },
-          'Architecture': { icon: '🏛️', items: ['Floor Plans & Elevation'] },
-          'Interior Design': { icon: '🛋️', items: ['3D Rendering & Styling'] },
-          'UI/UX Design': { icon: '📱', items: ['App Wireframes & Prototypes'] },
-          'Software Development': { icon: '⚡', items: ['Custom Web Apps'] },
-          'Cloud & IT Support': { icon: '☁️', items: ['AWS/Azure & Troubleshooting'] }
+          'Content Writing': ['Blog Posts', 'Website Copy'],
+          'Copywriting': ['Ad Copy', 'Email Campaigns'],
+          'Translation': ['Regional Language Translation'],
+          'Data Entry': ['Excel & Database Management'],
+          'Virtual Assistant': ['Calendar & Email Management'],
+          'Graphic Design': ['Poster & Banner Design'],
+          'Video Editing': ['Reels & YouTube Editing'],
+          'Photography': ['Product & Food Shoots'],
+          'Business Consultancy': ['Startup Strategy'],
+          'Financial Consultancy': ['Wealth Planning & Budgeting'],
+          'Legal Consultancy': ['Agreement Review'],
+          'HR Consultancy': ['Recruitment Outsourcing'],
+          'Architecture': ['Floor Plans & Elevation'],
+          'Interior Design': ['3D Rendering & Styling'],
+          'UI/UX Design': ['App Wireframes & Prototypes'],
+          'Software Development': ['Custom Web Apps'],
+          'Cloud & IT Support': ['AWS/Azure & Troubleshooting']
         }
       }
     };
@@ -1299,9 +1995,6 @@
     let cart = [];
     let currentServiceMode = 'food';
     let serviceCurrentStep = 1;
-    let selectedServiceCat = '';
-    let selectedServiceSubCat = '';
-    let selectedServiceItem = '';
 
     function initApp() {
       showMainHomeDashboard();
@@ -1380,14 +2073,12 @@
       `).join('');
     }
 
-    /* 🛠️ SERVICES WORKFLOW CONTROLLERS */
     function openServicesModule() {
       serviceCurrentStep = 1;
       renderServiceCategories();
       updateServicesUI();
       document.getElementById('servicesModuleModal').classList.remove('hidden');
     }
-
     function closeServicesModule() {
       document.getElementById('servicesModuleModal').classList.add('hidden');
     }
@@ -1405,21 +2096,21 @@
       }).join('');
     }
 
+    let selectedServiceCat = '';
+    let selectedServiceSubCat = '';
+    let selectedServiceItem = '';
+
     function selectServiceMainCategory(catKey) {
       selectedServiceCat = catKey;
       const subMap = servicesHierarchy[catKey]?.sub || {};
       document.getElementById('svcSubCatHeader').innerText = `Subcategories in ${catKey}`;
       
       const subGrid = document.getElementById('svcSubCategoriesGrid');
-      subGrid.innerHTML = Object.keys(subMap).map(subKey => {
-        const subData = subMap[subKey];
-        return `
-          <button onclick="selectServiceSubCategory('${subKey}')" class="p-3 border-2 border-cyan-100 rounded-2xl hover:bg-cyan-50 text-left font-bold text-cyan-950 transition flex items-center gap-2">
-            <span class="text-lg">${subData.icon}</span>
-            <span class="text-xs truncate">${subKey}</span>
-          </button>
-        `;
-      }).join('');
+      subGrid.innerHTML = Object.keys(subMap).map(subKey => `
+        <button onclick="selectServiceSubCategory('${subKey}')" class="p-3 border-2 border-cyan-100 rounded-2xl hover:bg-cyan-50 text-left font-bold text-cyan-950 transition flex items-center gap-2">
+          <span class="text-xs truncate">${subKey}</span>
+        </button>
+      `).join('');
 
       serviceCurrentStep = 2;
       updateServicesUI();
@@ -1427,9 +2118,7 @@
 
     function selectServiceSubCategory(subName) {
       selectedServiceSubCat = subName;
-      const catObj = servicesHierarchy[selectedServiceCat]?.sub[subName];
-      const itemsList = catObj?.items || [subName];
-
+      const itemsList = servicesHierarchy[selectedServiceCat]?.sub[subName] || [subName];
       document.getElementById('svcItemHeader').innerText = `Tasks in ${subName}`;
       
       const itemGrid = document.getElementById('svcItemsGrid');
@@ -1451,20 +2140,9 @@
       updateServicesUI();
     }
 
-    function backToServiceStep1() {
-      serviceCurrentStep = 1;
-      updateServicesUI();
-    }
-
-    function backToServiceStep2() {
-      serviceCurrentStep = 2;
-      updateServicesUI();
-    }
-
-    function backToServiceStepItem() {
-      serviceCurrentStep = 3;
-      updateServicesUI();
-    }
+    function backToServiceStep1() { serviceCurrentStep = 1; updateServicesUI(); }
+    function backToServiceStep2() { serviceCurrentStep = 2; updateServicesUI(); }
+    function backToServiceStepItem() { serviceCurrentStep = 3; updateServicesUI(); }
 
     function selectSvcPackage(pkgName, priceVal) {
       document.getElementById('svcSummaryTotal').innerText = `₹${priceVal}`;
@@ -1475,7 +2153,7 @@
         serviceCurrentStep++;
         updateServicesUI();
       } else {
-        alert('Service Booking Confirmed successfully! OTP & Professional assigned.');
+        alert('Service Booking Confirmed successfully! Professional assigned.');
         closeServicesModule();
       }
     }
@@ -1509,7 +2187,7 @@
         s3.classList.remove('hidden');
         btn.classList.remove('hidden');
         btn.innerText = 'Proceed to Date & Time Slot →';
-        serviceCurrentStep = 5; 
+        serviceCurrentStep = 5;
       } else if (serviceCurrentStep === 5) {
         s3.classList.remove('hidden');
         s4.classList.remove('hidden');
@@ -1525,6 +2203,19 @@
       }
     }
 
+    function updateRegSubcategories(catKey) {
+      const subSelect = document.getElementById('regSvcSubSelect');
+      subSelect.innerHTML = '<option value="">Select Subcategory</option>';
+      if (!catKey || !servicesHierarchy[catKey]) return;
+      const subs = servicesHierarchy[catKey].sub;
+      for (const subKey in subs) {
+        const opt = document.createElement('option');
+        opt.value = subKey;
+        opt.textContent = subKey;
+        subSelect.appendChild(opt);
+      }
+    }
+
     function openRideBookingModal() { document.getElementById('rideBookingModal').classList.remove('hidden'); }
     function closeRideBookingModal() { document.getElementById('rideBookingModal').classList.add('hidden'); }
     function confirmRideBooking() { alert('Ride requested!'); closeRideBookingModal(); }
@@ -1533,17 +2224,36 @@
     function closeLuggageBookingModal() { document.getElementById('luggageBookingModal').classList.add('hidden'); }
     function confirmLuggageBookingAndTrack() { alert('Cargo Shifting Confirmed!'); closeLuggageBookingModal(); }
 
-    function calculateLuggageTotalFare() {
-      const weightSelect = document.getElementById('lugWeight');
-      const baseFare = parseInt(weightSelect.value) || 600;
-      
-      const subtotal = baseFare;
-      const tax = Math.round(subtotal * 0.18);
-      const total = subtotal + tax;
+    function selectRegFormType(type) {
+      document.querySelectorAll('.reg-type-btn').forEach(b => {
+        b.className = "reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1";
+      });
+      event.currentTarget.className = "reg-type-btn p-3.5 border-2 border-rose-600 bg-rose-50/50 rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1";
 
-      document.getElementById('lugFareVehicle').innerText = `₹${baseFare}`;
-      document.getElementById('lugFareTax').innerText = `₹${tax}`;
-      document.getElementById('lugFareTotal').innerText = `₹${total}`;
+      document.querySelectorAll('.reg-form-section').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById('formSec' + type.charAt(0).toUpperCase() + type.slice(1));
+      if (target) target.classList.add('active');
+
+      document.querySelectorAll('.tc-group-section').forEach(g => g.classList.remove('active'));
+      const tcTarget = document.getElementById('tcGroup' + type.charAt(0).toUpperCase() + type.slice(1));
+      if (tcTarget) tcTarget.classList.add('active');
+    }
+
+    function openTcModal(title, items) {
+      document.getElementById('tcModalTitle').innerText = title;
+      const listContainer = document.getElementById('tcModalList');
+      listContainer.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('tcModal').classList.remove('hidden');
+    }
+
+    function closeTcModal() {
+      document.getElementById('tcModal').classList.add('hidden');
+    }
+
+    function handleUniversalRegistration(e) {
+      e.preventDefault();
+      alert('Partner Application submitted successfully! Admin review in progress.');
+      switchView('panelCustomer');
     }
 
     function addToCart(id, name, price) {
