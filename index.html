@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>QuickServe - Super App & Unified Platform</title>
+  <title>QuickServe - Simplifying Everyday Life</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
@@ -49,7 +49,6 @@
               </div>
             </div>
             
-            <!-- DELIVERY ADDRESS (VISIBLE ON BOTH MOBILE AND DESKTOP) -->
             <div onclick="promptAddressChange()" class="flex items-center gap-1.5 text-xs bg-gray-100 hover:bg-gray-200 px-2.5 sm:px-3 py-1.5 rounded-xl cursor-pointer transition">
               <i data-lucide="map-pin" class="w-4 h-4 text-rose-600 shrink-0"></i>
               <div>
@@ -146,14 +145,6 @@
       <!-- 1. HOME DASHBOARD SCREEN -->
       <div id="foodHome" class="food-sub-screen space-y-6">
         
-        <!-- BACK TO MAIN HOME BAR -->
-        <div class="flex items-center justify-between bg-white p-3 rounded-2xl border shadow-sm">
-          <button onclick="showMainHomeDashboard()" class="text-xs font-extrabold text-gray-700 bg-gray-100 px-3 py-1.5 rounded-xl hover:bg-gray-200 transition flex items-center gap-1">
-            ← Back to All Modules
-          </button>
-          <span id="activeModuleIndicator" class="text-xs font-black text-rose-600 uppercase tracking-wider">Active Module: Food</span>
-        </div>
-
         <!-- CATEGORIES SECTION -->
         <div>
           <h3 id="categorySectionTitle" class="text-xs font-black text-gray-400 uppercase tracking-wider mb-3">Popular Categories</h3>
@@ -711,7 +702,7 @@
           <div class="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-xl">🧳</div>
           <div>
             <h3 class="font-black text-base sm:text-lg text-gray-900">Luggage & House Shifting Logistics</h3>
-            <p class="text-[11px] text-gray-500">Cargo transport from Cargo Autos to Heavy LCVs with optional helpers & packing</p>
+            <p class="text-[11px] text-gray-500">Cargo transport from Cargo Autos to Heavy LCVs with optional packing</p>
           </div>
         </div>
         <button onclick="closeLuggageBookingModal()" class="text-gray-400 hover:text-gray-700"><i data-lucide="x" class="w-6 h-6"></i></button>
@@ -814,7 +805,7 @@
               <span class="font-black text-xs text-purple-700 mt-2">Base: ₹600</span>
             </label>
 
-            <label onclick="selectLuggageVehicleCard(this, 'Mini Truck', 1100)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white cursor-pointer flex flex-col justify-between">
+            <label onclick="selectLuggageVehicleCard(this, 'Mini Truck', 1100)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white rounded-2xl cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex justify-between items-center"><span class="font-black text-xs">🚚 Mini Truck</span><span class="text-[9px] bg-gray-100 px-1 rounded">Up to 2 Tons</span></div>
                 <p class="text-[10px] text-gray-500 mt-1">House shifting & relocation</p>
@@ -849,39 +840,16 @@
           </div>
         </div>
 
-        <!-- STEP 4: ADDITIONAL SERVICES & HELPERS -->
-        <div class="space-y-2 bg-gray-50 p-3.5 rounded-2xl border">
-          <h4 class="font-black text-gray-700 text-[11px] uppercase tracking-wider">4. Additional Services & Helpers</h4>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <label class="flex items-center gap-1.5 bg-white p-2 rounded-xl border cursor-pointer font-bold">
-              <input type="checkbox" id="addLoading" onchange="calculateLuggageTotalFare()" checked class="accent-purple-600" /> Loading Service (+₹150)
-            </label>
-            <label class="flex items-center gap-1.5 bg-white p-2 rounded-xl border cursor-pointer font-bold">
-              <input type="checkbox" id="addUnloading" onchange="calculateLuggageTotalFare()" checked class="accent-purple-600" /> Unloading Service (+₹150)
-            </label>
-            <label class="flex items-center gap-1.5 bg-white p-2 rounded-xl border cursor-pointer font-bold">
-              <input type="checkbox" id="addHelper" onchange="calculateLuggageTotalFare()" class="accent-purple-600" /> Extra Helper (+₹250)
-            </label>
-            <label class="flex items-center gap-1.5 bg-white p-2 rounded-xl border cursor-pointer font-bold">
-              <input type="checkbox" id="addInsurance" onchange="calculateLuggageTotalFare()" checked class="accent-purple-600" /> Cargo Insurance (+₹99)
-            </label>
-          </div>
-        </div>
-
-        <!-- STEP 5: ITEMIZED FARE BREAKDOWN -->
+        <!-- ITEMIZED FARE BREAKDOWN -->
         <div class="bg-gray-900 text-white p-4 rounded-2xl space-y-2">
           <div class="flex justify-between text-[11px] text-gray-300">
             <span>Vehicle Base & Distance Charge</span>
-            <span id="lugFareVehicle">₹750</span>
+            <span id="lugFareVehicle">₹600</span>
           </div>
-          <div class="flex justify-between text-[11px] text-gray-300">
-            <span>Additional Services (Loading/Unloading/Insurance)</span>
-            <span id="lugFareServices">₹399</span>
-          </div>
-          <div class="flex justify-between text-[11px] text-gray-300"><span>Platform Fee & GST (18%)</span><span id="lugFareTax">₹207</span></div>
+          <div class="flex justify-between text-[11px] text-gray-300"><span>Platform Fee & GST (18%)</span><span id="lugFareTax">₹108</span></div>
           <div class="flex justify-between font-black text-sm text-purple-300 pt-2 border-t border-gray-800">
             <span>Total Estimated Amount</span>
-            <span id="lugFareTotal">₹1,356</span>
+            <span id="lugFareTotal">₹708</span>
           </div>
         </div>
 
@@ -908,13 +876,12 @@
           <h1 class="text-xl sm:text-2xl font-black text-gray-900 mt-1">🚗 RideShare (Up to 7 Seats)</h1>
           <p class="text-xs text-gray-500">Prepaid intercity seat reservations with automated seating capacity limits.</p>
         </div>
-        <!-- CLOSE TAB BUTTON REPLACED PER REQUEST -->
         <button onclick="switchView('panelCustomer')" class="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 transition flex items-center justify-center">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <!-- FLOW A: REQUESTER ONLY (PROVIDER REMOVED) -->
+      <!-- FLOW A: REQUESTER ONLY -->
       <div id="rsFlowRequester" class="rs-flow-tab active space-y-6">
         <div class="bg-gray-50 p-4 rounded-2xl border space-y-3">
           <h3 class="text-xs font-black text-gray-700 uppercase">Search Trip & Reserve Seats</h3>
@@ -1565,6 +1532,19 @@
     function openLuggageBookingModal() { document.getElementById('luggageBookingModal').classList.remove('hidden'); }
     function closeLuggageBookingModal() { document.getElementById('luggageBookingModal').classList.add('hidden'); }
     function confirmLuggageBookingAndTrack() { alert('Cargo Shifting Confirmed!'); closeLuggageBookingModal(); }
+
+    function calculateLuggageTotalFare() {
+      const weightSelect = document.getElementById('lugWeight');
+      const baseFare = parseInt(weightSelect.value) || 600;
+      
+      const subtotal = baseFare;
+      const tax = Math.round(subtotal * 0.18);
+      const total = subtotal + tax;
+
+      document.getElementById('lugFareVehicle').innerText = `₹${baseFare}`;
+      document.getElementById('lugFareTax').innerText = `₹${tax}`;
+      document.getElementById('lugFareTotal').innerText = `₹${total}`;
+    }
 
     function addToCart(id, name, price) {
       const existing = cart.find(i => i.id === id);
