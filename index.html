@@ -29,6 +29,25 @@
     .tc-group-section.active { display: block; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    /* Modern Glassmorphism & Card Animations */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+      border-radius: 20px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -10px rgba(21, 101, 192, 0.12), 0 2px 6px 0 rgba(0, 0, 0, 0.04);
+      border-color: rgba(21, 101, 192, 0.2);
+    }
+    .glass-card:active {
+      transform: scale(0.98);
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col pb-16 md:pb-0">
@@ -43,37 +62,36 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div class="flex items-center justify-between gap-2 md:gap-4 mb-2">
           
-          <!-- LOGO & LOCATION -->
-          <div class="flex items-center gap-2 sm:gap-4">
+          <!-- LOGO & LOCATION (STACKED VERTICALLY) -->
+          <div class="flex flex-col gap-1">
             <div class="flex items-center gap-2 cursor-pointer" onclick="showMainHomeDashboard()">
-              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-amber-500 text-white flex items-center justify-center font-black text-lg sm:text-xl shadow">Q</div>
+              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#1565C0] to-[#FF9800] text-white flex items-center justify-center font-black text-lg sm:text-xl shadow">Q</div>
               <div>
-                <span class="text-lg sm:text-2xl font-black tracking-tight text-gray-900 block leading-none">Quick<span class="text-rose-600">Serve</span></span>
+                <span class="text-lg sm:text-2xl font-black tracking-tight text-gray-900 block leading-none">Quick<span class="text-[#1565C0]">Serve</span></span>
                 <span class="text-[9px] sm:text-[10px] font-bold text-gray-400 tracking-wider block mt-0.5">Simplifying Everyday Life.</span>
               </div>
             </div>
             
-            <div onclick="promptAddressChange()" class="flex items-center gap-1.5 text-xs bg-gray-100 hover:bg-gray-200 px-2.5 sm:px-3 py-1.5 rounded-xl cursor-pointer transition">
-              <i data-lucide="map-pin" class="w-4 h-4 text-rose-600 shrink-0"></i>
+            <div onclick="promptAddressChange()" class="flex items-center gap-1.5 text-xs bg-gray-100 hover:bg-gray-200 px-2.5 py-1.5 rounded-xl cursor-pointer transition w-fit">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#1565C0] shrink-0"></i>
               <div>
-                <span class="font-bold hidden sm:block text-gray-900">Deliver To</span>
-                <span id="custAddressText" class="text-gray-500 truncate max-w-[100px] sm:max-w-[150px] md:max-w-[200px] block">📍 Home - Sector 4</span>
+                <span id="custAddressText" class="text-gray-600 truncate max-w-[200px] block font-medium">📍 Home - Sector 4</span>
               </div>
             </div>
           </div>
 
           <!-- TOP ACTION BUTTONS -->
           <div class="flex items-center gap-2">
-            <button onclick="openFoodSubScreen('foodOffers')" class="hidden sm:flex items-center gap-1 text-xs font-bold text-amber-600 bg-amber-50 px-3 py-2 rounded-xl border border-amber-200">
+            <button onclick="openFoodSubScreen('foodOffers')" class="hidden sm:flex items-center gap-1 text-xs font-bold text-[#FF9800] bg-orange-50 px-3 py-2 rounded-xl border border-orange-200">
               <i data-lucide="percent" class="w-4 h-4"></i> Offers
             </button>
-            <button onclick="switchView('panelRegistration')" class="text-xs font-extrabold text-rose-600 bg-rose-50 hover:bg-rose-100 px-2.5 sm:px-3 py-2 rounded-xl border border-rose-200 transition">
+            <button onclick="switchView('panelRegistration')" class="text-xs font-extrabold text-[#1565C0] bg-blue-50 hover:bg-blue-100 px-2.5 sm:px-3 py-2 rounded-xl border border-blue-200 transition">
               Partner Sign-Up
             </button>
             <button id="headerCartBtn" onclick="toggleCartDrawer()" class="relative bg-gray-900 text-white px-3 sm:px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow transition">
               <i data-lucide="shopping-bag" class="w-4 h-4"></i>
               <span class="hidden sm:inline">Cart</span>
-              <span id="globalCartBadge" class="bg-rose-600 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold hidden">0</span>
+              <span id="globalCartBadge" class="bg-[#FF9800] text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold hidden">0</span>
             </button>
           </div>
         </div>
@@ -84,64 +102,134 @@
           <input type="text" id="custSearchInput" onfocus="openFoodSubScreen('foodSearch')" onkeyup="handleModuleSearch(this.value)" placeholder="Search for Restaurants, Food, Dishes, Cuisines, Groceries..." class="w-full pl-9 pr-4 py-2 text-xs sm:text-sm bg-gray-100 border border-transparent rounded-xl focus:bg-white focus:border-gray-300 focus:outline-none transition" />
         </div>
       </div>
-
-      <!-- TOP SERVICES SELECTOR SCROLL BAR -->
-      <div class="bg-gray-100 border-t py-2.5 px-4 overflow-x-auto no-scrollbar">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 sm:gap-6 min-w-max text-center">
-          
-          <button onclick="selectServiceCategory('food')" class="flex flex-col items-center group cursor-pointer">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-rose-500 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🍲</div>
-            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">Food</span>
-          </button>
-
-          <button onclick="selectServiceCategory('grocery')" class="flex flex-col items-center group cursor-pointer">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-amber-400 text-gray-900 rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">⚡</div>
-            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">⚡ 10-Min Delivery</span>
-          </button>
-
-          <button onclick="openRideBookingModal()" class="flex flex-col items-center group cursor-pointer">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-500 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🚖</div>
-            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">Ride Booking</span>
-          </button>
-
-          <button onclick="openDedicatedModule('rideshare')" class="flex flex-col items-center group cursor-pointer">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🚗</div>
-            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">RideShare</span>
-          </button>
-
-          <button onclick="openDedicatedModule('services')" class="flex flex-col items-center group cursor-pointer">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-cyan-600 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🛠️</div>
-            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">Services</span>
-          </button>
-
-          <button onclick="openLuggageBookingModal()" class="flex flex-col items-center group cursor-pointer">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-600 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🚛</div>
-            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">Luggage Vehicle</span>
-          </button>
-
-          <button onclick="selectServiceCategory('ecommerce')" class="flex flex-col items-center group cursor-pointer">
-            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-teal-600 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🛍</div>
-            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">Ecommerce</span>
-          </button>
-
-        </div>
-      </div>
     </header>
 
     <!-- PROMO BANNER -->
-    <div id="activeSlaBanner" class="bg-rose-50 border-b border-rose-100 py-2 px-4 text-center text-xs text-rose-700 font-bold">
-      ⚡ Fast Food • Fresh Groceries • Reliable Rides • Trusted Professionals • Safe Transport • Smart Shopping
+    <div id="activeSlaBanner" class="bg-blue-50 border-b border-blue-100 py-2 px-4 text-center text-xs text-[#1565C0] font-bold">
+      🚀 Delivering Fresh Restaurant Meals & Express Groceries in 15 to 30 Mins!
     </div>
 
     <!-- MAIN DYNAMIC CONTENT CONTAINER -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
 
-      <!-- MAIN LANDING: WELCOME HEADER ONLY -->
+      <!-- MAIN LANDING: WELCOME HEADER & PREMIUM VERTICAL SERVICE LIST -->
       <div id="mainModulesGrid" class="space-y-6">
-        <div class="text-center space-y-2 py-8">
+        <div class="text-center space-y-2 py-4">
           <h1 class="text-2xl sm:text-3xl font-black text-gray-900">Welcome to QuickServe SuperApp</h1>
-          <div class="inline-block mt-1 bg-gradient-to-r from-rose-600 to-amber-500 bg-clip-text text-transparent font-black tracking-wider uppercase text-xs">
+          <div class="inline-block mt-1 bg-gradient-to-r from-[#1565C0] to-[#FF9800] bg-clip-text text-transparent font-black tracking-wider uppercase text-xs">
             Simplifying Everyday Life.
+          </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- PREMIUM SINGLE VERTICAL SERVICE LIST SECTION (REPLACING ICONS)    -->
+        <!-- ================================================================= -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between px-1">
+            <h3 class="text-xs font-black text-gray-400 uppercase tracking-wider">Explore Services</h3>
+            <span class="text-[10px] text-[#1565C0] font-bold">All-in-One Super App</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <!-- 1. FOOD -->
+            <div onclick="selectServiceCategory('food')" class="glass-card p-4 sm:p-5 flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-rose-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow group-hover:scale-105 transition shrink-0">🍲</div>
+                <div class="space-y-1">
+                  <h4 class="font-black text-sm sm:text-base text-gray-900 group-hover:text-[#1565C0] transition">Food</h4>
+                  <p class="text-xs text-gray-500">Order delicious meals from nearby restaurants.</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#1565C0] group-hover:text-white transition shrink-0">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- 2. 10-MIN DELIVERY -->
+            <div onclick="selectServiceCategory('grocery')" class="glass-card p-4 sm:p-5 flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-amber-400 text-gray-900 rounded-2xl flex items-center justify-center text-2xl shadow group-hover:scale-105 transition shrink-0">⚡</div>
+                <div class="space-y-1">
+                  <h4 class="font-black text-sm sm:text-base text-gray-900 group-hover:text-[#1565C0] transition">10-Min Delivery</h4>
+                  <p class="text-xs text-gray-500">Groceries & daily essentials delivered in minutes.</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#1565C0] group-hover:text-white transition shrink-0">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- 3. RIDE BOOKING -->
+            <div onclick="openRideBookingModal()" class="glass-card p-4 sm:p-5 flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-yellow-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow group-hover:scale-105 transition shrink-0">🚖</div>
+                <div class="space-y-1">
+                  <h4 class="font-black text-sm sm:text-base text-gray-900 group-hover:text-[#1565C0] transition">Ride Booking</h4>
+                  <p class="text-xs text-gray-500">Book bikes, autos, taxis, cabs and SUVs instantly.</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#1565C0] group-hover:text-white transition shrink-0">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- 4. RIDESHARE -->
+            <div onclick="openDedicatedModule('rideshare')" class="glass-card p-4 sm:p-5 flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow group-hover:scale-105 transition shrink-0">🚗</div>
+                <div class="space-y-1">
+                  <h4 class="font-black text-sm sm:text-base text-gray-900 group-hover:text-[#1565C0] transition">RideShare</h4>
+                  <p class="text-xs text-gray-500">Scheduled intercity seat sharing up to 7 seats.</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#1565C0] group-hover:text-white transition shrink-0">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- 5. HOME SERVICES -->
+            <div onclick="openDedicatedModule('services')" class="glass-card p-4 sm:p-5 flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-cyan-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow group-hover:scale-105 transition shrink-0">🛠️</div>
+                <div class="space-y-1">
+                  <h4 class="font-black text-sm sm:text-base text-gray-900 group-hover:text-[#1565C0] transition">Home Services</h4>
+                  <p class="text-xs text-gray-500">Verified electricians, appliance repair, cleaning & salon.</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#1565C0] group-hover:text-white transition shrink-0">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- 6. LUGGAGE VEHICLE -->
+            <div onclick="openLuggageBookingModal()" class="glass-card p-4 sm:p-5 flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-purple-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow group-hover:scale-105 transition shrink-0">🚛</div>
+                <div class="space-y-1">
+                  <h4 class="font-black text-sm sm:text-base text-gray-900 group-hover:text-[#1565C0] transition">Luggage Vehicle</h4>
+                  <p class="text-xs text-gray-500">Cargo autos to heavy LCVs for house shifting & logistics.</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#1565C0] group-hover:text-white transition shrink-0">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- 7. ECOMMERCE -->
+            <div onclick="selectServiceCategory('ecommerce')" class="glass-card p-4 sm:p-5 flex items-center justify-between cursor-pointer group md:col-span-2">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-teal-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow group-hover:scale-105 transition shrink-0">🛍</div>
+                <div class="space-y-1">
+                  <h4 class="font-black text-sm sm:text-base text-gray-900 group-hover:text-[#1565C0] transition">Ecommerce</h4>
+                  <p class="text-xs text-gray-500">Shop fashion, electronics, home essentials & digital products.</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#1565C0] group-hover:text-white transition shrink-0">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -163,8 +251,8 @@
         </div>
 
         <!-- DYNAMIC SUBCATEGORY CONTAINER -->
-        <div id="subCategoryContainer" class="hidden bg-rose-50/70 border border-rose-200 p-4 rounded-2xl space-y-2">
-          <h4 id="subCatTitle" class="font-black text-rose-900 text-xs uppercase">Subcategories</h4>
+        <div id="subCategoryContainer" class="hidden bg-blue-50/70 border border-blue-200 p-4 rounded-2xl space-y-2">
+          <h4 id="subCatTitle" class="font-black text-[#1565C0] text-xs uppercase">Subcategories</h4>
           <div id="subCatList" class="flex flex-wrap gap-1.5 text-[11px]">
             <!-- Injected via JS -->
           </div>
@@ -196,7 +284,7 @@
             </div>
             <span class="text-3xl">🍗</span>
           </div>
-          <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-2xl shadow flex justify-between items-center">
+          <div class="bg-gradient-to-r from-[#1565C0] to-blue-600 text-white p-4 rounded-2xl shadow flex justify-between items-center">
             <div>
               <span class="bg-white/20 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Bank Coupons</span>
               <h4 class="text-base font-black mt-1">10% Cashback</h4>
@@ -223,7 +311,7 @@
         <div id="popularRestaurantsSection">
           <div class="flex items-center justify-between mb-3">
             <h3 class="text-base font-black text-gray-900">Popular Restaurants</h3>
-            <span onclick="openFoodSubScreen('foodListing')" class="text-xs text-rose-600 font-bold hover:underline cursor-pointer">Show All</span>
+            <span onclick="openFoodSubScreen('foodListing')" class="text-xs text-[#1565C0] font-bold hover:underline cursor-pointer">Show All</span>
           </div>
           <div id="restaurantListingGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- Injected via JS -->
@@ -254,7 +342,7 @@
       <div id="foodListing" class="food-sub-screen space-y-4">
         <div class="flex items-center justify-between">
           <h3 class="text-base font-black text-gray-900">All Nearby Partner Restaurants</h3>
-          <button onclick="openFoodSubScreen('foodHome')" class="text-xs font-bold text-rose-600 bg-rose-50 px-3 py-1 rounded-lg">← Back to Home</button>
+          <button onclick="openFoodSubScreen('foodHome')" class="text-xs font-bold text-[#1565C0] bg-blue-50 px-3 py-1 rounded-lg">← Back to Home</button>
         </div>
         <div id="fullRestaurantGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
@@ -295,13 +383,13 @@
 
       <!-- 9. LIVE ORDER TRACKING SCREEN -->
       <div id="foodTracking" class="food-sub-screen max-w-2xl mx-auto space-y-4">
-        <div class="bg-white rounded-2xl border-2 border-rose-500 p-4 space-y-4 shadow-sm">
+        <div class="bg-white rounded-2xl border-2 border-blue-500 p-4 space-y-4 shadow-sm">
           <div class="flex items-center justify-between border-b pb-2">
             <div>
               <span class="text-xs font-black text-gray-900">Active Order #ORD-9912</span>
               <p class="text-[11px] text-gray-500">Royal Spices Kitchen</p>
             </div>
-            <span class="bg-rose-100 text-rose-700 font-bold text-[10px] px-2 py-0.5 rounded">ON THE WAY</span>
+            <span class="bg-blue-100 text-[#1565C0] font-bold text-[10px] px-2 py-0.5 rounded">ON THE WAY</span>
           </div>
         </div>
       </div>
@@ -325,7 +413,7 @@
       <!-- 13, 14, 15, 16, 17. PROFILE & SETTINGS -->
       <div id="foodProfile" class="food-sub-screen space-y-6">
         <div class="bg-white p-4 rounded-2xl border shadow-sm flex items-center gap-4">
-          <div class="w-14 h-14 bg-rose-600 rounded-full text-white font-black text-xl flex items-center justify-center">BN</div>
+          <div class="w-14 h-14 bg-[#1565C0] rounded-full text-white font-black text-xl flex items-center justify-center">BN</div>
           <div>
             <h3 class="font-black text-base text-gray-900">Badri Nageswara Rao</h3>
             <p class="text-xs text-gray-500">+91 9876543210 • badri@example.com</p>
@@ -337,7 +425,7 @@
 
     <!-- CUSTOMER BOTTOM NAVIGATION BAR -->
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t z-40 px-4 py-2 flex items-center justify-around shadow-lg text-xs font-bold text-gray-600">
-      <button onclick="showMainHomeDashboard()" class="flex flex-col items-center text-rose-600">
+      <button onclick="showMainHomeDashboard()" class="flex flex-col items-center text-[#1565C0]">
         <i data-lucide="home" class="w-5 h-5"></i>
         <span>Home</span>
       </button>
@@ -362,7 +450,7 @@
 
 
   <!-- ================================================================= -->
-  <!-- 🛠️ DEDICATED SERVICES MODULE MODAL (WITH FULL EXPLICIT ICONS)     -->
+  <!-- 🛠️ DEDICATED SERVICES MODULE MODAL                                -->
   <!-- ================================================================= -->
   <div id="servicesModuleModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex justify-center items-end sm:items-center p-0 sm:p-4">
     <div class="bg-white w-full max-w-3xl rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 space-y-5 max-h-[92vh] overflow-y-auto">
@@ -964,17 +1052,17 @@
 
 
   <!-- ================================================================= -->
-  <!-- 2. UNIVERSAL PARTNER REGISTRATION FORM (STANDARDIZED)             -->
+  <!-- 2. UNIVERSAL PARTNER REGISTRATION FORM (MOBILE RESPONSIVE & COMPLETE) -->
   <!-- ================================================================= -->
-  <div id="panelRegistration" class="view-panel max-w-4xl mx-auto px-4 py-8">
-    <div class="bg-white rounded-3xl border p-6 sm:p-8 space-y-6 shadow-xl">
+  <div id="panelRegistration" class="view-panel max-w-4xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
+    <div class="bg-white rounded-3xl border p-4 sm:p-8 space-y-6 shadow-xl">
       <div class="flex justify-between items-center border-b pb-4">
         <div>
           <span class="bg-rose-100 text-rose-800 text-[10px] font-black px-2.5 py-1 rounded-full uppercase">Onboarding Hub</span>
-          <h2 class="text-xl sm:text-2xl font-black text-gray-900 mt-1">Universal Partner Registration</h2>
+          <h2 class="text-lg sm:text-2xl font-black text-gray-900 mt-1">Universal Partner Registration</h2>
           <p class="text-xs text-gray-500">Join QuickServe as a merchant, driver, service expert, or seller.</p>
         </div>
-        <button onclick="switchView('panelCustomer')" class="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 transition flex items-center justify-center">
+        <button onclick="switchView('panelCustomer')" class="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 transition flex items-center justify-center shrink-0">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
@@ -982,32 +1070,32 @@
       <!-- SELECT PARTNER TYPE -->
       <div class="space-y-3">
         <label class="block text-xs font-black text-gray-700 uppercase tracking-wider">1. Select Partner Category</label>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <button type="button" onclick="selectRegFormType('restaurant')" class="reg-type-btn p-3.5 border-2 border-rose-600 bg-rose-50/50 rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
-            <span class="text-xl">🍲</span> Restaurant Partner
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <button type="button" onclick="selectRegFormType('restaurant')" class="reg-type-btn p-3 border-2 border-rose-600 bg-rose-50/50 rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-lg">🍲</span> Restaurant Partner
           </button>
-          <button type="button" onclick="selectRegFormType('grocery')" class="reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
-            <span class="text-xl">⚡</span> 10-Min Delivery Partner
+          <button type="button" onclick="selectRegFormType('grocery')" class="reg-type-btn p-3 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-lg">⚡</span> 10-Min Delivery
           </button>
-          <button type="button" onclick="selectRegFormType('ride')" class="reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
-            <span class="text-xl">🚖</span> Ride Booking Partner
+          <button type="button" onclick="selectRegFormType('ride')" class="reg-type-btn p-3 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-lg">🚖</span> Ride Partner
           </button>
-          <button type="button" onclick="selectRegFormType('professional')" class="reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
-            <span class="text-xl">🛠️</span> Professional Service
+          <button type="button" onclick="selectRegFormType('professional')" class="reg-type-btn p-3 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-lg">🛠️</span> Professional Service
           </button>
-          <button type="button" onclick="selectRegFormType('luggage')" class="reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
-            <span class="text-xl">🚛</span> Luggage Vehicle Partner
+          <button type="button" onclick="selectRegFormType('luggage')" class="reg-type-btn p-3 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-lg">🚛</span> Luggage Vehicle
           </button>
-          <button type="button" onclick="selectRegFormType('ecommerce')" class="reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
-            <span class="text-xl">🛍</span> E-Commerce Seller
+          <button type="button" onclick="selectRegFormType('ecommerce')" class="reg-type-btn p-3 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1">
+            <span class="text-lg">🛍</span> E-Commerce Seller
           </button>
         </div>
       </div>
 
-      <form onsubmit="handleUniversalRegistration(event)" class="space-y-6 text-xs pt-2">
+      <form onsubmit="handleUniversalRegistration(event)" class="space-y-5 text-xs pt-2">
         
         <!-- COMMON PERSONAL & CONTACT DETAILS -->
-        <div class="bg-gray-50 p-4 rounded-2xl border space-y-3">
+        <div class="bg-gray-50 p-3 sm:p-4 rounded-2xl border space-y-3">
           <h3 class="font-black text-gray-900 uppercase tracking-wider text-[11px]">Personal & Account Details</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
@@ -1048,7 +1136,7 @@
         </div>
 
         <!-- COMMON ADDRESS & LOCATION DETAILS -->
-        <div class="bg-gray-50 p-4 rounded-2xl border space-y-3">
+        <div class="bg-gray-50 p-3 sm:p-4 rounded-2xl border space-y-3">
           <h3 class="font-black text-gray-900 uppercase tracking-wider text-[11px]">Address & Location Details</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
@@ -1082,7 +1170,7 @@
         <!-- DYNAMIC SPECIFIC REGISTRATION SECTIONS -->
         
         <!-- 1. RESTAURANT PARTNER SECTION -->
-        <div id="formSecRestaurant" class="reg-form-section active space-y-4 bg-rose-50/50 p-4 rounded-2xl border border-rose-100">
+        <div id="formSecRestaurant" class="reg-form-section active space-y-3 bg-rose-50/50 p-3 sm:p-4 rounded-2xl border border-rose-100">
           <h3 class="font-black text-rose-900 uppercase tracking-wider text-[11px]">Restaurant Specific Information</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
@@ -1100,7 +1188,7 @@
               <input type="text" placeholder="Biryani, Chinese, North Indian" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
             </div>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div>
               <label class="block font-bold text-gray-600 mb-1">Seating Capacity</label>
               <input type="number" placeholder="e.g. 40" class="w-full p-2.5 border rounded-xl bg-white font-bold" />
@@ -1138,7 +1226,7 @@
         </div>
 
         <!-- 2. GROCERY / 10-MIN PARTNER SECTION -->
-        <div id="formSecGrocery" class="reg-form-section space-y-4 bg-amber-50/50 p-4 rounded-2xl border border-amber-100">
+        <div id="formSecGrocery" class="reg-form-section space-y-3 bg-amber-50/50 p-3 sm:p-4 rounded-2xl border border-amber-100">
           <h3 class="font-black text-amber-900 uppercase tracking-wider text-[11px]">10-Min Store Specific Information</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
@@ -1174,8 +1262,8 @@
           </div>
         </div>
 
-        <!-- 3. RIDE BOOKING PARTNER SECTION (STANDARDIZED) -->
-        <div id="formSecRide" class="reg-form-section space-y-4 bg-yellow-50/50 p-4 rounded-2xl border border-yellow-100">
+        <!-- 3. RIDE BOOKING PARTNER SECTION (STANDARDIZED VEHICLES) -->
+        <div id="formSecRide" class="reg-form-section space-y-3 bg-yellow-50/50 p-3 sm:p-4 rounded-2xl border border-yellow-100">
           <h3 class="font-black text-yellow-900 uppercase tracking-wider text-[11px]">Ride Booking & Vehicle Information</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
@@ -1226,8 +1314,8 @@
           </div>
         </div>
 
-        <!-- 4. PROFESSIONAL SERVICE PARTNER SECTION (WITH FULL HIERARCHY SELECTION) -->
-        <div id="formSecProfessional" class="reg-form-section space-y-4 bg-cyan-50/50 p-4 rounded-2xl border border-cyan-100">
+        <!-- 4. PROFESSIONAL SERVICE PARTNER SECTION (FULL HIERARCHY SELECT) -->
+        <div id="formSecProfessional" class="reg-form-section space-y-3 bg-cyan-50/50 p-3 sm:p-4 rounded-2xl border border-cyan-100">
           <h3 class="font-black text-cyan-900 uppercase tracking-wider text-[11px]">Professional & Home Service Details</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
@@ -1279,7 +1367,7 @@
         </div>
 
         <!-- 5. LUGGAGE VEHICLE PARTNER SECTION -->
-        <div id="formSecLuggage" class="reg-form-section space-y-4 bg-purple-50/50 p-4 rounded-2xl border border-purple-100">
+        <div id="formSecLuggage" class="reg-form-section space-y-3 bg-purple-50/50 p-3 sm:p-4 rounded-2xl border border-purple-100">
           <h3 class="font-black text-purple-900 uppercase tracking-wider text-[11px]">Luggage & Cargo Vehicle Information</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
@@ -1300,7 +1388,7 @@
         </div>
 
         <!-- 6. E-COMMERCE SELLER SECTION -->
-        <div id="formSecEcommerce" class="reg-form-section space-y-4 bg-teal-50/50 p-4 rounded-2xl border border-teal-100">
+        <div id="formSecEcommerce" class="reg-form-section space-y-3 bg-teal-50/50 p-3 sm:p-4 rounded-2xl border border-teal-100">
           <h3 class="font-black text-teal-900 uppercase tracking-wider text-[11px]">E-Commerce Store & Inventory Information</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
@@ -1319,7 +1407,7 @@
         </div>
 
         <!-- COMMON BANK DETAILS -->
-        <div class="bg-gray-50 p-4 rounded-2xl border space-y-3">
+        <div class="bg-gray-50 p-3 sm:p-4 rounded-2xl border space-y-3">
           <h3 class="font-black text-gray-900 uppercase tracking-wider text-[11px]">Bank Account Details (Payouts)</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
@@ -1351,7 +1439,7 @@
         </div>
 
         <!-- COMMON MANDATORY DOCUMENTS UPLOAD -->
-        <div class="bg-gray-50 p-4 rounded-2xl border space-y-3">
+        <div class="bg-gray-50 p-3 sm:p-4 rounded-2xl border space-y-3">
           <h3 class="font-black text-gray-900 uppercase tracking-wider text-[11px]">Mandatory Document Verification</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
@@ -1370,14 +1458,14 @@
         </div>
 
         <!-- TERMS & CONDITIONS CHECKBOXES (DYNAMIC PER CATEGORY WITH CLICKABLE MODALS) -->
-        <div class="space-y-3 bg-rose-50/40 p-4 rounded-2xl border border-rose-200">
+        <div class="space-y-3 bg-rose-50/40 p-3 sm:p-4 rounded-2xl border border-rose-200">
           <h3 class="font-black text-gray-900 uppercase tracking-wider text-[11px]">Terms & Compliance Agreements</h3>
           <p class="text-[11px] text-gray-500">Please click on any agreement title to read the details, then check the box to confirm acceptance.</p>
 
           <!-- FOOD PARTNER T&C -->
           <div id="tcGroupRestaurant" class="tc-group-section active space-y-2">
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4" /> I Accept the Food Partner Terms & Conditions</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4 shrink-0" /> I Accept the Food Partner Terms & Conditions</label>
               <button type="button" onclick="openTcModal('Food Partner Terms & Conditions', [
                 'The restaurant must provide accurate business and licensing information.',
                 'Only fresh, hygienic, and legally permitted food items may be sold.',
@@ -1387,135 +1475,135 @@
                 'Repeated delays or order cancellations may result in temporary suspension.',
                 'QuickServe reserves the right to remove prohibited food items.',
                 'Restaurants must comply with local food safety and health regulations.'
-              ])" class="text-rose-600 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-rose-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4" /> I Accept the Food Partner Agreement</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4 shrink-0" /> I Accept the Food Partner Agreement</label>
               <button type="button" onclick="openTcModal('Food Partner Agreement', [
                 'I confirm that I am the legal owner or authorized representative of the restaurant.',
                 'I authorize QuickServe to display my restaurant information, menu, pricing, offers, and branding on the platform.',
                 'I agree to fulfill customer orders received through QuickServe.',
                 'I understand that QuickServe acts as a marketplace connecting customers and restaurants.'
-              ])" class="text-rose-600 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-rose-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4 shrink-0" /> I Accept the Privacy Policy</label>
               <button type="button" onclick="openTcModal('Privacy Policy', [
                 'Customer information must only be used for order fulfillment.',
                 'Customer contact details must not be stored or shared outside the platform.',
                 'Restaurant business information may be displayed publicly on QuickServe.',
                 'Partner documents will remain confidential except when required by law.'
-              ])" class="text-rose-600 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-rose-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4" /> I Accept the Commission Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4 shrink-0" /> I Accept the Commission Policy</label>
               <button type="button" onclick="openTcModal('Commission Policy', [
                 'QuickServe will deduct the agreed commission from every completed order.',
                 'Commission rates are defined in the partner agreement.',
                 'Settlements will be processed according to the payment schedule.',
                 'Applicable taxes will be deducted where required.'
-              ])" class="text-rose-600 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-rose-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4" /> I Accept the Cancellation Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-rose-600 w-4 h-4 shrink-0" /> I Accept the Cancellation Policy</label>
               <button type="button" onclick="openTcModal('Cancellation Policy', [
                 'Orders accepted by the restaurant should not be cancelled without a valid reason.',
                 'Frequent cancellations may result in penalties or account suspension.',
                 'Refunds for cancelled orders will follow QuickServe customer refund policy.'
-              ])" class="text-rose-600 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-rose-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
           </div>
 
           <!-- GROCERY / 10-MIN PARTNER T&C -->
           <div id="tcGroupGrocery" class="tc-group-section space-y-2">
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4" /> I Accept the 10-Min Delivery Terms & Conditions</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4 shrink-0" /> I Accept the 10-Min Delivery Terms & Conditions</label>
               <button type="button" onclick="openTcModal('10-Min Delivery Terms & Conditions', [
                 'Products must be genuine, fresh, and legally saleable.',
                 'Inventory must be updated regularly to prevent stock issues.',
                 'Orders must be packed and handed over within the agreed preparation time.',
                 'Expired or damaged products must not be sold.',
                 'All local retail and food safety regulations must be followed.'
-              ])" class="text-amber-600 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-amber-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4" /> I Accept the Partner Agreement</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4 shrink-0" /> I Accept the Partner Agreement</label>
               <button type="button" onclick="openTcModal('Partner Agreement', [
                 'I authorize QuickServe to display my store and product catalog.',
                 'I agree to fulfill customer orders accurately and on time.',
                 'I will maintain product availability and pricing.'
-              ])" class="text-amber-600 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-amber-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4 shrink-0" /> I Accept the Privacy Policy</label>
               <button type="button" onclick="openTcModal('Privacy Policy', [
                 'Customer data must be used only for fulfilling orders.',
                 'Confidential business information will be securely stored.'
-              ])" class="text-amber-600 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-amber-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4" /> I Accept the Commission Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4 shrink-0" /> I Accept the Commission Policy</label>
               <button type="button" onclick="openTcModal('Commission Policy', [
                 'Commission will be deducted from completed orders.',
                 'Settlement schedules and deductions will follow the signed agreement.'
-              ])" class="text-amber-600 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-amber-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4" /> I Accept the Cancellation Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-amber-600 w-4 h-4 shrink-0" /> I Accept the Cancellation Policy</label>
               <button type="button" onclick="openTcModal('Cancellation Policy', [
                 'Accepted orders should not be cancelled due to inventory negligence.',
                 'Frequent cancellations may reduce store visibility or lead to suspension.'
-              ])" class="text-amber-600 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-amber-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
           </div>
 
           <!-- RIDE BOOKING PARTNER T&C -->
           <div id="tcGroupRide" class="tc-group-section space-y-2">
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4" /> I Accept the Ride Partner Terms & Conditions</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4 shrink-0" /> I Accept the Ride Partner Terms & Conditions</label>
               <button type="button" onclick="openTcModal('Ride Partner Terms & Conditions', [
                 'Drivers must possess valid licenses and vehicle documents.',
                 'Vehicles must be roadworthy, insured, and regularly maintained.',
                 'Drivers must follow traffic laws and treat passengers respectfully.',
                 'Fraudulent trips, fare manipulation, or misconduct are prohibited.',
                 'Drivers are responsible for passenger safety during the trip.'
-              ])" class="text-yellow-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-yellow-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4" /> I Accept the Partner Agreement</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4 shrink-0" /> I Accept the Partner Agreement</label>
               <button type="button" onclick="openTcModal('Partner Agreement', [
                 'I authorize QuickServe to connect me with ride requests.',
                 'I agree to provide transportation services professionally.',
                 'I understand that QuickServe acts only as a technology platform.'
-              ])" class="text-yellow-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-yellow-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4 shrink-0" /> I Accept the Privacy Policy</label>
               <button type="button" onclick="openTcModal('Privacy Policy', [
                 'Passenger information must remain confidential.',
                 'Personal information must not be shared or misused.',
                 'Trip records may be stored for safety and legal compliance.'
-              ])" class="text-yellow-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-yellow-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4" /> I Accept the Commission Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4 shrink-0" /> I Accept the Commission Policy</label>
               <button type="button" onclick="openTcModal('Commission Policy', [
                 'QuickServe will deduct commission from completed rides.',
                 'Driver earnings will be transferred according to the settlement cycle.'
-              ])" class="text-yellow-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-yellow-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4" /> I Accept the Cancellation Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-yellow-600 w-4 h-4 shrink-0" /> I Accept the Cancellation Policy</label>
               <button type="button" onclick="openTcModal('Cancellation Policy', [
                 'Drivers should avoid cancelling accepted rides without valid reasons.',
                 'Excessive cancellations may affect incentives and account status.'
-              ])" class="text-yellow-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-yellow-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
             <!-- RideShare Add-on terms -->
             <div class="bg-indigo-50/70 p-3 rounded-xl border border-indigo-100 space-y-2 mt-2">
               <span class="font-black text-indigo-900 text-[11px] block">Optional RideShare Feature Terms:</span>
-              <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-                <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" class="accent-indigo-600 w-4 h-4" /> I Accept the RideShare Terms & Conditions</label>
+              <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+                <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" class="accent-indigo-600 w-4 h-4 shrink-0" /> I Accept the RideShare Terms & Conditions</label>
                 <button type="button" onclick="openTcModal('RideShare Terms & Conditions', [
                   'Only verified Ride Booking Partners may enable RideShare.',
                   'Drivers must publish accurate travel routes and timings.',
@@ -1523,140 +1611,140 @@
                   'Passengers must pay online before confirmation.',
                   'Drivers must not request additional payments outside the platform.',
                   'RideShare bookings are non-refundable unless cancelled by the driver or due to exceptional circumstances.'
-                ])" class="text-indigo-600 font-bold hover:underline text-[11px]">Read Details</button>
+                ])" class="text-indigo-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
               </div>
-              <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-                <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" class="accent-indigo-600 w-4 h-4" /> I Accept the RideShare Agreement</label>
+              <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+                <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" class="accent-indigo-600 w-4 h-4 shrink-0" /> I Accept the RideShare Agreement</label>
                 <button type="button" onclick="openTcModal('RideShare Agreement', [
                   'I agree to offer available seats in my registered vehicle.',
                   'I understand that RideShare is optional and can be enabled or disabled anytime.',
                   'I will follow all safety and traffic regulations.'
-                ])" class="text-indigo-600 font-bold hover:underline text-[11px]">Read Details</button>
+                ])" class="text-indigo-600 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
               </div>
             </div>
           </div>
 
           <!-- PROFESSIONAL SERVICE PARTNER T&C -->
           <div id="tcGroupProfessional" class="tc-group-section space-y-2">
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4" /> I Accept the Service Partner Terms & Conditions</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4 shrink-0" /> I Accept the Service Partner Terms & Conditions</label>
               <button type="button" onclick="openTcModal('Service Partner Terms & Conditions', [
                 'Services must be delivered professionally and on time.',
                 'Partners must carry required tools and equipment.',
                 'False qualifications or certifications are prohibited.',
                 'Uniforms or ID cards must be worn if provided by QuickServe.'
-              ])" class="text-cyan-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-cyan-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4" /> I Accept the Partner Agreement</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4 shrink-0" /> I Accept the Partner Agreement</label>
               <button type="button" onclick="openTcModal('Partner Agreement', [
                 'I agree to provide the listed services with honesty and professionalism.',
                 'I authorize QuickServe to display my profile, pricing, and ratings.'
-              ])" class="text-cyan-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-cyan-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4 shrink-0" /> I Accept the Privacy Policy</label>
               <button type="button" onclick="openTcModal('Privacy Policy', [
                 'Customer information must remain confidential.',
                 'Photos or videos of customer premises may not be shared without permission.'
-              ])" class="text-cyan-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-cyan-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4" /> I Accept the Commission Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4 shrink-0" /> I Accept the Commission Policy</label>
               <button type="button" onclick="openTcModal('Commission Policy', [
                 'Commission will be deducted on completed services.',
                 'Settlements will follow the agreed payment cycle.'
-              ])" class="text-cyan-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-cyan-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4" /> I Accept the Cancellation Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-cyan-600 w-4 h-4 shrink-0" /> I Accept the Cancellation Policy</label>
               <button type="button" onclick="openTcModal('Cancellation Policy', [
                 'Service providers should avoid cancelling confirmed appointments.',
                 'Repeated cancellations may reduce profile visibility or result in suspension.'
-              ])" class="text-cyan-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-cyan-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
           </div>
 
           <!-- LUGGAGE VEHICLE PARTNER T&C -->
           <div id="tcGroupLuggage" class="tc-group-section space-y-2">
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4" /> I Accept the Luggage Partner Terms & Conditions</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4 shrink-0" /> I Accept the Luggage Partner Terms & Conditions</label>
               <button type="button" onclick="openTcModal('Luggage Partner Terms & Conditions', [
                 'Vehicles must be legally registered and insured.',
                 'Drivers are responsible for the safe transport of customer goods.',
                 'Illegal, hazardous, or prohibited items must not be transported.',
                 'Vehicle capacity limits must be followed.'
-              ])" class="text-purple-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-purple-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4" /> I Accept the Partner Agreement</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4 shrink-0" /> I Accept the Partner Agreement</label>
               <button type="button" onclick="openTcModal('Partner Agreement', [
                 'I agree to provide transportation services for luggage and goods.',
                 'I authorize QuickServe to display my vehicle and service information.'
-              ])" class="text-purple-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-purple-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4 shrink-0" /> I Accept the Privacy Policy</label>
               <button type="button" onclick="openTcModal('Privacy Policy', [
                 'Customer pickup and delivery information must remain confidential.',
                 'Transport details will only be used for completing bookings.'
-              ])" class="text-purple-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-purple-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4" /> I Accept the Commission Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4 shrink-0" /> I Accept the Commission Policy</label>
               <button type="button" onclick="openTcModal('Commission Policy', [
                 'Commission will be deducted from completed transport bookings.',
                 'Payments will be settled according to the agreed schedule.'
-              ])" class="text-purple-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-purple-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4" /> I Accept the Cancellation Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-purple-600 w-4 h-4 shrink-0" /> I Accept the Cancellation Policy</label>
               <button type="button" onclick="openTcModal('Cancellation Policy', [
                 'Confirmed transport bookings should not be cancelled without valid reasons.',
                 'Frequent cancellations may lead to penalties or suspension.'
-              ])" class="text-purple-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-purple-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
           </div>
 
           <!-- E-COMMERCE SELLER T&C -->
           <div id="tcGroupEcommerce" class="tc-group-section space-y-2">
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4" /> I Accept the Seller Terms & Conditions</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4 shrink-0" /> I Accept the Seller Terms & Conditions</label>
               <button type="button" onclick="openTcModal('Seller Terms & Conditions', [
                 'Sellers must provide genuine and legally permitted products.',
                 'Product descriptions, pricing, and images must be accurate.',
                 'Sellers are responsible for product quality, warranty, and legal compliance.',
                 'Counterfeit or prohibited products are strictly prohibited.'
-              ])" class="text-teal-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-teal-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4" /> I Accept the Partner Agreement</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4 shrink-0" /> I Accept the Partner Agreement</label>
               <button type="button" onclick="openTcModal('Partner Agreement', [
                 'I authorize QuickServe to display and sell my products through the platform.',
                 'I agree to fulfill customer orders according to platform standards.'
-              ])" class="text-teal-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-teal-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4" /> I Accept the Privacy Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4 shrink-0" /> I Accept the Privacy Policy</label>
               <button type="button" onclick="openTcModal('Privacy Policy', [
                 'Customer information may only be used to process orders.',
                 'Seller business information may be publicly displayed on the marketplace.'
-              ])" class="text-teal-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-teal-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4" /> I Accept the Commission Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4 shrink-0" /> I Accept the Commission Policy</label>
               <button type="button" onclick="openTcModal('Commission Policy', [
                 'QuickServe will deduct the applicable commission from completed sales.',
                 'Settlement schedules, deductions, and applicable taxes will be processed according to the partner agreement.'
-              ])" class="text-teal-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-teal-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
-            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border">
-              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4" /> I Accept the Cancellation & Return Policy</label>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border gap-2">
+              <label class="flex items-center gap-2 cursor-pointer font-bold text-xs"><input type="checkbox" required class="accent-teal-600 w-4 h-4 shrink-0" /> I Accept the Cancellation & Return Policy</label>
               <button type="button" onclick="openTcModal('Cancellation & Return Policy', [
                 'Sellers must honor the platform approved cancellation and return policies.',
                 'Eligible returns and refunds must be processed within the prescribed timelines.',
                 'Sellers are responsible for replacing or refunding defective, damaged, or incorrect products in accordance with QuickServe policies.'
-              ])" class="text-teal-700 font-bold hover:underline text-[11px]">Read Details</button>
+              ])" class="text-teal-700 font-bold hover:underline text-[11px] shrink-0">Read Details</button>
             </div>
           </div>
 
@@ -2226,9 +2314,9 @@
 
     function selectRegFormType(type) {
       document.querySelectorAll('.reg-type-btn').forEach(b => {
-        b.className = "reg-type-btn p-3.5 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1";
+        b.className = "reg-type-btn p-3 border-2 border-gray-200 bg-white rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1";
       });
-      event.currentTarget.className = "reg-type-btn p-3.5 border-2 border-rose-600 bg-rose-50/50 rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1";
+      event.currentTarget.className = "reg-type-btn p-3 border-2 border-rose-600 bg-rose-50/50 rounded-2xl text-left font-bold text-xs transition flex flex-col gap-1";
 
       document.querySelectorAll('.reg-form-section').forEach(s => s.classList.remove('active'));
       const target = document.getElementById('formSec' + type.charAt(0).toUpperCase() + type.slice(1));
