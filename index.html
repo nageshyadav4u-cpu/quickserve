@@ -49,11 +49,12 @@
               </div>
             </div>
             
-            <div onclick="promptAddressChange()" class="hidden sm:flex items-center gap-1.5 text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-xl cursor-pointer transition">
-              <i data-lucide="map-pin" class="w-4 h-4 text-rose-600"></i>
+            <!-- DELIVERY ADDRESS (VISIBLE ON BOTH MOBILE AND DESKTOP) -->
+            <div onclick="promptAddressChange()" class="flex items-center gap-1.5 text-xs bg-gray-100 hover:bg-gray-200 px-2.5 sm:px-3 py-1.5 rounded-xl cursor-pointer transition">
+              <i data-lucide="map-pin" class="w-4 h-4 text-rose-600 shrink-0"></i>
               <div>
-                <span class="font-bold block text-gray-900">Deliver To</span>
-                <span id="custAddressText" class="text-gray-500 truncate max-w-[120px] md:max-w-[200px] block">📍 Home - Main Road, Sector 4</span>
+                <span class="font-bold hidden sm:block text-gray-900">Deliver To</span>
+                <span id="custAddressText" class="text-gray-500 truncate max-w-[100px] sm:max-w-[150px] md:max-w-[200px] block">📍 Home - Sector 4</span>
               </div>
             </div>
           </div>
@@ -907,12 +908,13 @@
           <h1 class="text-xl sm:text-2xl font-black text-gray-900 mt-1">🚗 RideShare (Up to 7 Seats)</h1>
           <p class="text-xs text-gray-500">Prepaid intercity seat reservations with automated seating capacity limits.</p>
         </div>
+        <!-- CLOSE TAB BUTTON REPLACED PER REQUEST -->
         <button onclick="switchView('panelCustomer')" class="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 transition flex items-center justify-center">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <!-- FLOW A: REQUESTER ONLY -->
+      <!-- FLOW A: REQUESTER ONLY (PROVIDER REMOVED) -->
       <div id="rsFlowRequester" class="rs-flow-tab active space-y-6">
         <div class="bg-gray-50 p-4 rounded-2xl border space-y-3">
           <h3 class="text-xs font-black text-gray-700 uppercase">Search Trip & Reserve Seats</h3>
