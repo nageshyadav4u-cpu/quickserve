@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>QuickServe - Super App & Unified Platform</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .view-panel { display: none; }
+    .view-panel.active { display: block; }
+    .provider-panel { display: none; }
+    .provider-panel.active { display: block; }
+    .admin-sub-view { display: none; }
+    .admin-sub-view.active { display: block; }
+    .rs-flow-tab { display: none; }
+    .rs-flow-tab.active { display: block; }
+    .food-sub-screen { display: none; }
+    .food-sub-screen.active { display: block; }
+    .ride-sub-screen { display: none; }
+    .ride-sub-screen.active { display: block; }
+    .luggage-sub-view { display: none; }
+    .luggage-sub-view.active { display: block; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col pb-16 md:pb-0">
+
+  <!-- ================================================================= -->
+  <!-- 1. CUSTOMER SUPER APP STOREFRONT                                  -->
+  <!-- ================================================================= -->
+  <div id="panelCustomer" class="view-panel active flex-1">
+    
+    <!-- HEADER BAR -->
+    <header class="bg-white border-b shadow-sm sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div class="flex items-center justify-between gap-2 md:gap-4 mb-2">
+          
+          <!-- LOGO & LOCATION -->
+          <div class="flex items-center gap-2 sm:gap-4">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showMainHomeDashboard()">
+              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-amber-500 text-white flex items-center justify-center font-black text-lg sm:text-xl shadow">Q</div>
+              <div>
+                <span class="text-lg sm:text-2xl font-black tracking-tight text-gray-900 block leading-none">Quick<span class="text-rose-600">Serve</span></span>
+                <span class="text-[9px] sm:text-[10px] font-bold text-gray-400 tracking-wider block mt-0.5">Simplifying Everyday Life.</span>
+              </div>
+            </div>
+            
+            <div onclick="promptAddressChange()" class="hidden sm:flex items-center gap-1.5 text-xs bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-xl cursor-pointer transition">
+              <i data-lucide="map-pin" class="w-4 h-4 text-rose-600"></i>
+              <div>
+                <span class="font-bold block text-gray-900">Deliver To</span>
+                <span id="custAddressText" class="text-gray-500 truncate max-w-[120px] md:max-w-[200px] block">📍 Home - Main Road, Sector 4</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TOP ACTION BUTTONS -->
+          <div class="flex items-center gap-2">
+            <button onclick="openFoodSubScreen('foodOffers')" class="hidden sm:flex items-center gap-1 text-xs font-bold text-amber-600 bg-amber-50 px-3 py-2 rounded-xl border border-amber-200">
+              <i data-lucide="percent" class="w-4 h-4"></i> Offers
+            </button>
+            <button onclick="switchView('panelRegistration')" class="text-xs font-extrabold text-rose-600 bg-rose-50 hover:bg-rose-100 px-2.5 sm:px-3 py-2 rounded-xl border border-rose-200 transition">
+              Partner Sign-Up
+            </button>
+            <button id="headerCartBtn" onclick="toggleCartDrawer()" class="relative bg-gray-900 text-white px-3 sm:px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow transition">
+              <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+              <span class="hidden sm:inline">Cart</span>
+              <span id="globalCartBadge" class="bg-rose-600 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold hidden">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+          <input type="text" id="custSearchInput" onfocus="openFoodSubScreen('foodSearch')" onkeyup="handleModuleSearch(this.value)" placeholder="Search for Restaurants, Food, Dishes, Cuisines, Groceries..." class="w-full pl-9 pr-4 py-2 text-xs sm:text-sm bg-gray-100 border border-transparent rounded-xl focus:bg-white focus:border-gray-300 focus:outline-none transition" />
+        </div>
+      </div>
+
+      <!-- TOP SERVICES SELECTOR SCROLL BAR -->
+      <div class="bg-gray-100 border-t py-2.5 px-4 overflow-x-auto no-scrollbar">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 sm:gap-6 min-w-max text-center">
+          
+          <button onclick="selectServiceCategory('food')" class="flex flex-col items-center group cursor-pointer">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-rose-500 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🍲</div>
+            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">Food</span>
+          </button>
+
+          <button onclick="selectServiceCategory('grocery')" class="flex flex-col items-center group cursor-pointer">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-amber-400 text-gray-900 rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">⚡</div>
+            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">⚡ 10-Min Delivery</span>
+          </button>
+
+          <button onclick="openRideBookingModal()" class="flex flex-col items-center group cursor-pointer">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-500 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🚖</div>
+            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">Ride Booking</span>
+          </button>
+
+          <button onclick="openDedicatedModule('rideshare')" class="flex flex-col items-center group cursor-pointer">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🚗</div>
+            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">RideShare</span>
+          </button>
+
+          <button onclick="openDedicatedModule('services')" class="flex flex-col items-center group cursor-pointer">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-cyan-600 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🛠️</div>
+            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">Services</span>
+          </button>
+
+          <button onclick="openLuggageBookingModal()" class="flex flex-col items-center group cursor-pointer">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-600 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🚛</div>
+            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">Luggage Vehicle</span>
+          </button>
+
+          <button onclick="selectServiceCategory('ecommerce')" class="flex flex-col items-center group cursor-pointer">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-teal-600 text-white rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow group-hover:scale-105 transition">🛍</div>
+            <span class="text-[10px] sm:text-xs font-extrabold text-gray-800 mt-1">Ecommerce</span>
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- PROMO BANNER -->
+    <div id="activeSlaBanner" class="bg-rose-50 border-b border-rose-100 py-2 px-4 text-center text-xs text-rose-700 font-bold">
+      🚀 Delivering Fresh Restaurant Meals & Express Groceries in 15 to 30 Mins!
+    </div>
+
+    <!-- MAIN DYNAMIC CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+
+      <!-- MAIN LANDING: WELCOME HEADER ONLY -->
+      <div id="mainModulesGrid" class="space-y-6">
+        <div class="text-center space-y-2 py-8">
+          <h1 class="text-2xl sm:text-3xl font-black text-gray-900">Welcome to QuickServe SuperApp</h1>
+          <div class="inline-block mt-1 bg-gradient-to-r from-rose-600 to-amber-500 bg-clip-text text-transparent font-black tracking-wider uppercase text-xs">
+            Simplifying Everyday Life.
+          </div>
+        </div>
+      </div>
+
+      <!-- 1. HOME DASHBOARD SCREEN -->
+      <div id="foodHome" class="food-sub-screen space-y-6">
+        
+        <!-- BACK TO MAIN HOME BAR -->
+        <div class="flex items-center justify-between bg-white p-3 rounded-2xl border shadow-sm">
+          <button onclick="showMainHomeDashboard()" class="text-xs font-extrabold text-gray-700 bg-gray-100 px-3 py-1.5 rounded-xl hover:bg-gray-200 transition flex items-center gap-1">
+            ← Back to All Modules
+          </button>
+          <span id="activeModuleIndicator" class="text-xs font-black text-rose-600 uppercase tracking-wider">Active Module: Food</span>
+        </div>
+
+        <!-- CATEGORIES SECTION -->
+        <div>
+          <h3 id="categorySectionTitle" class="text-xs font-black text-gray-400 uppercase tracking-wider mb-3">Popular Categories</h3>
+          <div id="popularCategoriesGrid" class="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar pb-2">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- QUICK FILTER TAGS -->
+        <div id="quickFilterTags" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 text-xs">
+          <!-- Dynamic Filter Buttons Injected via JS -->
+        </div>
+
+        <!-- DYNAMIC SUBCATEGORY CONTAINER -->
+        <div id="subCategoryContainer" class="hidden bg-rose-50/70 border border-rose-200 p-4 rounded-2xl space-y-2">
+          <h4 id="subCatTitle" class="font-black text-rose-900 text-xs uppercase">Subcategories</h4>
+          <div id="subCatList" class="flex flex-wrap gap-1.5 text-[11px]">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- PROMOTIONAL BANNERS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="bg-gradient-to-r from-rose-600 to-red-500 text-white p-4 rounded-2xl shadow flex justify-between items-center">
+            <div>
+              <span class="bg-white/20 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Festival Offer</span>
+              <h4 class="text-base font-black mt-1">FLAT 50% OFF</h4>
+              <p class="text-[11px] text-white/80">Code: FESTIVE50</p>
+            </div>
+            <span class="text-3xl">🎉</span>
+          </div>
+          <div class="bg-gradient-to-r from-amber-500 to-yellow-500 text-white p-4 rounded-2xl shadow flex justify-between items-center">
+            <div>
+              <span class="bg-white/20 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Free Delivery</span>
+              <h4 class="text-base font-black mt-1">₹0 Delivery Fee</h4>
+              <p class="text-[11px] text-white/80">On orders above ₹199</p>
+            </div>
+            <span class="text-3xl">🛵</span>
+          </div>
+          <div class="bg-gradient-to-r from-emerald-600 to-teal-500 text-white p-4 rounded-2xl shadow flex justify-between items-center">
+            <div>
+              <span class="bg-white/20 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Combo Deals</span>
+              <h4 class="text-base font-black mt-1">Save Up To ₹150</h4>
+              <p class="text-[11px] text-white/80">Family Biryani Combos</p>
+            </div>
+            <span class="text-3xl">🍗</span>
+          </div>
+          <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-2xl shadow flex justify-between items-center">
+            <div>
+              <span class="bg-white/20 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Bank Coupons</span>
+              <h4 class="text-base font-black mt-1">10% Cashback</h4>
+              <p class="text-[11px] text-white/80">UPI & Credit Cards</p>
+            </div>
+            <span class="text-3xl">💳</span>
+          </div>
+        </div>
+
+        <!-- RECOMMENDED / SERVICE ITEMS -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 id="productSectionTitle" class="text-base font-black text-gray-900">Recommended Items</h3>
+              <p id="productSectionSub" class="text-xs text-gray-500">Based on Previous Orders, Location, Time & Trending</p>
+            </div>
+          </div>
+          <div id="customerProductGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-6">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- POPULAR RESTAURANTS LISTING (FOOD MODE) -->
+        <div id="popularRestaurantsSection">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-black text-gray-900">Popular Restaurants</h3>
+            <span onclick="openFoodSubScreen('foodListing')" class="text-xs text-rose-600 font-bold hover:underline cursor-pointer">Show All</span>
+          </div>
+          <div id="restaurantListingGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 2. SEARCH & FILTERS SCREEN -->
+      <div id="foodSearch" class="food-sub-screen space-y-4">
+        <div class="flex items-center justify-between bg-white p-3 rounded-2xl border shadow-sm">
+          <button onclick="showMainHomeDashboard()" class="text-xs font-extrabold text-gray-700 bg-gray-100 px-3 py-1.5 rounded-xl hover:bg-gray-200 transition">
+            ← Back to All Modules
+          </button>
+        </div>
+        <h3 id="searchScreenTitle" class="text-base font-black text-gray-900">Search Food, Dishes or Restaurants</h3>
+        <div class="flex flex-wrap items-center gap-2 border-b pb-3 text-xs">
+          <span class="font-bold text-gray-700">Filter By:</span>
+          <button onclick="applySearchFilter('veg')" class="px-3 py-1 bg-gray-100 hover:bg-emerald-100 text-gray-700 hover:text-emerald-800 rounded-full font-medium">🥬 Veg</button>
+          <button onclick="applySearchFilter('nonveg')" class="px-3 py-1 bg-gray-100 hover:bg-rose-100 text-gray-700 hover:text-rose-800 rounded-full font-medium">🍗 Non-Veg</button>
+          <button onclick="applySearchFilter('rating')" class="px-3 py-1 bg-gray-100 hover:bg-amber-100 text-gray-700 hover:text-amber-800 rounded-full font-medium">★ 4.0+</button>
+          <button onclick="applySearchFilter('fast')" class="px-3 py-1 bg-gray-100 hover:bg-blue-100 text-gray-700 hover:text-blue-800 rounded-full font-medium">⏱ Fast Delivery</button>
+        </div>
+        <div id="searchResultsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+
+      <!-- 3 & 4. RESTAURANT LISTING FULL SCREEN -->
+      <div id="foodListing" class="food-sub-screen space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-black text-gray-900">All Nearby Partner Restaurants</h3>
+          <button onclick="openFoodSubScreen('foodHome')" class="text-xs font-bold text-rose-600 bg-rose-50 px-3 py-1 rounded-lg">← Back to Home</button>
+        </div>
+        <div id="fullRestaurantGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+
+      <!-- 5 & 6. RESTAURANT DETAILS & MENU SCREEN -->
+      <div id="foodRestDetails" class="food-sub-screen space-y-4">
+        <button onclick="openFoodSubScreen('foodHome')" class="text-xs font-bold text-gray-600 bg-gray-100 px-3 py-1.5 rounded-xl hover:bg-gray-200">← Back</button>
+        <div class="bg-white rounded-3xl border overflow-hidden shadow-sm">
+          <div class="relative h-48 bg-gray-200">
+            <img id="detailCover" src="" class="w-full h-full object-cover" />
+            <button onclick="toggleFavCurrentRest()" id="favRestBtn" class="absolute top-3 right-3 bg-white/90 p-2 rounded-full text-rose-600 shadow">
+              <i data-lucide="heart" class="w-5 h-5"></i>
+            </button>
+          </div>
+          <div class="p-4 space-y-3">
+            <div class="flex justify-between items-start">
+              <div>
+                <h2 id="detailTitle" class="text-xl font-black text-gray-900"></h2>
+                <p id="detailCuisine" class="text-xs text-gray-500 mt-0.5"></p>
+              </div>
+              <span id="detailRating" class="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-2 py-1 rounded-lg"></span>
+            </div>
+            <div id="detailMenuContainer" class="space-y-3 pt-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. CHECKOUT PAGE -->
+      <div id="foodCheckout" class="food-sub-screen max-w-2xl mx-auto space-y-4">
+        <div class="flex items-center justify-between border-b pb-3">
+          <h3 class="text-base font-black text-gray-900">Final Order Checkout</h3>
+          <button onclick="openFoodSubScreen('foodHome')" class="text-xs font-bold text-gray-600 bg-gray-100 px-3 py-1 rounded-lg">Cancel</button>
+        </div>
+        <button onclick="placeFinalOrder()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3.5 rounded-2xl text-xs shadow">
+          Confirm & Place Order
+        </button>
+      </div>
+
+      <!-- 9. LIVE ORDER TRACKING SCREEN -->
+      <div id="foodTracking" class="food-sub-screen max-w-2xl mx-auto space-y-4">
+        <div class="bg-white rounded-2xl border-2 border-rose-500 p-4 space-y-4 shadow-sm">
+          <div class="flex items-center justify-between border-b pb-2">
+            <div>
+              <span class="text-xs font-black text-gray-900">Active Order #ORD-9912</span>
+              <p class="text-[11px] text-gray-500">Royal Spices Kitchen</p>
+            </div>
+            <span class="bg-rose-100 text-rose-700 font-bold text-[10px] px-2 py-0.5 rounded">ON THE WAY</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. ORDERS HISTORY SCREEN -->
+      <div id="foodOrders" class="food-sub-screen space-y-4">
+        <h3 class="text-base font-black text-gray-900">Your Orders</h3>
+      </div>
+
+      <!-- 11. FAVORITES SCREEN -->
+      <div id="foodFavorites" class="food-sub-screen space-y-4">
+        <h3 class="text-base font-black text-gray-900">Favorite Restaurants & Dishes</h3>
+        <div id="favoritesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+
+      <!-- 12. OFFERS & COUPONS SCREEN -->
+      <div id="foodOffers" class="food-sub-screen space-y-4">
+        <h3 class="text-base font-black text-gray-900">Coupons & Bank Offers</h3>
+      </div>
+
+      <!-- 13, 14, 15, 16, 17. PROFILE & SETTINGS -->
+      <div id="foodProfile" class="food-sub-screen space-y-6">
+        <div class="bg-white p-4 rounded-2xl border shadow-sm flex items-center gap-4">
+          <div class="w-14 h-14 bg-rose-600 rounded-full text-white font-black text-xl flex items-center justify-center">BN</div>
+          <div>
+            <h3 class="font-black text-base text-gray-900">Badri Nageswara Rao</h3>
+            <p class="text-xs text-gray-500">+91 9876543210 • badri@example.com</p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- CUSTOMER BOTTOM NAVIGATION BAR -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t z-40 px-4 py-2 flex items-center justify-around shadow-lg text-xs font-bold text-gray-600">
+      <button onclick="showMainHomeDashboard()" class="flex flex-col items-center text-rose-600">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span>Home</span>
+      </button>
+      <button onclick="openFoodSubScreen('foodSearch')" class="flex flex-col items-center hover:text-gray-900">
+        <i data-lucide="search" class="w-5 h-5"></i>
+        <span>Search</span>
+      </button>
+      <button onclick="openFoodSubScreen('foodOrders')" class="flex flex-col items-center hover:text-gray-900">
+        <i data-lucide="receipt" class="w-5 h-5"></i>
+        <span>Orders</span>
+      </button>
+      <button onclick="openFoodSubScreen('foodFavorites')" class="flex flex-col items-center hover:text-gray-900">
+        <i data-lucide="heart" class="w-5 h-5"></i>
+        <span>Favorites</span>
+      </button>
+      <button onclick="openFoodSubScreen('foodProfile')" class="flex flex-col items-center hover:text-gray-900">
+        <i data-lucide="user" class="w-5 h-5"></i>
+        <span>Profile</span>
+      </button>
+    </nav>
+  </div>
+
+
+  <!-- ================================================================= -->
+  <!-- 🛠️ DEDICATED SERVICES MODULE MODAL (WITH FULL EXPLICIT ICONS)     -->
+  <!-- ================================================================= -->
+  <div id="servicesModuleModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex justify-center items-end sm:items-center p-0 sm:p-4">
+    <div class="bg-white w-full max-w-3xl rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 space-y-5 max-h-[92vh] overflow-y-auto">
+      
+      <!-- MODAL HEADER -->
+      <div class="flex justify-between items-center border-b pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-xl bg-cyan-600 text-white flex items-center justify-center font-bold text-xl">🛠️</div>
+          <div>
+            <h3 class="font-black text-base sm:text-lg text-gray-900">Home & Professional Services</h3>
+            <p class="text-[11px] text-gray-500">Verified Electricians, Appliance Repair, Cleaning, Salon & Care</p>
+          </div>
+        </div>
+        <button onclick="closeServicesModule()" class="text-gray-400 hover:text-gray-700"><i data-lucide="x" class="w-6 h-6"></i></button>
+      </div>
+
+      <!-- WORKFLOW CONTAINER -->
+      <div class="space-y-4 text-xs">
+        
+        <!-- STEP 1: CATEGORIES -->
+        <div id="svcStep1" class="space-y-3">
+          <h4 class="font-black text-cyan-900 text-xs uppercase tracking-wider">Step 1: Select Service Category</h4>
+          <div id="svcCategoriesGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-64 overflow-y-auto no-scrollbar">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- STEP 2: SUBCATEGORIES -->
+        <div id="svcStep2" class="hidden space-y-3">
+          <div class="flex justify-between items-center bg-cyan-50 p-2.5 rounded-xl">
+            <span id="svcSubCatHeader" class="font-black text-cyan-950 uppercase text-xs">Subcategories</span>
+            <button onclick="backToServiceStep1()" class="text-cyan-700 font-bold hover:underline">← Change Category</button>
+          </div>
+          <div id="svcSubCategoriesGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-64 overflow-y-auto no-scrollbar">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- STEP 3: SPECIFIC SERVICE / TASK LISTING -->
+        <div id="svcStepItem" class="hidden space-y-3">
+          <div class="flex justify-between items-center bg-cyan-50 p-2.5 rounded-xl">
+            <span id="svcItemHeader" class="font-black text-cyan-950 uppercase text-xs">Select Specific Task</span>
+            <button onclick="backToServiceStep2()" class="text-cyan-700 font-bold hover:underline">← Change Subcategory</button>
+          </div>
+          <div id="svcItemsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto no-scrollbar">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- STEP 4 & 5: PACKAGE SELECTION -->
+        <div id="svcStep3" class="hidden space-y-3 bg-gray-50 p-4 rounded-2xl border">
+          <div class="flex justify-between items-center">
+            <h4 id="svcTaskHeader" class="font-black text-gray-900 uppercase">Selected Service Task</h4>
+            <button onclick="backToServiceStepItem()" class="text-cyan-600 font-bold hover:underline">← Back to Tasks</button>
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-gray-600 font-bold">Choose Package Tier</label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <label onclick="selectSvcPackage('Basic', 350)" class="p-3 border-2 border-cyan-600 bg-cyan-50/50 rounded-xl cursor-pointer block">
+                <span class="font-black block text-gray-900">Basic Package</span>
+                <p class="text-[10px] text-gray-500 mt-0.5">Standard checkup & fix</p>
+                <span class="font-bold text-cyan-700 block mt-2">₹350</span>
+              </label>
+              <label onclick="selectSvcPackage('Standard', 650)" class="p-3 border-2 border-gray-200 bg-white rounded-xl cursor-pointer block">
+                <span class="font-black block text-gray-900">Standard Package</span>
+                <p class="text-[10px] text-gray-500 mt-0.5">Includes parts & labor</p>
+                <span class="font-bold text-cyan-700 block mt-2">₹650</span>
+              </label>
+              <label onclick="selectSvcPackage('Premium', 1100)" class="p-3 border-2 border-gray-200 bg-white rounded-xl cursor-pointer block">
+                <span class="font-black block text-gray-900">Premium Package</span>
+                <p class="text-[10px] text-gray-500 mt-0.5">Comprehensive overhaul + 6m warranty</p>
+                <span class="font-bold text-cyan-700 block mt-2">₹1,100</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 6 & 7: DATE & TIME SLOT -->
+        <div id="svcStep4" class="hidden space-y-3 bg-gray-50 p-4 rounded-2xl border">
+          <h4 class="font-black text-gray-700 uppercase">Step 6 & 7: Schedule Date & Time Slot</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Select Date</label>
+              <input type="date" value="2026-08-25" class="w-full p-2.5 border rounded-xl font-bold bg-white" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-600 mb-1">Available Time Slots</label>
+              <select class="w-full p-2.5 border rounded-xl font-bold bg-white text-cyan-900">
+                <option>08:00 AM – 10:00 AM</option>
+                <option selected>10:00 AM – 12:00 PM</option>
+                <option>12:00 PM – 02:00 PM</option>
+                <option>02:00 PM – 04:00 PM</option>
+                <option>04:00 PM – 06:00 PM</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 8, 9 & 10: SUMMARY & PAYMENT -->
+        <div id="svcStep5" class="hidden space-y-3 bg-gray-900 text-white p-4 rounded-2xl">
+          <h4 class="font-black text-cyan-400 uppercase tracking-wider text-[11px]">Step 8-10: Summary & Payment</h4>
+          <div class="space-y-1 text-xs text-gray-300">
+            <p><strong>Service Location:</strong> 📍 Home - Main Road, Sector 4</p>
+            <p><strong>Assigned Professional:</strong> Verified Expert (4.9 ★ Rating)</p>
+            <div class="flex justify-between font-black text-sm text-cyan-300 pt-2 border-t border-gray-800">
+              <span>Total Payable Amount</span>
+              <span id="svcSummaryTotal">₹650</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MODAL ACTION BUTTON -->
+      <div class="pt-2">
+        <button id="svcModalNextBtn" onclick="progressServiceWorkflow()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-extrabold py-3.5 rounded-2xl text-xs shadow transition">
+          Select Subcategory &rarr;
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================================================================= -->
+  <!-- 🚖 EXPANDED MULTI-VEHICLE RIDE & PARCEL BOOKING MODAL              -->
+  <!-- ================================================================= -->
+  <div id="rideBookingModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex justify-center items-end sm:items-center p-0 sm:p-4">
+    <div class="bg-white w-full max-w-2xl rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 space-y-4 max-h-[92vh] overflow-y-auto">
+      
+      <!-- MODAL HEADER & SOS EMERGENCY BUTTON -->
+      <div class="flex justify-between items-center border-b pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-xl bg-yellow-500 text-white flex items-center justify-center font-bold text-xl">🚖</div>
+          <div>
+            <h3 class="font-black text-base sm:text-lg text-gray-900">Ride & Parcel Booking</h3>
+            <p class="text-[11px] text-gray-500">On-Demand Passenger Rides & Express Parcel Delivery</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="alert('🚨 EMERGENCY SOS ACTIVATED! Live GPS shared with emergency contacts.')" class="bg-rose-600 text-white text-[10px] font-black px-2.5 py-1.5 rounded-xl shadow animate-pulse">
+            🚨 SOS Emergency
+          </button>
+          <button onclick="closeRideBookingModal()" class="text-gray-400 hover:text-gray-700"><i data-lucide="x" class="w-6 h-6"></i></button>
+        </div>
+      </div>
+
+      <!-- ROUTE & LOCATION SEARCH -->
+      <div class="space-y-2 bg-gray-50 p-3 rounded-2xl border text-xs">
+        <div class="flex items-center gap-2 bg-white p-2.5 rounded-xl border">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+          <input type="text" id="ridePickupInput" value="📍 Pickup / Current Location (Sector 4, Main Road)" class="w-full font-bold text-gray-800 focus:outline-none" />
+        </div>
+        <div class="flex items-center gap-2 bg-white p-2.5 rounded-xl border">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0"></span>
+          <input type="text" id="rideDropInput" placeholder="Drop Location (e.g. Airport / Railway Station)" class="w-full font-bold text-gray-800 focus:outline-none" />
+        </div>
+
+        <div class="flex items-center gap-2 pt-1 overflow-x-auto no-scrollbar text-[11px]">
+          <span class="text-gray-400 font-bold shrink-0">Quick Places:</span>
+          <button onclick="setRideDrop('Home - Sector 4')" class="bg-white border px-2.5 py-1 rounded-lg font-bold shrink-0">🏠 Home</button>
+          <button onclick="setRideDrop('Cyber Towers, Work')" class="bg-white border px-2.5 py-1 rounded-lg font-bold shrink-0">💼 Work</button>
+          <button onclick="setRideDrop('International Airport')" class="bg-white border px-2.5 py-1 rounded-lg font-bold shrink-0">✈ Airport</button>
+          <button onclick="setRideDrop('Central Railway Station')" class="bg-white border px-2.5 py-1 rounded-lg font-bold shrink-0">🚉 Station</button>
+        </div>
+      </div>
+
+      <!-- CONDITIONAL PARCEL SPECIFICATIONS FORM -->
+      <div id="parcelFieldsSection" class="hidden bg-blue-50/70 border border-blue-200 p-3.5 rounded-2xl space-y-2.5 text-xs">
+        <div class="flex items-center gap-2 border-b border-blue-200 pb-1.5">
+          <span class="text-base">📦</span>
+          <span class="font-black text-blue-950 uppercase text-[11px]">Parcel & Package Delivery Information</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div>
+            <label class="block text-[10px] font-bold text-gray-600 mb-0.5">Sender Name & Contact *</label>
+            <input type="text" value="Sender: Badri (9876543210)" class="w-full p-2 border rounded-xl bg-white font-bold" />
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-gray-600 mb-0.5">Receiver Name & Mobile *</label>
+            <input type="text" placeholder="Receiver Full Name & 10-digit Phone" class="w-full p-2 border rounded-xl bg-white font-bold" />
+          </div>
+        </div>
+      </div>
+
+      <!-- SCHEDULE RIDE / PARCEL TOGGLE -->
+      <div class="flex items-center justify-between bg-amber-50 p-3 rounded-2xl border border-amber-200 text-xs">
+        <div class="flex items-center gap-2">
+          <i data-lucide="calendar-clock" class="w-4 h-4 text-amber-700"></i>
+          <span class="font-bold text-amber-950">Schedule Order for Later?</span>
+        </div>
+        <input type="datetime-local" class="bg-white border rounded-xl p-1 font-bold text-[11px]" />
+      </div>
+
+      <!-- VEHICLE & PARCEL SELECTION -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h4 class="text-xs font-black text-gray-400 uppercase tracking-wider">Select Option or Vehicle</h4>
+          <span class="text-[10px] text-emerald-600 font-bold">Transparent Fare Estimates</span>
+        </div>
+
+        <div id="rideVehicleList" class="space-y-2 text-xs max-h-56 overflow-y-auto no-scrollbar">
+          
+          <!-- 📦 PARCEL OPTION INTEGRATED INTO RIDE BOOKING -->
+          <label id="optParcel" onclick="selectRideVehicleCard(this, 'Parcel Delivery', 50, true)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer hover:border-blue-500 transition">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="rideVeh" id="radioParcel" class="accent-blue-600" />
+              <span class="text-2xl">📦</span>
+              <div>
+                <span class="font-black text-gray-900 block">Parcel Delivery</span>
+                <p class="text-[11px] text-gray-500">Bike / Scooter Courier • Up to 20kg • ETA: 3 mins</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-black text-sm text-blue-600">₹50</span>
+              <span class="text-[10px] text-gray-400 block line-through">₹70</span>
+            </div>
+          </label>
+
+          <!-- 🏍 BIKE TAXI -->
+          <label id="optBike" onclick="selectRideVehicleCard(this, 'Bike Taxi', 45, false)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-yellow-500 bg-yellow-50/40 cursor-pointer">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="rideVeh" id="radioBike" checked class="accent-yellow-500" />
+              <span class="text-2xl">🏍</span>
+              <div>
+                <span class="font-black text-gray-900 block">Bike Taxi</span>
+                <p class="text-[11px] text-gray-500">1 Passenger • ETA: 2 mins</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-black text-sm text-gray-900">₹45</span>
+              <span class="text-[10px] text-gray-400 block line-through">₹60</span>
+            </div>
+          </label>
+
+          <label onclick="selectRideVehicleCard(this, 'Auto Rickshaw', 85)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="rideVeh" class="accent-yellow-500" />
+              <span class="text-2xl">🛺</span>
+              <div>
+                <span class="font-black text-gray-900 block">Auto Rickshaw</span>
+                <p class="text-[11px] text-gray-500">Up to 3 Passengers • ETA: 3 mins</p>
+              </div>
+            </div>
+            <span class="font-black text-sm text-gray-900">₹85</span>
+          </label>
+
+          <label onclick="selectRideVehicleCard(this, 'Taxi Hatchback', 140)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="rideVeh" class="accent-yellow-500" />
+              <span class="text-2xl">🚖</span>
+              <div>
+                <span class="font-black text-gray-900 block">Taxi (Hatchback)</span>
+                <p class="text-[11px] text-gray-500">4 Passengers • ETA: 4 mins</p>
+              </div>
+            </div>
+            <span class="font-black text-sm text-gray-900">₹140</span>
+          </label>
+
+          <label onclick="selectRideVehicleCard(this, 'Sedan Comfort', 180)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="rideVeh" class="accent-yellow-500" />
+              <span class="text-2xl">🚘</span>
+              <div>
+                <span class="font-black text-gray-900 block">Sedan (Dzire / Etios)</span>
+                <p class="text-[11px] text-gray-500">AC • 4 Passengers • ETA: 5 mins</p>
+              </div>
+            </div>
+            <span class="font-black text-sm text-gray-900">₹180</span>
+          </label>
+
+          <label onclick="selectRideVehicleCard(this, 'SUV Premium', 260)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="rideVeh" class="accent-yellow-500" />
+              <span class="text-2xl">🚙</span>
+              <div>
+                <span class="font-black text-gray-900 block">SUV (Innova / Ertiga)</span>
+                <p class="text-[11px] text-gray-500">6–7 Passengers • ETA: 6 mins</p>
+              </div>
+            </div>
+            <span class="font-black text-sm text-gray-900">₹260</span>
+          </label>
+
+          <label onclick="selectRideVehicleCard(this, 'XL Van', 450)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="rideVeh" class="accent-yellow-500" />
+              <span class="text-2xl">🚐</span>
+              <div>
+                <span class="font-black text-gray-900 block">XL Van / Traveller</span>
+                <p class="text-[11px] text-gray-500">8–15 Passengers • ETA: 8 mins</p>
+              </div>
+            </div>
+            <span class="font-black text-sm text-gray-900">₹450</span>
+          </label>
+
+          <label onclick="selectRideVehicleCard(this, 'Luxury Car', 750)" class="ride-veh-item flex items-center justify-between p-3 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer">
+            <div class="flex items-center gap-3">
+              <input type="radio" name="rideVeh" class="accent-yellow-500" />
+              <span class="text-2xl">⭐</span>
+              <div>
+                <span class="font-black text-gray-900 block">Luxury (BMW / Mercedes / Audi)</span>
+                <p class="text-[11px] text-gray-500">4 Passengers • Premium • ETA: 10 mins</p>
+              </div>
+            </div>
+            <span class="font-black text-sm text-gray-900">₹750</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- FARE SUMMARY -->
+      <div class="bg-gray-900 text-white p-3.5 rounded-2xl text-xs space-y-1.5">
+        <div class="flex justify-between text-[11px] text-gray-300">
+          <span>Base Fare + Distance</span>
+          <span id="rideFareBase">₹45</span>
+        </div>
+        <div class="flex justify-between text-[11px] text-gray-300"><span>Platform Fee & GST</span><span>₹12</span></div>
+        <div class="flex justify-between font-black text-sm text-yellow-400 pt-1.5 border-t border-gray-800">
+          <span>Total Fare Payable</span>
+          <span id="rideFareTotal">₹57</span>
+        </div>
+      </div>
+
+      <button id="btnConfirmRideOrParcel" onclick="confirmRideBooking()" class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-950 font-black py-3.5 rounded-2xl text-xs shadow transition">
+        Confirm & Request Nearby Driver
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- ================================================================= -->
+  <!-- 🚛 LUGGAGE VEHICLE BOOKING MODAL                                  -->
+  <!-- ================================================================= -->
+  <div id="luggageBookingModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex justify-center items-end sm:items-center p-0 sm:p-4">
+    <div class="bg-white w-full max-w-3xl rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 space-y-5 max-h-[92vh] overflow-y-auto">
+      
+      <!-- MODAL HEADER -->
+      <div class="flex justify-between items-center border-b pb-3">
+        <div class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-xl">🧳</div>
+          <div>
+            <h3 class="font-black text-base sm:text-lg text-gray-900">Luggage & House Shifting Logistics</h3>
+            <p class="text-[11px] text-gray-500">Cargo transport from Cargo Autos to Heavy LCVs with optional helpers & packing</p>
+          </div>
+        </div>
+        <button onclick="closeLuggageBookingModal()" class="text-gray-400 hover:text-gray-700"><i data-lucide="x" class="w-6 h-6"></i></button>
+      </div>
+
+      <!-- LUGGAGE BOOKING WORKFLOW FORM -->
+      <div class="space-y-4 text-xs">
+        
+        <!-- STEP 1: ROUTE & SCHEDULE -->
+        <div class="space-y-2 bg-purple-50/50 p-3.5 rounded-2xl border border-purple-100">
+          <h4 class="font-black text-purple-900 text-[11px] uppercase tracking-wider">1. Route & Schedule Details</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] font-bold text-gray-600 mb-0.5">Pickup Location & Sender Mobile *</label>
+              <input type="text" id="lugPickup" value="Apartment 302, MVP Colony, Visakhapatnam" class="w-full p-2 border rounded-xl font-bold bg-white" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-gray-600 mb-0.5">Drop Location & Receiver Mobile *</label>
+              <input type="text" id="lugDrop" value="Door No 14-2, Railway New Colony, Visakhapatnam" class="w-full p-2 border rounded-xl font-bold bg-white" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <div>
+              <label class="block text-[10px] font-bold text-gray-600 mb-0.5">Schedule Date & Time *</label>
+              <input type="datetime-local" value="2026-08-28T10:00" class="w-full p-2 border rounded-xl bg-white font-bold" />
+            </div>
+            <div class="grid grid-cols-2 gap-1">
+              <div>
+                <label class="block text-[10px] font-bold text-gray-600 mb-0.5">Sender Name</label>
+                <input type="text" value="Badri Nageswara Rao" class="w-full p-2 border rounded-xl bg-white font-bold" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-gray-600 mb-0.5">Receiver Name</label>
+                <input type="text" value="K. Suresh" class="w-full p-2 border rounded-xl bg-white font-bold" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: CARGO ITEM SPECS & CATEGORIES -->
+        <div class="space-y-2 bg-gray-50 p-3.5 rounded-2xl border">
+          <h4 class="font-black text-gray-700 text-[11px] uppercase tracking-wider">2. Item Category & Cargo Specifications</h4>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div>
+              <label class="block text-[10px] font-bold text-gray-600 mb-0.5">Item Category</label>
+              <select id="lugCategory" class="w-full p-2 border rounded-xl font-bold bg-white">
+                <option>Household Items / Shifting</option>
+                <option>Furniture</option>
+                <option>Electronics & Appliances</option>
+                <option>Office Equipment</option>
+                <option>Business Inventory</option>
+                <option>Travel Luggage / Boxes</option>
+                <option>Machinery / Construction</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-gray-600 mb-0.5">Estimated Weight</label>
+              <select id="lugWeight" onchange="calculateLuggageTotalFare()" class="w-full p-2 border rounded-xl font-bold bg-white text-purple-700">
+                <option value="150">Up to 300 KG (Cargo Auto)</option>
+                <option value="400" selected>300 KG – 1 Ton (Pickup Truck)</option>
+                <option value="800">1 Ton – 2 Tons (Mini Truck)</option>
+                <option value="1500">2 Tons – 5 Tons (LCV / Tempo)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-gray-600 mb-0.5">Dimensions (L x W x H)</label>
+              <input type="text" value="200 x 120 x 150 cm" class="w-full p-2 border rounded-xl bg-white font-bold" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-gray-600 mb-0.5">Total Item Count</label>
+              <input type="number" value="24" class="w-full p-2 border rounded-xl bg-white font-bold" />
+            </div>
+          </div>
+          <div class="pt-1 flex items-center gap-2">
+            <label class="bg-white px-2.5 py-1.5 border rounded-xl text-[11px] font-bold cursor-pointer hover:bg-gray-100 flex items-center gap-1">
+              📷 Upload Photos of Cargo <input type="file" class="hidden" />
+            </label>
+            <input type="text" placeholder="Special Instructions (e.g., Handle fragile glass with care)" class="flex-1 p-2 border rounded-xl bg-white text-xs font-medium" />
+          </div>
+        </div>
+
+        <!-- STEP 3: VEHICLE HIERARCHY SELECTION -->
+        <div>
+          <h4 class="font-black text-gray-700 text-[11px] uppercase tracking-wider mb-2">3. Select Cargo Vehicle</h4>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            
+            <label onclick="selectLuggageVehicleCard(this, 'Cargo Auto', 300)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white rounded-2xl cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center"><span class="font-black text-xs">🛺 Cargo Auto</span><span class="text-[9px] bg-gray-100 px-1 rounded">Up to 300kg</span></div>
+                <p class="text-[10px] text-gray-500 mt-1">Small furniture, office boxes</p>
+              </div>
+              <span class="font-black text-xs text-purple-700 mt-2">Base: ₹300</span>
+            </label>
+
+            <label onclick="selectLuggageVehicleCard(this, 'Pickup Truck', 600)" class="lug-veh-card p-3 border-2 border-purple-600 bg-purple-50/50 rounded-2xl cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center"><span class="font-black text-xs">🛻 Pickup Truck</span><span class="text-[9px] bg-purple-100 text-purple-800 px-1 rounded">Up to 1 Ton</span></div>
+                <p class="text-[10px] text-gray-500 mt-1">Furniture & home appliances</p>
+              </div>
+              <span class="font-black text-xs text-purple-700 mt-2">Base: ₹600</span>
+            </label>
+
+            <label onclick="selectLuggageVehicleCard(this, 'Mini Truck', 1100)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center"><span class="font-black text-xs">🚚 Mini Truck</span><span class="text-[9px] bg-gray-100 px-1 rounded">Up to 2 Tons</span></div>
+                <p class="text-[10px] text-gray-500 mt-1">House shifting & relocation</p>
+              </div>
+              <span class="font-black text-xs text-purple-700 mt-2">Base: ₹1100</span>
+            </label>
+
+            <label onclick="selectLuggageVehicleCard(this, 'Cargo Van', 1400)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center"><span class="font-black text-xs">🚐 Cargo Van</span><span class="text-[9px] bg-gray-100 px-1 rounded">Fragile Goods</span></div>
+                <p class="text-[10px] text-gray-500 mt-1">Covered & secure electronics</p>
+              </div>
+              <span class="font-black text-xs text-purple-700 mt-2">Base: ₹1400</span>
+            </label>
+
+            <label onclick="selectLuggageVehicleCard(this, 'Tempo', 1900)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center"><span class="font-black text-xs">🚛 Tempo</span><span class="text-[9px] bg-gray-100 px-1 rounded">Bulk Goods</span></div>
+                <p class="text-[10px] text-gray-500 mt-1">Commercial inventory & events</p>
+              </div>
+              <span class="font-black text-xs text-purple-700 mt-2">Base: ₹1900</span>
+            </label>
+
+            <label onclick="selectLuggageVehicleCard(this, 'LCV', 2800)" class="lug-veh-card p-3 border-2 border-gray-200 bg-white cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center"><span class="font-black text-xs">🚛 LCV</span><span class="text-[9px] bg-gray-100 px-1 rounded">Up to 5 Tons</span></div>
+                <p class="text-[10px] text-gray-500 mt-1">Industrial & wholesale loads</p>
+              </div>
+              <span class="font-black text-xs text-purple-700 mt-2">Base: ₹2800</span>
+            </label>
+
+          </div>
+        </div>
+
+        <!-- STEP 4: ADDITIONAL SERVICES & HELPERS -->
+        <div class="space-y-2 bg-gray-50 p-3.5 rounded-2xl border">
+          <h4 class="font-black text-gray-700 text-[11px] uppercase tracking-wider">4. Additional Services & Helpers</h4>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <label class="flex items-center gap-1.5 bg-white p-2 rounded-xl border cursor-pointer font-bold">
+              <input type="checkbox" id="addLoading" onchange="calculateLuggageTotalFare()" checked class="accent-purple-600" /> Loading Service (+₹150)
+            </label>
+            <label class="flex items-center gap-1.5 bg-white p-2 rounded-xl border cursor-pointer font-bold">
+              <input type="checkbox" id="addUnloading" onchange="calculateLuggageTotalFare()" checked class="accent-purple-600" /> Unloading Service (+₹150)
+            </label>
+            <label class="flex items-center gap-1.5 bg-white p-2 rounded-xl border cursor-pointer font-bold">
+              <input type="checkbox" id="addHelper" onchange="calculateLuggageTotalFare()" class="accent-purple-600" /> Extra Helper (+₹250)
+            </label>
+            <label class="flex items-center gap-1.5 bg-white p-2 rounded-xl border cursor-pointer font-bold">
+              <input type="checkbox" id="addInsurance" onchange="calculateLuggageTotalFare()" checked class="accent-purple-600" /> Cargo Insurance (+₹99)
+            </label>
+          </div>
+        </div>
+
+        <!-- STEP 5: ITEMIZED FARE BREAKDOWN -->
+        <div class="bg-gray-900 text-white p-4 rounded-2xl space-y-2">
+          <div class="flex justify-between text-[11px] text-gray-300">
+            <span>Vehicle Base & Distance Charge</span>
+            <span id="lugFareVehicle">₹750</span>
+          </div>
+          <div class="flex justify-between text-[11px] text-gray-300">
+            <span>Additional Services (Loading/Unloading/Insurance)</span>
+            <span id="lugFareServices">₹399</span>
+          </div>
+          <div class="flex justify-between text-[11px] text-gray-300"><span>Platform Fee & GST (18%)</span><span id="lugFareTax">₹207</span></div>
+          <div class="flex justify-between font-black text-sm text-purple-300 pt-2 border-t border-gray-800">
+            <span>Total Estimated Amount</span>
+            <span id="lugFareTotal">₹1,356</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONFIRM BOOKING BUTTON -->
+      <button onclick="confirmLuggageBookingAndTrack()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-extrabold py-3.5 rounded-2xl text-xs shadow transition">
+        Proceed to Payment & Confirm Cargo Booking
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- ================================================================= -->
+  <!-- 4. RIDESHARE                                                      -->
+  <!-- ================================================================= -->
+  <div id="panelRideShare" class="view-panel max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    <div class="bg-white rounded-2xl sm:rounded-3xl border shadow-xl p-4 sm:p-6 space-y-6">
+      
+      <div class="border-b pb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+        <div>
+          <span class="bg-indigo-100 text-indigo-800 text-[10px] font-black px-2.5 py-1 rounded-full uppercase">Scheduled Seat Sharing</span>
+          <h1 class="text-xl sm:text-2xl font-black text-gray-900 mt-1">🚗 RideShare (Up to 7 Seats)</h1>
+          <p class="text-xs text-gray-500">Prepaid intercity seat reservations with automated seating capacity limits.</p>
+        </div>
+        <button onclick="switchView('panelCustomer')" class="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 transition flex items-center justify-center">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- FLOW A: REQUESTER ONLY -->
+      <div id="rsFlowRequester" class="rs-flow-tab active space-y-6">
+        <div class="bg-gray-50 p-4 rounded-2xl border space-y-3">
+          <h3 class="text-xs font-black text-gray-700 uppercase">Search Trip & Reserve Seats</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+            <div>
+              <label class="block font-bold text-gray-500 mb-1">From Location</label>
+              <input type="text" id="rsSearchFrom" value="Visakhapatnam" class="w-full p-2.5 border rounded-xl font-bold bg-white" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-500 mb-1">To Location</label>
+              <input type="text" id="rsSearchTo" value="Vijayawada" class="w-full p-2.5 border rounded-xl font-bold bg-white" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-500 mb-1">Travel Date</label>
+              <input type="date" value="2026-08-25" class="w-full p-2.5 border rounded-xl font-bold bg-white" />
+            </div>
+            <div>
+              <label class="block font-bold text-gray-500 mb-1">Number of Seats</label>
+              <select id="passengerBookSeatCount" class="w-full p-2.5 border rounded-xl font-bold bg-white text-indigo-700">
+                <option value="1">1 Seat</option>
+                <option value="2" selected>2 Seats</option>
+                <option value="3">3 Seats</option>
+                <option value="4">4 Seats</option>
+                <option value="5">5 Seats</option>
+                <option value="6">6 Seats (Max)</option>
+              </select>
+            </div>
+          </div>
+          <button onclick="searchAvailableRideSlots()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold py-3 rounded-xl shadow flex items-center justify-center gap-2 text-xs transition">
+            <i data-lucide="search" class="w-4 h-4"></i> Search Available Trips & Seat Slots
+          </button>
+        </div>
+
+        <div id="rsSearchResultsContainer" class="space-y-3">
+          <h3 class="text-xs font-black text-gray-400 uppercase tracking-wider">Matching Scheduled Trips</h3>
+          <div class="border-2 border-indigo-500 rounded-2xl p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white shadow-sm">
+            <div class="space-y-1 text-xs">
+              <div class="flex items-center gap-2">
+                <span class="font-black text-sm text-gray-900">🚗 Toyota Innova (Rahul)</span>
+                <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">★ 4.9</span>
+                <span id="rsCardSeatBadge" class="bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded text-[10px]">3 / 6 Seats Available</span>
+              </div>
+              <p class="text-gray-700 font-bold">Route: Visakhapatnam → Vijayawada</p>
+              <p class="text-gray-500 text-[11px]">Departure: 08:00 AM • AC • Luggage Allowed</p>
+            </div>
+            <div class="text-right w-full md:w-auto shrink-0 border-t md:border-t-0 pt-2 md:pt-0">
+              <p class="text-xl font-black text-indigo-600">₹250 <span class="text-xs text-gray-400 font-normal">/ seat</span></p>
+              <button onclick="bookRideShareSeat()" class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs shadow transition mt-1">Book Seats</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================================================================= -->
+  <!-- 2. UNIVERSAL REGISTRATION & 3. PROVIDER & 5. ADMIN & 6. LEGAL     -->
+  <!-- ================================================================= -->
+  <div id="panelRegistration" class="view-panel max-w-4xl mx-auto px-4 py-8">
+    <div class="bg-white rounded-3xl border p-6 space-y-4">
+      <h2 class="text-xl font-black text-gray-900">Universal Partner Registration</h2>
+      <form onsubmit="handleUniversalRegistration(event)" class="space-y-3 text-xs">
+        <input type="text" required placeholder="Full Name *" class="w-full p-2.5 border rounded-xl bg-gray-50" />
+        <button type="submit" class="w-full bg-rose-600 text-white font-bold py-3 rounded-xl">Submit Application</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="panelProvider" class="view-panel flex-1 bg-gray-100 p-6">
+    <h2 class="text-lg font-black">Service Provider Hub</h2>
+  </div>
+
+  <div id="panelAdmin" class="view-panel flex-1 bg-gray-100 p-6">
+    <h2 class="text-lg font-black">Super Admin Master Panel</h2>
+  </div>
+
+  <div id="panelLegal" class="view-panel max-w-4xl mx-auto p-6 bg-white rounded-3xl border my-8">
+    <h2 class="text-lg font-black">Legal Policies & Compliance Terms</h2>
+  </div>
+
+  <!-- CART DRAWER -->
+  <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
+    <div onclick="toggleCartDrawer()" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
+      <div class="p-4 border-b flex items-center justify-between bg-gray-50">
+        <h3 class="font-bold text-base text-gray-900">Your Cart</h3>
+        <button onclick="toggleCartDrawer()" class="p-1 text-gray-400"><i data-lucide="x" class="w-6 h-6"></i></button>
+      </div>
+      <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+      <div class="p-4 border-t bg-gray-50 space-y-2 text-xs">
+        <div class="flex justify-between text-gray-600"><span>Item Subtotal</span><span id="subtotalPrice" class="font-bold text-gray-900">₹0</span></div>
+        <div class="flex justify-between text-sm font-black text-gray-900 pt-2 border-t"><span>Grand Total</span><span id="totalPrice">₹0</span></div>
+        <button onclick="toggleCartDrawer(); openFoodSubScreen('foodCheckout');" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl shadow">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================================= -->
+  <!-- APPLICATION DATA & CONTROLLERS                                    -->
+  <!-- ================================================================= -->
+  <script>
+    const restaurantData = [
+      {
+        id: 'r1',
+        name: 'Royal Spices Kitchen',
+        rating: '4.5 ★',
+        time: '25 min',
+        cost: '₹250 for two',
+        cuisine: 'Biryani, North Indian, Curries',
+        cover: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500',
+        fav: true,
+        menu: [
+          { id: 'f1', name: 'Special Chicken Biryani', price: 290, desc: 'Aromatic basmati rice cooked with tender chicken and spices.', veg: false }
+        ]
+      }
+    ];
+
+    const catalogData = {
+      food: [
+        { id: 'f1', name: 'Special Chicken Biryani', meta: 'Biryani • ★ 4.5', price: 290, img: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500', veg: false },
+        { id: 'f2', name: 'Paneer Butter Masala', meta: 'Curry • ★ 4.3', price: 240, img: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500', veg: true }
+      ],
+      grocery: [
+        { id: 'g1', name: 'Fresh Full Cream Milk 1L', meta: 'Milk & Dairy • In Stock', price: 68, img: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500' }
+      ],
+      ecommerce: [
+        { id: 'e1', name: 'Men Regular Fit T-Shirt', meta: "Men's Fashion • In Stock", price: 499, img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500' },
+        { id: 'e2', name: 'Android Smartphone 5G', meta: 'Smartphones • In Stock', price: 14990, img: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500' }
+      ]
+    };
+
+    const categoriesMap = {
+      food: ['🍛 Meals', '🍗 Biryani', '🍕 Pizza', '🍔 Burgers', '🍜 Chinese', '🥘 Curry & Gravy', '🍞 Breads', '🍝 Pasta', '🥟 Fast Food', '🥞 Breakfast', '🍰 Desserts', '🥤 Beverages'],
+      grocery: ['🥛 Milk & Dairy', '🍞 Bread & Bakery', '🥬 Fruits & Veg', '🥚 Eggs & Meat', '🍚 Rice & Atta', '🧂 Oil & Masala', '🍜 Instant Food', '🍫 Snacks', '🥤 Beverages'],
+      ecommerce: [
+        '👗 Fashion', '📱 Mobiles & Accessories', '💻 Computers & Office', '📺 Electronics', 
+        '🏠 Home & Kitchen', '🛋 Furniture', '🧴 Beauty & Personal Care', '💊 Health & Wellness', 
+        '👶 Baby Products', '🐶 Pet Supplies', '⚽ Sports & Fitness', '🚗 Automotive', 
+        '📚 Books & Stationery', '🎮 Gaming', '🎁 Gifts & Toys', '🌿 Gardening', '🎉 Festival Store', '🏷 Digital Products'
+      ]
+    };
+
+    const foodQuickFilters = ['⭐ Top Rated', '🔥 Trending', '⚡ Fast Delivery', '💰 Budget Meals', '🌱 Pure Veg', '🍗 Best Sellers'];
+    const groceryQuickFilters = ['🔥 All', '🍽 Breakfast', '🍱 Lunch Box', '🥗 Healthy', '🌿 Organic', '⚡ Flash Deals'];
+    const ecommerceQuickFilters = ['⭐ Best Sellers', '🔥 Trending', '🆕 New Arrivals', '💰 Deals of the Day', '⚡ Flash Sale', '🎉 Festival Offers', '💎 Premium Collection', '🌱 Eco-Friendly Products', '🛍 Local Store Products', '🚚 Free Shipping', '❤️ Most Wishlisted', '🏷 Clearance Sale'];
+
+    const foodSubCategoriesMap = {
+      '🍛 Meals': ['South Indian Meals', 'Veg Meals', 'Mini Meals', 'Deluxe Meals', 'Thali'],
+      '🍗 Biryani': ['Chicken Dum Biryani', 'Chicken Fry Biryani', 'Mutton Dum Biryani', 'Veg Biryani']
+    };
+
+    const subCategoriesMap = {
+      '🥛 Milk & Dairy': ['Fresh Milk', 'Toned Milk', 'Curd', 'Paneer', 'Butter', 'Ghee']
+    };
+
+    const ecommerceSubCategoriesMap = {
+      '👗 Fashion': ["Men's Fashion", "Women's Fashion", "Kids Fashion", "Footwear", "Fashion Accessories"],
+      '📱 Mobiles & Accessories': ['Smartphones', 'Accessories'],
+      '💻 Computers & Office': ['Computers', 'Accessories', 'Office Supplies'],
+      '📺 Electronics': ['TV & Entertainment', 'Audio', 'Cameras'],
+      '🏠 Home & Kitchen': ['Kitchen Appliances', 'Kitchenware', 'Home Essentials'],
+      '🛋 Furniture': ['Living Room', 'Bedroom', 'Dining', 'Office Furniture'],
+      '🧴 Beauty & Personal Care': ['Makeup', 'Skin Care', 'Hair Care', 'Grooming'],
+      '💊 Health & Wellness': ['Health Devices', 'Nutrition', 'Fitness'],
+      '👶 Baby Products': ['Feeding', 'Baby Care', 'Baby Gear', 'Toys'],
+      '🐶 Pet Supplies': ['Dog', 'Cat', 'Accessories'],
+      '⚽ Sports & Fitness': ['Sports', 'Gym Equipment', 'Outdoor'],
+      '🚗 Automotive': ['Car Accessories', 'Bike Accessories', 'Vehicle Care'],
+      '📚 Books & Stationery': ['Books', 'Stationery'],
+      '🎮 Gaming': ['Consoles', 'Gaming Accessories', 'PC Gaming'],
+      '🎁 Gifts & Toys': ['Gifts', 'Toys'],
+      '🌿 Gardening': ['Plants', 'Seeds', 'Pots', 'Garden Tools', 'Fertilizers', 'Watering Cans'],
+      '🎉 Festival Store': ['Decorations', 'Pooja Items', 'Seasonal Gifts'],
+      '🏷 Digital Products': ['Gift Cards', 'Mobile Recharge', 'DTH Recharge', 'Software Licenses', 'Antivirus', 'E-books', 'Online Courses']
+    };
+
+    /* COMPLETE SERVICES HIERARCHY MAP WITH EXPLICIT ICONS AND SUB-ICONS */
+    const servicesHierarchy = {
+      '🏠 Home Services': {
+        icon: '🏠',
+        sub: {
+          'Electrical Services': { icon: '⚡', items: ['Fan Installation', 'Light Installation', 'Switch Repair', 'Socket Repair', 'MCB Replacement', 'House Wiring', 'Inverter Installation', 'Generator Installation', 'Door Bell Installation', 'Motor Repair', 'Power Failure Repair', 'Electrical Inspection'] },
+          'Plumbing Services': { icon: '🚰', items: ['Tap Repair', 'Pipe Leakage', 'Toilet Repair', 'Wash Basin Installation', 'Water Tank Repair', 'Motor Installation', 'Bathroom Fittings', 'Kitchen Sink Repair', 'Drain Cleaning', 'Water Pipeline Installation'] },
+          'Carpentry': { icon: '🪚', items: ['Door Installation', 'Door Repair', 'Window Repair', 'Furniture Assembly', 'Bed Assembly', 'Wardrobe Installation', 'Modular Furniture', 'Shelf Installation', 'Wooden Flooring', 'Custom Furniture'] },
+          'Painting': { icon: '🎨', items: ['Interior Painting', 'Exterior Painting', 'Texture Painting', 'Waterproof Painting', 'Wood Polish', 'Wall Putty'] },
+          'Masonry': { icon: '🧱', items: ['Tile Installation', 'Flooring', 'Brick Work', 'Concrete Repair', 'Wall Construction', 'Granite Installation'] },
+          'Handyman': { icon: '🔨', items: ['TV Mounting', 'Mirror Installation', 'Curtain Installation', 'Picture Hanging', 'Wall Drilling', 'Furniture Fixing'] },
+          'Pest Control': { icon: '🐜', items: ['Cockroach Control', 'Termite Control', 'Mosquito Control', 'Bed Bug Treatment', 'Rodent Control', 'General Pest Control'] },
+          'CCTV & Security': { icon: '🔒', items: ['CCTV Installation', 'CCTV Maintenance', 'Smart Lock Installation', 'Video Door Phone', 'Biometric System', 'Alarm System'] }
+        }
+      },
+      '❄️ AC & Appliance Services': {
+        icon: '❄️',
+        sub: {
+          'Air Conditioner': { icon: '🌬️', items: ['AC Installation', 'AC Uninstallation', 'AC Repair', 'AC Gas Filling', 'AC Service', 'Annual Maintenance'] },
+          'Refrigerator': { icon: '🧊', items: ['Cooling Repair', 'Compressor Repair', 'Gas Refill', 'Installation', 'Maintenance'] },
+          'Washing Machine': { icon: '🫧', items: ['Installation', 'Repair', 'Drum Repair', 'Motor Repair', 'Maintenance'] },
+          'Water Purifier': { icon: '💧', items: ['RO Installation', 'Filter Replacement', 'RO Repair', 'AMC'] },
+          'Television': { icon: '📺', items: ['LED TV Repair', 'Smart TV Installation', 'Wall Mount', 'Display Repair'] },
+          'Microwave': { icon: '🍲', items: ['Heating Repair', 'Door Repair', 'Transformer Replacement', 'General Service'] },
+          'Geyser': { icon: '♨️', items: ['Thermostat Repair', 'Element Replacement', 'Tank Leakage Repair', 'Installation'] },
+          'Chimney': { icon: '💨', items: ['Filter Cleaning', 'Motor Repair', 'Duct Cleaning', 'Installation'] },
+          'Dishwasher': { icon: '🍽️', items: ['Installation', 'Repair', 'Leakage Fix', 'General Service'] },
+          'Mixer Grinder': { icon: '🥣', items: ['Blade Replacement', 'Motor Repair', 'Coupler Change', 'Jar Repair'] },
+          'Water Heater': { icon: '🔥', items: ['Heating Element', 'Wiring Check', 'Tank Scaling Clean', 'Installation'] }
+        }
+      },
+      '🧹 Cleaning Services': {
+        icon: '🧹',
+        sub: {
+          'Home Cleaning': { icon: '🧽', items: ['Basic Cleaning', 'Deep Cleaning', 'Move-in Cleaning', 'Move-out Cleaning'] },
+          'Kitchen Cleaning': { icon: '🍳', items: ['Chimney Degreasing', 'Hob Cleaning', 'Cabinet Deep Clean', 'Full Kitchen Scrub'] },
+          'Bathroom Cleaning': { icon: '🚿', items: ['Hard Water Stain Removal', 'Sanitization', 'Deep Descaling', 'Floor Scrub'] },
+          'Sofa Cleaning': { icon: '🛋️', items: ['Fabric Shampooing', 'Leather Conditioning', 'Stain Removal', 'Vacuuming'] },
+          'Carpet Cleaning': { icon: '🧶', items: ['Dry Vacuuming', 'Shampoo Wash', 'Stain Removal', 'Deodorizing'] },
+          'Mattress Cleaning': { icon: '🛏️', items: ['Steam Sanitization', 'Dust Mite Treatment', 'Stain Removal'] },
+          'Office Cleaning': { icon: '🏢', items: ['Workstation Cleaning', 'Floor Buffing', 'Glass Facade Cleaning', 'Restroom Sanitization'] },
+          'Water Tank Cleaning': { icon: '🛢️', items: ['Overhead Tank Scrub', 'Underground Sump Cleaning', 'UV Disinfection'] },
+          'Glass Cleaning': { icon: '🪟', items: ['Window Glass Polish', 'Balcony Glass Clean'] },
+          'Floor Polishing': { icon: '✨', items: ['Marble Buffing', 'Granite Polishing', 'Tile Scrubbing'] },
+          'Sanitization': { icon: '🛡️', items: ['Full House Fogging', 'Surface Disinfection'] }
+        }
+      },
+      '💇 Beauty & Salon': {
+        icon: '💇',
+        sub: {
+          "Women's Salon": { icon: '💅', items: ['Hair Cut', 'Hair Spa', 'Hair Coloring', 'Facial', 'Waxing', 'Threading', 'Manicure', 'Pedicure', 'Bridal Makeup'] },
+          "Men's Salon": { icon: '🪒', items: ['Hair Cut', 'Beard Styling', 'Hair Color', 'Facial', 'Shaving', 'Head Massage'] },
+          'Spa': { icon: '🌿', items: ['Aromatherapy', 'Deep Tissue', 'Swedish Massage', 'Head & Shoulder'] },
+          'Massage': { icon: '💆‍♂️', items: ['Full Body Relaxation', 'Pain Relief Therapy'] },
+          'Nail Art': { icon: '💎', items: ['Gel Extensions', 'Manicure Art', 'Nail Polish Application'] },
+          'Skin Care': { icon: '🧖‍♀️', items: ['Anti-Aging Facial', 'Tan Removal', 'Acne Treatment', 'Gold Glow Facial'] },
+          'Makeup Artist': { icon: '💄', items: ['Party Makeup', 'Engagement Look', 'Bridal Makeup'] }
+        }
+      },
+      '🩺 Health & Wellness': {
+        icon: '🩺',
+        sub: {
+          'Doctor Consultation': { icon: '👨‍⚕️', items: ['General Physician Visit', 'Pediatrician Visit', 'Geriatric Consultation'] },
+          'Home Nurse': { icon: '👩‍⚕️', items: ['Post-Surgery Care', 'Elderly Nursing', 'Injection & IV Administration'] },
+          'Physiotherapy': { icon: '🤸‍♂️', items: ['Back Pain Rehab', 'Post-Op Therapy', 'Joint Mobility Exercises'] },
+          'Elder Care': { icon: '🧓', items: ['Daily Assistance', 'Vitals Monitoring', 'Companionship'] },
+          'Baby Care': { icon: '👶', items: ['Newborn Care Assistance', 'Infant Massage', 'Babysitting Support'] },
+          'Lab Tests': { icon: '🩸', items: ['Blood Collection at Home', 'Full Body Checkup', 'Diabetes Panel'] },
+          'Vaccination': { icon: '💉', items: ['Adult Vaccine Admin', 'Flu Shot at Home'] },
+          'Medical Equipment Rental': { icon: '🦽', items: ['Oxygen Concentrator', 'Wheelchair Rental', 'Hospital Bed Rental'] },
+          'Dietician': { icon: '🥗', items: ['Weight Loss Plan', 'Diabetes Diet Plan', 'Clinical Nutrition'] },
+          'Yoga Trainer': { icon: '🧘‍♀️', items: ['Personal Yoga Trainer', 'Zumba Sessions', 'Weight Loss Training'] },
+          'Personal Trainer': { icon: '🏋️‍♂️', items: ['Strength Training', 'Cardio Workout', 'Core Fitness'] },
+          'Mental Wellness': { icon: '🧠', items: ['Counseling Session', 'Stress Management', 'Therapy Consultation'] }
+        }
+      },
+      '🚗 Automotive Services': {
+        icon: '🚗',
+        sub: {
+          'Car Wash': { icon: '🧼', items: ['Foam Wash', 'Interior Vacuuming', 'Underbody Wash', 'Complete Detailing'] },
+          'Bike Wash': { icon: '🏍️', items: ['Water Wash', 'Chain Lube', 'Polish & Wax'] },
+          'Interior Cleaning': { icon: '🧽', items: ['Seat Shampooing', 'Dashboard Polish', 'Odour Removal'] },
+          'Exterior Polishing': { icon: '✨', items: ['Rubbing & Polishing', 'Ceramic Coating Prep'] },
+          'Battery Replacement': { icon: '🔋', items: ['New Battery Install', 'Old Battery Exchange'] },
+          'Tyre Replacement': { icon: '🛞', items: ['Stepney Change', 'New Tyre Fitment'] },
+          'Wheel Alignment': { icon: '🔄', items: ['Balancing & Alignment'] },
+          'Oil Change': { icon: '🛢️', items: ['Engine Oil Top-up', 'Filter Replacement'] },
+          'Fuel Delivery': { icon: '⛽', items: ['Emergency Petrol/Diesel Delivery'] },
+          'Jump Start': { icon: '⚡', items: ['Battery Jump Start Service'] },
+          'Puncture Repair': { icon: '🛠️', items: ['Tubeless Puncture Repair', 'Tube Patching'] },
+          'Car Repair': { icon: '🚙', items: ['Brake Pad Change', 'Suspension Repair', 'AC Repair'] },
+          'Bike Repair': { icon: '🛵', items: ['Chain Adjustment', 'Clutch Cable Replace', 'General Tune-up'] }
+        }
+      },
+      '📚 Education & Training': {
+        icon: '📚',
+        sub: {
+          'Home Tutor': { icon: '📖', items: ['Math & Science Tutor', 'English Literature', 'Physics & Chemistry'] },
+          'Online Tutor': { icon: '💻', items: ['Virtual Math Tutor', 'Coding for Kids'] },
+          'Language Trainer': { icon: '🗣️', items: ['Spoken English', 'French Classes', 'German Language'] },
+          'Computer Trainer': { icon: '🖥️', items: ['MS Office Training', 'Advanced Excel', 'Graphic Design Basics'] },
+          'Music Teacher': { icon: '🎸', items: ['Guitar Classes', 'Keyboard Lessons', 'Vocal Music'] },
+          'Dance Teacher': { icon: '💃', items: ['Classical Dance', 'Hip Hop Lessons', 'Bollywood Dance'] },
+          'Art Teacher': { icon: '🎨', items: ['Sketching & Drawing', 'Canvas Painting Classes'] },
+          'Spoken English': { icon: '💬', items: ['Fluency Development', 'Interview Prep'] },
+          'Competitive Exam Coaching': { icon: '📝', items: ['JEE/NEET Foundation', 'Banking Exam Prep'] },
+          'Career Guidance': { icon: '🎯', items: ['Stream Selection', 'Resume Building & Mock Interviews'] }
+        }
+      },
+      '🎉 Event Services': {
+        icon: '🎉',
+        sub: {
+          'Photography': { icon: '📸', items: ['Candid Wedding Shoots', 'Birthday Party Coverage', 'Baby Shower Photography'] },
+          'Videography': { icon: '🎥', items: ['Cinematic Trailer', 'Drone Shoot', 'Event Highlights'] },
+          'Decoration': { icon: '🎈', items: ['Balloon Arch Setup', 'Floral Stage Decor', 'Birthday Theme Decor'] },
+          'Catering': { icon: '🥘', items: ['Buffet Catering', 'Live BBQ Counter', 'Snacks & High Tea'] },
+          'DJ': { icon: '🎧', items: ['Party DJ with Console', 'Lighting Effects'] },
+          'Live Music': { icon: '🎤', items: ['Acoustic Band', 'Singer for Events'] },
+          'Event Planner': { icon: '📋', items: ['Corporate Meet Planner', 'Private Party Management'] },
+          'Sound System': { icon: '🔊', items: ['JBL Speakers & Mics Setup'] },
+          'Lighting': { icon: '💡', items: ['Ambient Fairy Lights', 'Stage Spotlights'] },
+          'Stage Setup': { icon: '🎪', items: ['Trussing & Backdrop Setup'] },
+          'Wedding Planner': { icon: '💐', items: ['End-to-End Wedding Management'] },
+          'Birthday Planner': { icon: '🎂', items: ['Theme Party Coordination'] }
+        }
+      },
+      '💼 Business Services': {
+        icon: '💼',
+        sub: {
+          'Accounting': { icon: '📊', items: ['Bookkeeping', 'Ledger Maintenance', 'Financial Statement Prep'] },
+          'GST Filing': { icon: '🧾', items: ['Monthly GSTR-1 & 3B', 'Annual GST Return'] },
+          'Income Tax Filing': { icon: '📑', items: ['ITR-1 to ITR-4 Filing', 'TDS Return Filing'] },
+          'Legal Services': { icon: '⚖️', items: ['Drafting Contracts', 'Notice Drafting', 'Legal Consultation'] },
+          'Company Registration': { icon: '🏢', items: ['Private Limited Setup', 'LLP Incorporation', 'Proprietorship Registration'] },
+          'Trademark Registration': { icon: '™️', items: ['Brand Name Filing', 'Logo Registration'] },
+          'Website Development': { icon: '💻', items: ['Business Landing Page', 'E-commerce Website Setup'] },
+          'Mobile App Development': { icon: '📱', items: ['Android & iOS App Architecture'] },
+          'Graphic Design': { icon: '🎨', items: ['Social Media Banners', 'Brochures & Flyers'] },
+          'Logo Design': { icon: '✒️', items: ['Brand Identity & Logo Suite'] },
+          'Digital Marketing': { icon: '📈', items: ['PPC Campaigns', 'Social Media Management'] },
+          'SEO': { icon: '🔍', items: ['On-page & Off-page SEO Audit'] },
+          'Social Media Marketing': { icon: '💬', items: ['Instagram & LinkedIn Growth'] },
+          'Printing': { icon: '🖨️', items: ['Visiting Cards, Banners, Letterheads'] },
+          'HR Consultancy': { icon: '👥', items: ['Payroll Setup', 'Candidate Screening'] }
+        }
+      },
+      '📦 Packers & Movers': {
+        icon: '📦',
+        sub: {
+          'House Shifting': { icon: '🏡', items: ['1BHK Shifting', '2BHK/3BHK Relocation', 'Villa Shifting'] },
+          'Office Relocation': { icon: '🏢', items: ['Workstation Packing', 'Server Transport', 'Full Office Move'] },
+          'Furniture Moving': { icon: '🛋️', items: ['Sofa & Bed Transport', 'Heavy Wardrobe Moving'] },
+          'Vehicle Transport': { icon: '🚚', items: ['Car Transport Carrier', 'Bike Relocation Service'] },
+          'Warehouse Moving': { icon: '🏭', items: ['Pallet Shifting', 'Heavy Goods Transit'] },
+          'Packing Service': { icon: '📦', items: ['Bubble Wrap & Carton Pack', 'Fragile Protection'] },
+          'Loading': { icon: '🏗️', items: ['Expert Labor Loading'] },
+          'Unloading': { icon: '🛬', items: ['Safe Unloading & Placement'] },
+          'Storage': { icon: '🗄️', items: ['Secure Short/Long Term Warehouse Storage'] },
+          'International Moving': { icon: '✈️', items: ['Customs Clearance & Overseas Freight'] }
+        }
+      },
+      '🐾 Pet Services': {
+        icon: '🐾',
+        sub: {
+          'Pet Grooming': { icon: '🐩', items: ['Bath & Blowdry', 'Haircut & Styling', 'Nail Clipping'] },
+          'Veterinary Doctor': { icon: '🩺', items: ['Home Vet Visit', 'General Health Check'] },
+          'Pet Vaccination': { icon: '💉', items: ['Anti-Rabies Vaccine', 'Annual Booster Shot'] },
+          'Pet Boarding': { icon: '🏠', items: ['Overnight Pet Stay', 'Daycare Facility'] },
+          'Pet Walking': { icon: '🦮', items: ['Daily Morning/Evening Walk'] },
+          'Pet Training': { icon: '🐕', items: ['Obedience Training', 'Behavioral Correction'] },
+          'Pet Sitting': { icon: '🐈', items: ['In-home Feeding & Care'] },
+          'Pet Taxi': { icon: '🚕', items: ['Safe Vet Clinic Cab Transport'] }
+        }
+      },
+      '🌿 Gardening & Outdoor': {
+        icon: '🌿',
+        sub: {
+          'Garden Maintenance': { icon: '🌱', items: ['Weeding & Watering', 'Soil Manuring'] },
+          'Lawn Mowing': { icon: '🌾', items: ['Grass Cutting & Edging'] },
+          'Landscaping': { icon: '🏡', items: ['Backyard Design', 'Stone Pathways'] },
+          'Plant Care': { icon: '🌻', items: ['Pest treatment for plants', 'Pruning & Blooming'] },
+          'Tree Cutting': { icon: '🌲', items: ['Safe Branch Removal', 'Full Tree Felling'] },
+          'Tree Pruning': { icon: '✂️', items: ['Hedge Trimming', 'Canopy Shaping'] },
+          'Irrigation': { icon: '💦', items: ['Drip System Setup', 'Sprinkler Repair'] },
+          'Vertical Gardening': { icon: '🪴', items: ['Balcony Green Wall Setup'] },
+          'Terrace Gardening': { icon: '🌿', items: ['Pot Setup & Veggie Patch Layout'] }
+        }
+      },
+      '🔒 Security Services': {
+        icon: '🔒',
+        sub: {
+          'Security Guards': { icon: '👮‍♂️', items: ['Residential Guard', 'Corporate Security Guard'] },
+          'CCTV Monitoring': { icon: '📹', items: ['Remote Live Monitoring Setup'] },
+          'Smart Home Installation': { icon: '🏠', items: ['Smart Hub & Sensors Setup'] },
+          'Fire Safety': { icon: '🧯', items: ['Extinguisher Install & Audit'] },
+          'Access Control': { icon: '🔑', items: ['RFID Gate Pass Setup', 'Biometric Turnstiles'] },
+          'Alarm Systems': { icon: '🚨', items: ['Intruder Sensor & Siren Setup'] },
+          'Event Security': { icon: '🛡️', items: ['Bouncers & Crowd Control Team'] }
+        }
+      },
+      '👶 Child & Elder Care': {
+        icon: '👶',
+        sub: {
+          'Babysitter': { icon: '🍼', items: ['Evening Babysitting', 'Weekend Care'] },
+          'Nanny': { icon: '🧸', items: ['Full-time Nanny', 'Toddler Engagement'] },
+          'Elder Companion': { icon: '👵', items: ['Park Walks', 'Medication Reminders'] },
+          'Home Care Attendant': { icon: '🏥', items: ['Bedridden Patient Support'] },
+          'Special Needs Care': { icon: '❤️', items: ['Trained Specialized Attendant'] },
+          'Overnight Care': { icon: '🌙', items: ['Night Nursing & Monitoring'] }
+        }
+      },
+      '💻 Freelance & Professional Services': {
+        icon: '💻',
+        sub: {
+          'Content Writing': { icon: '✍️', items: ['Blog Posts', 'Website Copy'] },
+          'Copywriting': { icon: '📝', items: ['Ad Copy', 'Email Campaigns'] },
+          'Translation': { icon: '🌐', items: ['Regional Language Translation'] },
+          'Data Entry': { icon: '⌨️', items: ['Excel & Database Management'] },
+          'Virtual Assistant': { icon: '🤖', items: ['Calendar & Email Management'] },
+          'Graphic Design': { icon: '🎨', items: ['Poster & Banner Design'] },
+          'Video Editing': { icon: '🎬', items: ['Reels & YouTube Editing'] },
+          'Photography': { icon: '📸', items: ['Product & Food Shoots'] },
+          'Business Consultancy': { icon: '📈', items: ['Startup Strategy'] },
+          'Financial Consultancy': { icon: '💰', items: ['Wealth Planning & Budgeting'] },
+          'Legal Consultancy': { icon: '⚖️', items: ['Agreement Review'] },
+          'HR Consultancy': { icon: '👥', items: ['Recruitment Outsourcing'] },
+          'Architecture': { icon: '🏛️', items: ['Floor Plans & Elevation'] },
+          'Interior Design': { icon: '🛋️', items: ['3D Rendering & Styling'] },
+          'UI/UX Design': { icon: '📱', items: ['App Wireframes & Prototypes'] },
+          'Software Development': { icon: '⚡', items: ['Custom Web Apps'] },
+          'Cloud & IT Support': { icon: '☁️', items: ['AWS/Azure & Troubleshooting'] }
+        }
+      }
+    };
+
+    let cart = [];
+    let currentServiceMode = 'food';
+    let serviceCurrentStep = 1;
+    let selectedServiceCat = '';
+    let selectedServiceSubCat = '';
+    let selectedServiceItem = '';
+
+    function initApp() {
+      showMainHomeDashboard();
+      lucide.createIcons();
+    }
+
+    function showMainHomeDashboard() {
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panelCustomer').classList.add('active');
+      document.querySelectorAll('.food-sub-screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('mainModulesGrid').classList.add('active');
+      document.getElementById('mainModulesGrid').classList.remove('hidden');
+      document.getElementById('mainModulesGrid').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openDedicatedModule(modName) {
+      document.getElementById('mainModulesGrid').classList.add('hidden');
+      document.getElementById('mainModulesGrid').style.display = 'none';
+
+      if (modName === 'rideshare') {
+        switchView('panelRideShare');
+      } else if (modName === 'luggage') {
+        openLuggageBookingModal();
+      } else if (modName === 'services') {
+        openServicesModule();
+      }
+    }
+
+    function switchView(panelId) {
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+      const active = document.getElementById(panelId);
+      if (active) active.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openFoodSubScreen(screenId) {
+      document.getElementById('mainModulesGrid').classList.add('hidden');
+      document.getElementById('mainModulesGrid').style.display = 'none';
+      document.querySelectorAll('.food-sub-screen').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(screenId);
+      if (target) target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectServiceCategory(service) {
+      currentServiceMode = service;
+      document.getElementById('mainModulesGrid').classList.add('hidden');
+      document.getElementById('mainModulesGrid').style.display = 'none';
+      const catGrid = document.getElementById('popularCategoriesGrid');
+      const cats = categoriesMap[service] || categoriesMap['food'];
+      if (catGrid) {
+        catGrid.innerHTML = cats.map(c => `
+          <div onclick="alert('Filtering category: ${c}')" class="bg-white border rounded-2xl px-4 py-2 shrink-0 text-xs font-bold text-gray-800 shadow-sm cursor-pointer">
+            ${c}
+          </div>
+        `).join('');
+      }
+      openFoodSubScreen('foodHome');
+      renderProductGrid();
+    }
+
+    function renderProductGrid() {
+      const grid = document.getElementById('customerProductGrid');
+      if (!grid) return;
+      const items = catalogData[currentServiceMode] || catalogData['food'];
+      grid.innerHTML = items.map(i => `
+        <div class="bg-white rounded-2xl border shadow-sm overflow-hidden flex flex-col justify-between">
+          <div class="h-28 bg-gray-100 overflow-hidden"><img src="${i.img}" class="w-full h-full object-cover" /></div>
+          <div class="p-2.5"><h4 class="font-bold text-xs">${i.name}</h4><p class="text-[10px] text-gray-500">${i.meta}</p></div>
+          <div class="p-2.5 pt-0 flex justify-between items-center border-t">
+            <span class="font-black text-xs">₹${i.price}</span>
+            <button onclick="addToCart('${i.id}', '${i.name}', ${i.price})" class="bg-gray-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-xl">+ ADD</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* 🛠️ SERVICES WORKFLOW CONTROLLERS */
+    function openServicesModule() {
+      serviceCurrentStep = 1;
+      renderServiceCategories();
+      updateServicesUI();
+      document.getElementById('servicesModuleModal').classList.remove('hidden');
+    }
+
+    function closeServicesModule() {
+      document.getElementById('servicesModuleModal').classList.add('hidden');
+    }
+
+    function renderServiceCategories() {
+      const grid = document.getElementById('svcCategoriesGrid');
+      grid.innerHTML = Object.keys(servicesHierarchy).map(catKey => {
+        const catData = servicesHierarchy[catKey];
+        return `
+          <button onclick="selectServiceMainCategory('${catKey}')" class="p-3 border-2 border-gray-200 rounded-2xl hover:border-cyan-600 hover:bg-cyan-50/40 text-left font-bold transition flex items-center gap-2">
+            <span class="text-xl">${catData.icon}</span>
+            <span class="truncate">${catKey.replace(/^[^\s]+\s+/, '')}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectServiceMainCategory(catKey) {
+      selectedServiceCat = catKey;
+      const subMap = servicesHierarchy[catKey]?.sub || {};
+      document.getElementById('svcSubCatHeader').innerText = `Subcategories in ${catKey}`;
+      
+      const subGrid = document.getElementById('svcSubCategoriesGrid');
+      subGrid.innerHTML = Object.keys(subMap).map(subKey => {
+        const subData = subMap[subKey];
+        return `
+          <button onclick="selectServiceSubCategory('${subKey}')" class="p-3 border-2 border-cyan-100 rounded-2xl hover:bg-cyan-50 text-left font-bold text-cyan-950 transition flex items-center gap-2">
+            <span class="text-lg">${subData.icon}</span>
+            <span class="text-xs truncate">${subKey}</span>
+          </button>
+        `;
+      }).join('');
+
+      serviceCurrentStep = 2;
+      updateServicesUI();
+    }
+
+    function selectServiceSubCategory(subName) {
+      selectedServiceSubCat = subName;
+      const catObj = servicesHierarchy[selectedServiceCat]?.sub[subName];
+      const itemsList = catObj?.items || [subName];
+
+      document.getElementById('svcItemHeader').innerText = `Tasks in ${subName}`;
+      
+      const itemGrid = document.getElementById('svcItemsGrid');
+      itemGrid.innerHTML = itemsList.map(item => `
+        <button onclick="selectServiceSpecificItem('${item}')" class="p-3 border border-cyan-200 rounded-xl hover:bg-cyan-50 text-left font-bold text-cyan-900 transition flex items-center justify-between">
+          <span>✓ ${item}</span>
+          <span class="text-[10px] text-cyan-600 bg-cyan-100 px-2 py-0.5 rounded">Select</span>
+        </button>
+      `).join('');
+
+      serviceCurrentStep = 3;
+      updateServicesUI();
+    }
+
+    function selectServiceSpecificItem(itemName) {
+      selectedServiceItem = itemName;
+      document.getElementById('svcTaskHeader').innerText = `Selected: ${itemName}`;
+      serviceCurrentStep = 4;
+      updateServicesUI();
+    }
+
+    function backToServiceStep1() {
+      serviceCurrentStep = 1;
+      updateServicesUI();
+    }
+
+    function backToServiceStep2() {
+      serviceCurrentStep = 2;
+      updateServicesUI();
+    }
+
+    function backToServiceStepItem() {
+      serviceCurrentStep = 3;
+      updateServicesUI();
+    }
+
+    function selectSvcPackage(pkgName, priceVal) {
+      document.getElementById('svcSummaryTotal').innerText = `₹${priceVal}`;
+    }
+
+    function progressServiceWorkflow() {
+      if (serviceCurrentStep < 6) {
+        serviceCurrentStep++;
+        updateServicesUI();
+      } else {
+        alert('Service Booking Confirmed successfully! OTP & Professional assigned.');
+        closeServicesModule();
+      }
+    }
+
+    function updateServicesUI() {
+      const s1 = document.getElementById('svcStep1');
+      const s2 = document.getElementById('svcStep2');
+      const sItem = document.getElementById('svcStepItem');
+      const s3 = document.getElementById('svcStep3');
+      const s4 = document.getElementById('svcStep4');
+      const s5 = document.getElementById('svcStep5');
+      const btn = document.getElementById('svcModalNextBtn');
+
+      s1.classList.add('hidden');
+      s2.classList.add('hidden');
+      sItem.classList.add('hidden');
+      s3.classList.add('hidden');
+      s4.classList.add('hidden');
+      s5.classList.add('hidden');
+
+      if (serviceCurrentStep === 1) {
+        s1.classList.remove('hidden');
+        btn.classList.add('hidden');
+      } else if (serviceCurrentStep === 2) {
+        s2.classList.remove('hidden');
+        btn.classList.add('hidden');
+      } else if (serviceCurrentStep === 3) {
+        sItem.classList.remove('hidden');
+        btn.classList.add('hidden');
+      } else if (serviceCurrentStep === 4) {
+        s3.classList.remove('hidden');
+        btn.classList.remove('hidden');
+        btn.innerText = 'Proceed to Date & Time Slot →';
+        serviceCurrentStep = 5; 
+      } else if (serviceCurrentStep === 5) {
+        s3.classList.remove('hidden');
+        s4.classList.remove('hidden');
+        btn.classList.remove('hidden');
+        btn.innerText = 'Proceed to Summary & Payment →';
+        serviceCurrentStep = 6;
+      } else if (serviceCurrentStep >= 6) {
+        s3.classList.remove('hidden');
+        s4.classList.remove('hidden');
+        s5.classList.remove('hidden');
+        btn.classList.remove('hidden');
+        btn.innerText = 'Confirm & Pay ₹650';
+      }
+    }
+
+    function openRideBookingModal() { document.getElementById('rideBookingModal').classList.remove('hidden'); }
+    function closeRideBookingModal() { document.getElementById('rideBookingModal').classList.add('hidden'); }
+    function confirmRideBooking() { alert('Ride requested!'); closeRideBookingModal(); }
+    
+    function openLuggageBookingModal() { document.getElementById('luggageBookingModal').classList.remove('hidden'); }
+    function closeLuggageBookingModal() { document.getElementById('luggageBookingModal').classList.add('hidden'); }
+    function confirmLuggageBookingAndTrack() { alert('Cargo Shifting Confirmed!'); closeLuggageBookingModal(); }
+
+    function addToCart(id, name, price) {
+      const existing = cart.find(i => i.id === id);
+      if (existing) existing.qty += 1;
+      else cart.push({ id, name, price, qty: 1 });
+      updateCartUI();
+    }
+
+    function toggleCartDrawer() { document.getElementById('cartDrawer').classList.toggle('hidden'); }
+
+    function updateCartUI() {
+      const badge = document.getElementById('globalCartBadge');
+      const totalCount = cart.reduce((sum, i) => sum + i.qty, 0);
+      if (totalCount > 0) {
+        badge.innerText = totalCount;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    function promptAddressChange() {
+      const addr = prompt('Enter Delivery Address:', 'Main Road, Sector 4');
+      if (addr) document.getElementById('custAddressText').innerText = `📍 Home - ${addr}`;
+    }
+
+    initApp();
+  </script>
+</body>
+</html>
