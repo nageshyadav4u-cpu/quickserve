@@ -6,8 +6,12 @@
   <title>QuickServe - Simplifying Everyday Life</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Bootstrap 5 CSS CDN (Added for sidebar and components support) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Material Symbols for Google Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
   <style>
     .view-panel { display: none; }
     .view-panel.active { display: block; }
@@ -48,6 +52,20 @@
     .glass-card:active {
       transform: scale(0.98);
     }
+
+    /* Sidebar Slide-out Navigation Styles */
+    #quickserveSidebarOverlay {
+      transition: opacity 0.3s ease-in-out;
+    }
+    #quickserveSidebar {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sidebar-submenu {
+      display: none;
+    }
+    .sidebar-submenu.active {
+      display: block;
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col pb-16 md:pb-0">
@@ -62,22 +80,29 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div class="flex items-center justify-between gap-2 md:gap-4 mb-2">
           
-          <!-- LOGO & LOCATION (LOCATION PLACED DIRECTLY BELOW QUICKSERVE LOGO) -->
-          <div class="flex flex-col gap-0.5">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="showMainHomeDashboard()">
-              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#1565C0] to-[#FF9800] text-white flex items-center justify-center font-black text-lg sm:text-xl shadow">Q</div>
-              <div>
-                <span class="text-lg sm:text-2xl font-black tracking-tight text-gray-900 block leading-none">Quick<span class="text-[#1565C0]">Serve</span></span>
-                <span class="text-[9px] sm:text-[10px] font-bold text-gray-400 tracking-wider block mt-0.5">Simplifying Everyday Life</span>
+          <!-- LOGO & LOCATION & SIDEBAR HAMBURGER TOGGLE -->
+          <div class="flex items-center gap-3">
+            <!-- Sidebar Hamburger Menu Trigger Button -->
+            <button onclick="toggleQuickServeSidebar(true)" class="p-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 transition flex items-center justify-center shrink-0 shadow-sm" aria-label="Open Navigation Menu">
+              <i data-lucide="menu" class="w-5 h-5 text-[#1565C0]"></i>
+            </button>
+
+            <div class="flex flex-col gap-0.5">
+              <div class="flex items-center gap-2 cursor-pointer" onclick="showMainHomeDashboard()">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#1565C0] to-[#FF9800] text-white flex items-center justify-center font-black text-lg sm:text-xl shadow">Q</div>
+                <div>
+                  <span class="text-lg sm:text-2xl font-black tracking-tight text-gray-900 block leading-none">Quick<span class="text-[#1565C0]">Serve</span></span>
+                  <span class="text-[9px] sm:text-[10px] font-bold text-gray-400 tracking-wider block mt-0.5">Simplifying Everyday Life</span>
+                </div>
               </div>
-            </div>
-            
-            <div onclick="promptAddressChange()" class="flex items-center gap-1.5 text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded-xl cursor-pointer transition w-fit mt-1">
-              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose-600 shrink-0"></i>
-              <div>
-                <span id="custAddressText" class="text-gray-700 truncate max-w-[220px] block font-bold text-[11px]">📍 123, MG Road, Bangalore - 560001</span>
+              
+              <div onclick="promptAddressChange()" class="flex items-center gap-1.5 text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded-xl cursor-pointer transition w-fit mt-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose-600 shrink-0"></i>
+                <div>
+                  <span id="custAddressText" class="text-gray-700 truncate max-w-[220px] block font-bold text-[11px]">📍 123, MG Road, Bangalore - 560001</span>
+                </div>
+                <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-500 shrink-0"></i>
               </div>
-              <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-gray-500 shrink-0"></i>
             </div>
           </div>
 
@@ -412,6 +437,30 @@
 
 
   <!-- ================================================================= -->
+  <!-- 📱 SIDEBAR NAVIGATION MENU (SLIDE-OUT HAMBURGER DRAWER)            -->
+  <!-- ================================================================= -->
+  <div id="quickserveSidebarOverlay" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden" onclick="toggleQuickServeSidebar(false)"></div>
+  <div id="quickserveSidebar" class="fixed inset-y-0 left-0 z-50 w-85 max-w-[85vw] bg-white shadow-2xl flex flex-col transform -translate-x-full overflow-hidden">
+    
+    <!-- Sidebar Sticky Header / Profile Section -->
+    <div id="sidebarHeaderSection" class="p-4 bg-gradient-to-r from-[#1565C0] to-blue-700 text-white flex items-center justify-between shrink-0 shadow-md">
+      <!-- Dynamically populated via JS depending on Login Status -->
+    </div>
+
+    <!-- Scrollable Sidebar Menu Items -->
+    <div class="flex-1 overflow-y-auto p-4 space-y-4 text-xs font-medium text-gray-700 no-scrollbar" id="sidebarMenuContainer">
+      <!-- Populated dynamically via JS obeying Super Admin configuration -->
+    </div>
+
+    <!-- Sidebar Footer Sticky Section -->
+    <div class="p-3 border-t bg-gray-50 flex items-center justify-between text-[11px] text-gray-500 shrink-0">
+      <span>QuickServe v2.6.0</span>
+      <button onclick="toggleQuickServeSidebar(false)" class="text-gray-700 font-bold hover:underline">Close Menu</button>
+    </div>
+  </div>
+
+
+  <!-- ================================================================= -->
   <!-- 🛠️ DEDICATED SERVICES MODULE MODAL                                -->
   <!-- ================================================================= -->
   <div id="servicesModuleModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex justify-center items-end sm:items-center p-0 sm:p-4">
@@ -539,7 +588,7 @@
 
 
   <!-- ================================================================= -->
-  <!-- 🚖 STANDARDIZED MULTI-VEHICLE RIDE & PARCEL BOOKING MODAL          -->
+  <!-- 🚖 STANDARDIZED MULTI-VEHICLE RIDE & PARCEL BOOKING MODAL         -->
   <!-- ================================================================= -->
   <div id="rideBookingModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex justify-center items-end sm:items-center p-0 sm:p-4">
     <div class="bg-white w-full max-w-2xl rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 space-y-4 max-h-[92vh] overflow-y-auto">
@@ -2047,9 +2096,372 @@
     let currentServiceMode = 'food';
     let serviceCurrentStep = 1;
 
+    // State simulation for Authentication and Super Admin Control of Menu Items
+    let isUserLoggedIn = true; // Toggle between true/false to test Guest vs Logged-In
+    let currentUserData = {
+      name: "Badri Nageswara Rao",
+      mobile: "+91 9876543210",
+      avatarText: "BN",
+      membership: "Gold Member",
+      walletBalance: "₹1,250"
+    };
+
+    // Super Admin controlled menu items configuration (can be updated from Admin panel)
+    let superAdminMenuConfig = {
+      services: {
+        food: { enabled: true, label: "Food Delivery", order: 1 },
+        grocery: { enabled: true, label: "10-Min Delivery", order: 2 },
+        ride: { enabled: true, label: "Ride Booking", order: 3 },
+        rideshare: { enabled: true, label: "RideShare", order: 4 },
+        services: { enabled: true, label: "Professional Services", order: 5 },
+        luggage: { enabled: true, label: "Luggage Vehicle", order: 6 },
+        parcel: { enabled: true, label: "Parcel Delivery", order: 7 },
+        ecommerce: { enabled: true, label: "E-Commerce", order: 8 }
+      },
+      sections: {
+        myBookings: { enabled: true, label: "My Bookings" },
+        myAccount: { enabled: true, label: "My Account" },
+        payments: { enabled: true, label: "Payments" },
+        helpSupport: { enabled: true, label: "Help & Support" },
+        settings: { enabled: true, label: "Settings" },
+        legal: { enabled: true, label: "Legal" }
+      }
+    };
+
     function initApp() {
       showMainHomeDashboard();
+      renderSidebarNavigation();
       lucide.createIcons();
+    }
+
+    // =================================================================
+    // SIDEBAR NAVIGATION DYNAMIC RENDERER & CONTROLLERS
+    // =================================================================
+    function toggleQuickServeSidebar(open) {
+      const overlay = document.getElementById('quickserveSidebarOverlay');
+      const sidebar = document.getElementById('quickserveSidebar');
+      if (open) {
+        overlay.classList.remove('hidden');
+        setTimeout(() => sidebar.classList.remove('-translate-x-full'), 10);
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        setTimeout(() => overlay.classList.add('hidden'), 300);
+      }
+    }
+
+    function toggleSidebarSubmenu(menuId) {
+      const sub = document.getElementById(menuId);
+      if (sub) {
+        sub.classList.toggle('active');
+      }
+    }
+
+    function renderSidebarNavigation() {
+      const headerContainer = document.getElementById('sidebarHeaderSection');
+      const menuContainer = document.getElementById('sidebarMenuContainer');
+
+      // 1. Render Header based on Login Status
+      if (isUserLoggedIn) {
+        headerContainer.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-white text-[#1565C0] font-black text-lg flex items-center justify-center shadow">
+              ${currentUserData.avatarText}
+            </div>
+            <div>
+              <h3 class="font-black text-sm text-white">${currentUserData.name}</h3>
+              <p class="text-[11px] text-blue-100">${currentUserData.mobile}</p>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="bg-amber-400 text-gray-900 text-[9px] font-extrabold px-1.5 py-0.5 rounded">${currentUserData.membership}</span>
+                <span class="bg-blue-800 text-blue-100 text-[9px] font-bold px-1.5 py-0.5 rounded">Wallet: ${currentUserData.walletBalance}</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodProfile');" class="bg-white/20 hover:bg-white/30 p-2 rounded-xl text-white text-xs font-bold transition">
+            Edit
+          </button>
+        `;
+      } else {
+        headerContainer.innerHTML = `
+          <div class="flex flex-col gap-2 w-full">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-xl bg-white text-[#1565C0] font-black flex items-center justify-center shadow">Q</div>
+              <span class="font-black text-base">QuickServe Guest</span>
+            </div>
+            <div class="flex items-center gap-2 pt-1">
+              <button onclick="alert('Redirecting to Login Modal');" class="bg-white text-[#1565C0] font-black px-4 py-2 rounded-xl text-xs shadow flex-1">Login</button>
+              <button onclick="switchView('panelRegistration'); toggleQuickServeSidebar(false);" class="bg-blue-600 border border-blue-400 text-white font-black px-4 py-2 rounded-xl text-xs shadow flex-1">Register</button>
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. Render Main Navigation List obeying Super Admin settings
+      let html = '';
+
+      // MAIN MENU SECTION
+      html += `
+        <div class="space-y-1 pb-3 border-b">
+          <a href="#" onclick="toggleQuickServeSidebar(false); showMainHomeDashboard(); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition">
+            <span class="material-symbols-rounded text-lg text-blue-600">home</span> Home
+          </a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodSearch'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition">
+            <span class="material-symbols-rounded text-lg text-blue-600">search</span> Search
+          </a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); promptAddressChange(); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition">
+            <span class="material-symbols-rounded text-lg text-rose-600">location_on</span> Change Location
+          </a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodOffers'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition">
+            <span class="material-symbols-rounded text-lg text-amber-500">local_offer</span> Offers & Deals
+          </a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Showing What is New on QuickServe!'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition">
+            <span class="material-symbols-rounded text-lg text-purple-600">new_releases</span> What's New
+          </a>
+        </div>
+      `;
+
+      // SERVICES SECTION (Dynamic based on Admin Enable/Disable)
+      html += `<div class="space-y-1 py-3 border-b"><span class="text-[10px] font-black text-gray-400 uppercase px-3 tracking-wider block mb-1">QuickServe Services</span>`;
+      
+      const sCfg = superAdminMenuConfig.services;
+      if (sCfg.food.enabled) {
+        html += `
+          <div>
+            <div onclick="toggleSidebarSubmenu('subFood')" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 cursor-pointer transition">
+              <div class="flex items-center gap-3"><span class="text-base">🍲</span> ${sCfg.food.label}</div>
+              <span class="material-symbols-rounded text-sm text-gray-400">expand_more</span>
+            </div>
+            <div id="subFood" class="sidebar-submenu pl-8 py-1 space-y-1">
+              <a href="#" onclick="toggleQuickServeSidebar(false); selectServiceCategory('food'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Restaurants</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); selectServiceCategory('food'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Food Categories</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodHome'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Popular Restaurants</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodOffers'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Offers</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodFavorites'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Favorites</a>
+            </div>
+          </div>
+        `;
+      }
+      if (sCfg.grocery.enabled) {
+        html += `
+          <div>
+            <div onclick="toggleSidebarSubmenu('subGrocery')" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 cursor-pointer transition">
+              <div class="flex items-center gap-3"><span class="text-base">⚡</span> ${sCfg.grocery.label}</div>
+              <span class="material-symbols-rounded text-sm text-gray-400">expand_more</span>
+            </div>
+            <div id="subGrocery" class="sidebar-submenu pl-8 py-1 space-y-1">
+              <a href="#" onclick="toggleQuickServeSidebar(false); selectServiceCategory('grocery'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Groceries</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); selectServiceCategory('grocery'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Fruits & Vegetables</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); alert('Opening Pharmacy Store'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Pharmacy</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); selectServiceCategory('grocery'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Daily Essentials</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); alert('Opening Bakery'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Bakery</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); alert('Opening Pet Supplies'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Pet Supplies</a>
+            </div>
+          </div>
+        `;
+      }
+      if (sCfg.ride.enabled) {
+        html += `
+          <div>
+            <div onclick="toggleSidebarSubmenu('subRide')" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 cursor-pointer transition">
+              <div class="flex items-center gap-3"><span class="text-base">🚖</span> ${sCfg.ride.label}</div>
+              <span class="material-symbols-rounded text-sm text-gray-400">expand_more</span>
+            </div>
+            <div id="subRide" class="sidebar-submenu pl-8 py-1 space-y-1">
+              <a href="#" onclick="toggleQuickServeSidebar(false); openRideBookingModal(); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Book Ride</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openRideBookingModal(); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Schedule Ride</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openRideBookingModal(); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Airport Ride</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openRideBookingModal(); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Outstation Ride</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); alert('Showing Ride History'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Ride History</a>
+            </div>
+          </div>
+        `;
+      }
+      if (sCfg.rideshare.enabled) {
+        html += `
+          <div>
+            <div onclick="toggleSidebarSubmenu('subRideShare')" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 cursor-pointer transition">
+              <div class="flex items-center gap-3"><span class="text-base">🚗</span> ${sCfg.rideshare.label}</div>
+              <span class="material-symbols-rounded text-sm text-gray-400">expand_more</span>
+            </div>
+            <div id="subRideShare" class="sidebar-submenu pl-8 py-1 space-y-1">
+              <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('rideshare'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Find Ride</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('rideshare'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">My RideShare</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('rideshare'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Published Trips</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('rideshare'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">RideShare History</a>
+            </div>
+          </div>
+        `;
+      }
+      if (sCfg.services.enabled) {
+        html += `
+          <div>
+            <div onclick="toggleSidebarSubmenu('subServices')" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 cursor-pointer transition">
+              <div class="flex items-center gap-3"><span class="text-base">🛠️</span> ${sCfg.services.label}</div>
+              <span class="material-symbols-rounded text-sm text-gray-400">expand_more</span>
+            </div>
+            <div id="subServices" class="sidebar-submenu pl-8 py-1 space-y-1">
+              <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('services'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Cleaning</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('services'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Electrician</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('services'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Plumber</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('services'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Carpenter</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('services'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Salon</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('services'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Appliance Repair</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('services'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">All Services</a>
+            </div>
+          </div>
+        `;
+      }
+      if (sCfg.luggage.enabled) {
+        html += `
+          <div>
+            <div onclick="toggleSidebarSubmenu('subLuggage')" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 cursor-pointer transition">
+              <div class="flex items-center gap-3"><span class="text-base">🚛</span> ${sCfg.luggage.label}</div>
+              <span class="material-symbols-rounded text-sm text-gray-400">expand_more</span>
+            </div>
+            <div id="subLuggage" class="sidebar-submenu pl-8 py-1 space-y-1">
+              <a href="#" onclick="toggleQuickServeSidebar(false); openLuggageBookingModal(); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Book Vehicle</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openLuggageBookingModal(); return false;" class="block py-1 hover:text-[#1565C0] font-medium">House Shifting</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openLuggageBookingModal(); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Office Shifting</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openLuggageBookingModal(); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Goods Transport</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); alert('Showing Booking History'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Booking History</a>
+            </div>
+          </div>
+        `;
+      }
+      if (sCfg.parcel.enabled) {
+        html += `
+          <div>
+            <div onclick="toggleSidebarSubmenu('subParcel')" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 cursor-pointer transition">
+              <div class="flex items-center gap-3"><span class="text-base">📦</span> ${sCfg.parcel.label}</div>
+              <span class="material-symbols-rounded text-sm text-gray-400">expand_more</span>
+            </div>
+            <div id="subParcel" class="sidebar-submenu pl-8 py-1 space-y-1">
+              <a href="#" onclick="toggleQuickServeSidebar(false); openRideBookingModal(); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Book Parcel</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); alert('Tracking parcel'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Track Parcel</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); alert('Parcel History'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Parcel History</a>
+            </div>
+          </div>
+        `;
+      }
+      if (sCfg.ecommerce.enabled) {
+        html += `
+          <div>
+            <div onclick="toggleSidebarSubmenu('subEcommerce')" class="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 cursor-pointer transition">
+              <div class="flex items-center gap-3"><span class="text-base">🛍</span> ${sCfg.ecommerce.label}</div>
+              <span class="material-symbols-rounded text-sm text-gray-400">expand_more</span>
+            </div>
+            <div id="subEcommerce" class="sidebar-submenu pl-8 py-1 space-y-1">
+              <a href="#" onclick="toggleQuickServeSidebar(false); selectServiceCategory('ecommerce'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Shop</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); selectServiceCategory('ecommerce'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Categories</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodFavorites'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Wishlist</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodOrders'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Orders</a>
+              <a href="#" onclick="toggleQuickServeSidebar(false); alert('Returns & Exchanges'); return false;" class="block py-1 hover:text-[#1565C0] font-medium">Returns</a>
+            </div>
+          </div>
+        `;
+      }
+      html += `</div>`;
+
+      // MY BOOKINGS SECTION
+      html += `
+        <div class="space-y-1 py-3 border-b">
+          <span class="text-[10px] font-black text-gray-400 uppercase px-3 tracking-wider block mb-1">My Bookings</span>
+          <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodOrders'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-blue-600">receipt_long</span> Food Orders</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Ride Bookings'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-yellow-600">local_taxi</span> Ride Bookings</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); openDedicatedModule('rideshare'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-indigo-600">directions_car</span> RideShare Bookings</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Service Bookings'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-cyan-600">handyman</span> Service Bookings</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); openLuggageBookingModal(); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-purple-600">local_shipping</span> Luggage Bookings</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Parcel Bookings'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-blue-500">inventory_2</span> Parcel Bookings</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodOrders'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-teal-600">shopping_cart</span> Shopping Orders</a>
+        </div>
+      `;
+
+      // MY ACCOUNT SECTION
+      html += `
+        <div class="space-y-1 py-3 border-b">
+          <span class="text-[10px] font-black text-gray-400 uppercase px-3 tracking-wider block mb-1">My Account</span>
+          <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodProfile'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-blue-600">person</span> Profile</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); promptAddressChange(); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-rose-600">bookmark</span> Saved Addresses</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Saved Payment Methods'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-emerald-600">credit_card</span> Saved Payment Methods</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodFavorites'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-rose-500">favorite</span> Favorites</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Wallet Balance: ₹1,250'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-amber-600">account_balance_wallet</span> Wallet</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Rewards Program'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-purple-600">card_giftcard</span> Rewards</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); openFoodSubScreen('foodOffers'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-orange-500">local_offer</span> Coupons</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Refer friends and earn ₹100'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-blue-600">share</span> Referral</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Notifications Center'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-gray-600">notifications</span> Notifications</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Ratings & Reviews'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-amber-400">star</span> Ratings & Reviews</a>
+        </div>
+      `;
+
+      // PAYMENTS SECTION
+      html += `
+        <div class="space-y-1 py-3 border-b">
+          <span class="text-[10px] font-black text-gray-400 uppercase px-3 tracking-wider block mb-1">Payments</span>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Wallet'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-emerald-600">account_balance_wallet</span> Wallet</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('UPI Management'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-blue-600">payments</span> UPI</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Cards Management'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-indigo-600">credit_card</span> Cards</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Payment History'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-gray-600">history</span> Payment History</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Refunds Status'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-rose-600">keyboard_return</span> Refunds</a>
+        </div>
+      `;
+
+      // HELP & SUPPORT SECTION
+      html += `
+        <div class="space-y-1 py-3 border-b">
+          <span class="text-[10px] font-black text-gray-400 uppercase px-3 tracking-wider block mb-1">Help & Support</span>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Help Center'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-blue-600">help</span> Help Center</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Live Chat with Support Agent'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-emerald-600">chat</span> Live Chat</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Raise Complaint Ticket'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-rose-600">report_problem</span> Raise Complaint</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Track Complaint Status'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-amber-600">track_changes</span> Track Complaint</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Emergency Support Hotline'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-rose-700 font-black">emergency</span> Emergency Support</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Frequently Asked Questions'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-gray-600">quiz</span> FAQs</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Contact Us'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-blue-600">call</span> Contact Us</a>
+        </div>
+      `;
+
+      // SETTINGS SECTION
+      html += `
+        <div class="space-y-1 py-3 border-b">
+          <span class="text-[10px] font-black text-gray-400 uppercase px-3 tracking-wider block mb-1">Settings</span>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Select Language'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-blue-600">language</span> Language</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Dark Mode Toggled'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-gray-800">dark_mode</span> Dark Mode</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Notification Settings'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-gray-600">notifications_active</span> Notification Settings</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Privacy Settings'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-indigo-600">lock</span> Privacy Settings</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Security Settings'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-emerald-600">security</span> Security</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Change Password'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-amber-600">key</span> Change Password</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); confirm('Are you sure you want to delete your account?'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-rose-50 font-bold text-rose-600 transition"><span class="material-symbols-rounded text-lg text-rose-600">delete</span> Delete Account</a>
+        </div>
+      `;
+
+      // LEGAL SECTION
+      html += `
+        <div class="space-y-1 py-3 border-b">
+          <span class="text-[10px] font-black text-gray-400 uppercase px-3 tracking-wider block mb-1">Legal</span>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('About QuickServe'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-blue-600">info</span> About Us</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Privacy Policy'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-gray-600">policy</span> Privacy Policy</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Terms & Conditions'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-gray-600">gavel</span> Terms & Conditions</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Cancellation Policy'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-gray-600">cancel</span> Cancellation Policy</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Refund Policy'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-gray-600">assignment_return</span> Refund Policy</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); switchView('panelRegistration'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-blue-50 font-bold text-[#1565C0] transition"><span class="material-symbols-rounded text-lg text-[#1565C0]">store</span> Partner Registration</a>
+        </div>
+      `;
+
+      // BOTTOM SECTION
+      html += `
+        <div class="space-y-1 pt-3 pb-2">
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Invite Friends link copied'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-purple-600">group_add</span> Invite Friends</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Thank you for rating QuickServe 5 Stars!'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-amber-500">star</span> Rate App</a>
+          <a href="#" onclick="toggleQuickServeSidebar(false); alert('Share App link copied'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 font-bold text-gray-800 transition"><span class="material-symbols-rounded text-lg text-blue-600">share</span> Share App</a>
+      `;
+
+      if (isUserLoggedIn) {
+        html += `
+          <a href="#" onclick="toggleQuickServeSidebar(false); isUserLoggedIn=false; renderSidebarNavigation(); alert('Logged out successfully'); return false;" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-rose-50 font-bold text-rose-600 transition mt-2"><span class="material-symbols-rounded text-lg text-rose-600">logout</span> Logout</a>
+        `;
+      }
+
+      html += `</div>`;
+
+      menuContainer.innerHTML = html;
     }
 
     function showMainHomeDashboard() {
